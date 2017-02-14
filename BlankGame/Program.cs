@@ -65,8 +65,7 @@ namespace BlankGame
             }
         }
 
-               public static Tuple<List<Room>, string, List<Item>> PlayGame(List<Room> areas, Room room, List<Item> inventory)
-//        public static Tuple<List<Room>, string, List<Item>> PlayGame(List<Room> areas, Room room, List<Item> inventory, out List<Room> outAreas, out Room outRoom, out List<Room> outInventory )
+        public static Tuple<List<Room>, string, List<Item>> PlayGame(List<Room> areas, Room room, List<Item> inventory)
         {
             List<Room> gameAreas = areas;
             List<Item> currentInventory = inventory;
@@ -78,19 +77,27 @@ namespace BlankGame
             if (result.Contains("Pickup") || result.Contains("pickup"))
             {
                 string pickedItem = result.Remove(0, 7);
-                currentInventory = Actions.AddToInventory(room, pickedItem, currentInventory);
+                Tuple <Room, List<Item>> updatedRoomInventory = ActionsInventory.AddToInventory(room, pickedItem, currentInventory);
+                gameAreas.Remove(room);
+                gameAreas.Add(updatedRoomInventory.Item1);
+                currentInventory = updatedRoomInventory.Item2;
+
                 return Tuple.Create(gameAreas, room.Name, currentInventory);
             }
             else if (result.Contains("Drop") || result.Contains("drop"))
             {
                 string removeItem = result.Remove(0, 5);
-                currentInventory = Actions.RemoveFromInventory(removeItem, currentInventory);
+                Tuple <Room, List<Item>> updatedRoomInventory = ActionsInventory.RemoveFromInventory(room, removeItem, currentInventory);
+                gameAreas.Remove(room);
+                gameAreas.Add(updatedRoomInventory.Item1);
+                currentInventory = updatedRoomInventory.Item2;
+
                 return Tuple.Create(gameAreas, room.Name, currentInventory);
             }
             else if (result.Contains("Look at") || result.Contains("look at") || result.Contains("look At") || result.Contains("Look At"))
             {
                 string inspectItem = result.Remove(0, 8);
-                Actions.LookAtItem(inspectItem);
+                ActionsInventory.LookAtItem(inspectItem);
                 return Tuple.Create(gameAreas, room.Name, currentInventory);
             }
             else if (result.Contains("Move") || result.Contains("move"))
@@ -171,7 +178,7 @@ namespace BlankGame
                     case "show Inventory":
                     case "Show Inventory":
                         {
-                            Actions.DisplayInventory(currentInventory);
+                            ActionsInventory.DisplayInventory(currentInventory);
                             return Tuple.Create(gameAreas, room.Name, currentInventory);
                         }
                     case "Exit":

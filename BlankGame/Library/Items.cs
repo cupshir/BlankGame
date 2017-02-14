@@ -37,5 +37,20 @@ namespace BlankGame
             };
             return items;
         }
+
+        public static List<Item> UpdateRoomInventory(string item)
+        {
+            List<Item> roomItems = new List<Item>();
+            if (item != "")
+            {
+                List<Item> validItems = Item.ValidItems();
+                IEnumerable<Item> selectedItem = validItems.Where(p => p.Name == item);
+                Item addItem = selectedItem.Single();
+
+                roomItems.Add(addItem);
+            }
+            return roomItems;
+        }
+
     }
 }

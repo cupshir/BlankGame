@@ -30,7 +30,19 @@ namespace BlankGame
         {
             Console.WriteLine();
             Console.WriteLine(room.Description);
+            Console.WriteLine();
             if (room.moveableObject != "") { Console.WriteLine(room.moveableObject);  }
+            Console.WriteLine();
+            if (room.Inventory.Count > 0)
+            {
+                foreach (Item item in room.Inventory)
+                {
+                    Console.WriteLine(item.Name + " is here");
+                }
+            } else
+            {
+                Console.WriteLine("There is nothing here");
+            }
             Console.WriteLine();
             if (room.toNorth != "") { Console.WriteLine("To the North is the " + room.toNorth); }
             if (room.toSouth != "") { Console.WriteLine("To the South is the " + room.toSouth); }
@@ -139,8 +151,7 @@ namespace BlankGame
                 Room updateRoom = currentRoom.Single();
                 gameAreas.Remove(updateRoom);
                 updateRoom.moveableObjectDescription = updateRoom.movedObjectDescription;
-                if (updateRoom.Name == "Cave Room 5") { updateRoom.canPickItem = true; }
-
+                
                 gameAreas.Add(updateRoom);
 
                 Console.WriteLine(updateRoom.moveableObjectAction);
@@ -149,98 +160,6 @@ namespace BlankGame
             return gameAreas;
         }
 
-        public static void DisplayInventory(List<Item> inventory)
-        {
-            Console.WriteLine();
-            Console.WriteLine("Current Inventory");
-            for (int i = 0; i < 50; i++)
-            {
-                Console.Write("-");
-            }
-            Console.WriteLine("");
-            if (!inventory.Any())
-            {
-                Console.WriteLine("<--Inventory Empty-->");
-            }
-            else
-            {
-                foreach (Item item in inventory)
-                {
-                    Console.WriteLine(item.Name);
-                }
-            }
-            Console.WriteLine();
-        }
-
-        public static void LookAtItem(string item)
-        {
-            List<Item> validItems = Item.ValidItems();
-
-            IEnumerable<Item> checkItem = validItems.Where(p => p.Name == item);
-            if (!checkItem.Any())
-            {
-                Console.WriteLine("That item doesnt exist");
-            } else
-            {
-                Console.WriteLine(item + " Details");
-                for (int i = 0; i < 50; i++)
-                {
-                    Console.Write("-");
-                }
-                Console.WriteLine();
-                foreach (var prop in checkItem)
-                {
-                    Console.WriteLine("       Level: " + prop.Level);
-                    Console.WriteLine("    Strength: " + prop.Strength);
-                    Console.WriteLine("     Stamina: " + prop.Stamina);
-                    Console.WriteLine("     Agility: " + prop.Agility);
-                    Console.WriteLine("Intelligence: " + prop.Intellegence);
-                }
-            }
-
-            Console.WriteLine();
-        }
-
-        public static List<Item> AddToInventory(Room currentRoom, string item, List<Item> inventory)
-        {
-            List<Item> validItems = Item.ValidItems();
-
-            IEnumerable<Item> itemCheck = validItems.Where(p => p.Name == item);
-            if (!itemCheck.Any())
-            {
-                Console.WriteLine("You cannot add that to your inventory!");
-            } else
-            {
-                Item newItem = itemCheck.Single();
-                if ((newItem.StartingLoc == currentRoom.Name) && (currentRoom.canPickItem == true))
-                {
-                    inventory.Add(newItem);
-                    Console.WriteLine();
-                    Console.WriteLine(item + " has been added to your inventory.");
-                }
-                else
-                {
-                    Console.WriteLine("There is no item like that around here");
-                }
-            }
-
-            return inventory;
-        }
-
-        public static List<Item> RemoveFromInventory(string item, List<Item> inventory)
-        {
-            IEnumerable<Item> itemCheck = inventory.Where(p => p.Name == item);
-            if (!itemCheck.Any())
-            {
-                Console.WriteLine("That is not currently in your inventory.");
-            } else
-            {
-                Item removeItem = itemCheck.Single();
-                inventory.Remove(removeItem);
-                Console.WriteLine();
-                Console.WriteLine(item + " has been removed from your inventory.");
-            }
-            return inventory;
-        }
+        
     }
 }
