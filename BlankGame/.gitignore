@@ -1,0 +1,18 @@
+#file types
+_ReSharper.*
+*.resharper
+*.DS_Store
+*.tlog
+*.vsp
+*.psess
+*.v11.suo
+*.user
+*.suo
+#*.Framework.XML
+
+#specific files
+
+#specific folders
+/.vs
+/bin
+/obj
