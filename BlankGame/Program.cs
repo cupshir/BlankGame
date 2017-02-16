@@ -10,11 +10,11 @@ namespace BlankGame
     {
         static void Main(string[] args)
         {
-            List<Monster> caveMobs = Monster.CreateMonsters();
+            // Create Game Rooms and player Inventory
             List<Room> blankGameAreas = Room.CreateRooms();
             List<Item> playerInventory = Item.CreateInventory();
 
-
+            // Games running State?
             string currentRoom = "MainMenu";
             Tuple<List<Room>, string, List<Item>> currentState;
             do
@@ -40,6 +40,7 @@ namespace BlankGame
 
         }
 
+        // Game's Main Menu
         private static string MainMenu()
         {
             Console.WriteLine();
@@ -65,15 +66,23 @@ namespace BlankGame
             }
         }
 
-        public static Tuple<List<Room>, string, List<Item>> PlayGame(List<Room> areas, Room room, List<Item> inventory)
+        // Execute player command
+        public static Tuple<List<Room>, string, List<Item>> PlayGame(List<Room> gameAreas, Room room, List<Item> currentInventory)
         {
-            List<Room> gameAreas = areas;
-            List<Item> currentInventory = inventory;
+
+            // Display current room - Update to its own method in future
             Console.WriteLine();
             Console.WriteLine("Current Location: " + room.Name);
             Console.WriteLine();
+
+            // Get player action and process
             Console.Write("Action: ");
             string result = Console.ReadLine();
+
+            // **Dynamic Actions**
+            //
+            // Pickup Item action
+            // If valid item, move item from room inventory to player inventory
             if (result.Contains("Pickup") || result.Contains("pickup"))
             {
                 string pickedItem = result.Remove(0, 7);
@@ -84,6 +93,9 @@ namespace BlankGame
 
                 return Tuple.Create(gameAreas, room.Name, currentInventory);
             }
+
+            // Drop Item action
+            // If item is in player inventory, move it to current room inventory
             else if (result.Contains("Drop") || result.Contains("drop"))
             {
                 string removeItem = result.Remove(0, 5);
@@ -94,26 +106,38 @@ namespace BlankGame
 
                 return Tuple.Create(gameAreas, room.Name, currentInventory);
             }
+
+            // Look at Item action
             else if (result.Contains("Look at") || result.Contains("look at") || result.Contains("look At") || result.Contains("Look At"))
             {
                 string inspectItem = result.Remove(0, 8);
                 ActionsInventory.LookAtItem(inspectItem);
                 return Tuple.Create(gameAreas, room.Name, currentInventory);
             }
+
+            // Move Item action
             else if (result.Contains("Move") || result.Contains("move"))
             {
                 string objectToMove = result.Remove(0, 5);
                 gameAreas = Actions.MoveObject(gameAreas, room.Name, objectToMove);
                 return Tuple.Create(gameAreas, room.Name, currentInventory);
             }
+
+            // Travel Action
+            // placeholder as reminder to redo below travel actions as dynamic action
+
+            // **Static Actions**
             else
             {
                 switch (result)
                 {
+                    // Display Help Information
                     case "help":
                     case "Help":
                         Actions.Help();
                         return Tuple.Create(gameAreas, room.Name, currentInventory);
+                    
+                    // Display current room information
                     case "look":
                     case "Look":
                         if (room.Name.Contains("Cave"))
@@ -125,6 +149,8 @@ namespace BlankGame
                             Actions.Look(room);
                         }
                         return Tuple.Create(gameAreas, room.Name, currentInventory);
+
+                    // Travel North
                     case "go north":
                     case "Go north":
                     case "go North":
@@ -133,6 +159,8 @@ namespace BlankGame
                             string nextRoom = Actions.Travel(room.Name, room.toNorth);
                             return Tuple.Create(gameAreas, nextRoom, currentInventory);
                         }
+
+                    // Travel South
                     case "go south":
                     case "Go south":
                     case "go South":
@@ -141,6 +169,8 @@ namespace BlankGame
                             string nextRoom = Actions.Travel(room.Name, room.toSouth);
                             return Tuple.Create(gameAreas, nextRoom, currentInventory);
                         }
+
+                    // Travel East
                     case "go east":
                     case "Go east":
                     case "go East":
@@ -149,6 +179,8 @@ namespace BlankGame
                             string nextRoom = Actions.Travel(room.Name, room.toEast);
                             return Tuple.Create(gameAreas, nextRoom, currentInventory);
                         }
+
+                    // Travel West
                     case "go west":
                     case "Go west":
                     case "go West":
@@ -157,6 +189,8 @@ namespace BlankGame
                             string nextRoom = Actions.Travel(room.Name, room.toWest);
                             return Tuple.Create(gameAreas, nextRoom, currentInventory);
                         }
+
+                    // Travel to the Cave Dungeon
                     case "enter cave":
                     case "Enter cave":
                     case "enter Cave":
@@ -173,6 +207,8 @@ namespace BlankGame
                             }
 
                         }
+
+                    // Display Player Inventory
                     case "show inventory":
                     case "Show inventory":
                     case "show Inventory":
@@ -181,13 +217,19 @@ namespace BlankGame
                             ActionsInventory.DisplayInventory(currentInventory);
                             return Tuple.Create(gameAreas, room.Name, currentInventory);
                         }
+
+                    // Exit to Main Menu
                     case "Exit":
                     case "exit":
                         return Tuple.Create(gameAreas, "MainMenu", currentInventory);
+
+                    // Clear Screen
                     case "Clear":
                     case "clear":
                         Console.Clear();
                         return Tuple.Create(gameAreas, room.Name, currentInventory);
+                    
+                    // Display current room if invalid command
                     default:
                         Console.WriteLine("That is not a valid command.");
                         return Tuple.Create(gameAreas, room.Name, currentInventory);
@@ -196,32 +238,5 @@ namespace BlankGame
         }
 
     }
-
-
-
-    class Monster
-    {
-        public string Name { get; set; }
-        public bool Alive { get; set; }
-        public int Level { get; set; }
-        public int Hitpoints { get; set; }
-        public int AttackPower { get; set; }
-        public int DefenseRating { get; set; }
-
-        public static List<Monster> CreateMonsters()
-        {
-            List<Monster> mobs = new List<Monster>()
-            {
-                new Monster {Name = "Snake", Alive = true, Level = 1, Hitpoints = 10, AttackPower = 5, DefenseRating = 1},
-                new Monster {Name = "Rat", Alive = true, Level = 1, Hitpoints = 10, AttackPower = 1, DefenseRating = 1},
-                new Monster {Name = "Spider", Alive = true, Level = 1, Hitpoints = 10, AttackPower = 5, DefenseRating = 1},
-                new Monster {Name = "Turtle", Alive = true, Level = 1, Hitpoints = 50, AttackPower = 1, DefenseRating = 5}
-            };
-            return mobs;
-        }
-
-    }
-
-
 
 }
