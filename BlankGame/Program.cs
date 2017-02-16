@@ -130,7 +130,7 @@ namespace BlankGame
                     case "go North":
                     case "Go North":
                         {
-                            string nextRoom = Actions.Travel(room, "toNorth");
+                            string nextRoom = Actions.Travel(room.Name, room.toNorth);
                             return Tuple.Create(gameAreas, nextRoom, currentInventory);
                         }
                     case "go south":
@@ -138,7 +138,7 @@ namespace BlankGame
                     case "go South":
                     case "Go South":
                         {
-                            string nextRoom = Actions.Travel(room, "toSouth");
+                            string nextRoom = Actions.Travel(room.Name, room.toSouth);
                             return Tuple.Create(gameAreas, nextRoom, currentInventory);
                         }
                     case "go east":
@@ -146,7 +146,7 @@ namespace BlankGame
                     case "go East":
                     case "Go East":
                         {
-                            string nextRoom = Actions.Travel(room, "toEast");
+                            string nextRoom = Actions.Travel(room.Name, room.toEast);
                             return Tuple.Create(gameAreas, nextRoom, currentInventory);
                         }
                     case "go west":
@@ -154,7 +154,7 @@ namespace BlankGame
                     case "go West":
                     case "Go West":
                         {
-                            string nextRoom = Actions.Travel(room, "toWest");
+                            string nextRoom = Actions.Travel(room.Name, room.toWest);
                             return Tuple.Create(gameAreas, nextRoom, currentInventory);
                         }
                     case "enter cave":
@@ -164,7 +164,7 @@ namespace BlankGame
                         {
                             if (room.Name == "Forest")
                             {
-                                string nextRoom = Actions.Travel(room, "toCave");
+                                string nextRoom = Actions.Travel(room.Name, room.toCave);
                                 return Tuple.Create(gameAreas, nextRoom, currentInventory);
                             }
                             else

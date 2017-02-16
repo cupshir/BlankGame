@@ -73,63 +73,18 @@ namespace BlankGame
             Console.WriteLine();
         }
 
-        public static string Travel(Room room, string direction)
+        public static string Travel(string currentRoom, string nextRoom)
         {
-            switch (direction)
+            if (nextRoom == "")
             {
-                case "toNorth":
-                    if (room.toNorth != "")
-                    {
-                        return room.toNorth;
-                    }
-                    else
-                    {
-                        CantTravel();
-                        return room.Name;
-                    }
-                case "toSouth":
-                    if (room.toSouth != "")
-                    {
-                        return room.toSouth;
-                    }
-                    else
-                    {
-                        CantTravel();
-                        return room.Name;
-                    }
-                case "toEast":
-                    if (room.toEast != "")
-                    {
-                        return room.toEast;
-                    }
-                    else
-                    {
-                        CantTravel();
-                        return room.Name;
-                    }
-                case "toWest":
-                    if (room.toWest != "")
-                    {
-                        return room.toWest;
-                    }
-                    else
-                    {
-                        CantTravel();
-                        return room.Name;
-                    }
-                case "toCave":
-                    if (room.toCave != "")
-                    {
-                        return room.toCave;
-                    }
-                    else
-                    {
-                        CantTravel();
-                        return room.Name;
-                    }
-                default:
-                    return room.Name;
+                CantTravel();
+                return currentRoom;
             }
+            else
+            {
+                return nextRoom;
+            }
+
         }
 
         private static void CantTravel()
