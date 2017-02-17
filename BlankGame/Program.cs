@@ -87,10 +87,18 @@ namespace BlankGame
                 if (checkValidItem.Count() == 1)
                 {
                     Item selectedItem = checkValidItem.Single();
-                    Tuple<Room, List<Item>> updatedRoomInventory = ActionsInventory.AddToInventory(room, selectedItem, currentInventory);
-                    gameAreas.Remove(room);
-                    gameAreas.Add(updatedRoomInventory.Item1);
-                    currentInventory = updatedRoomInventory.Item2;
+                    if (selectedItem.CanPickup == true)
+                    {
+                        Tuple<Room, List<Item>> updatedRoomInventory = ActionsInventory.AddToInventory(room, selectedItem, currentInventory);
+                        gameAreas.Remove(room);
+                        gameAreas.Add(updatedRoomInventory.Item1);
+                        currentInventory = updatedRoomInventory.Item2;
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("You can not pick that up at this time!");
+                    }
                 }
                 else
                 {
@@ -170,7 +178,7 @@ namespace BlankGame
                 }
 
                 Console.WriteLine("");
-                Console.WriteLine("That is not a valid destination");
+                Console.WriteLine("There is nothing in that direction!");
                 return Tuple.Create(gameAreas, room.Name, currentInventory);
 
             }

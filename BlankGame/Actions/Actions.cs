@@ -83,7 +83,15 @@ namespace BlankGame
             {
                 gameAreas.Remove(room);
                 room.moveableObjectDescription = room.movedObjectDescription;
-                
+                if (room.Name == "Cave Room 5")
+                {
+                    IEnumerable<Item> getItem = room.Inventory.Where(p => p.Name == "Sword of Awesomeness");
+                    
+                    Item updateItem = getItem.Single();
+                    room.Inventory.Remove(updateItem);
+                    updateItem.CanPickup = true;
+                    room.Inventory.Add(updateItem);
+                }
                 gameAreas.Add(room);
 
                 Console.WriteLine(room.moveableObjectAction);

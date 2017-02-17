@@ -15,8 +15,9 @@ namespace BlankGame
         public int Stamina { get; set; }
         public int Intellegence { get; set; }
         public int Agility { get; set; }
+        public bool CanPickup { get; set; }
 
-        public static Item CreateItem(string name = "", string description = "", int level = 1, int strength = 0, int stamina = 0, int intellegence = 0, int agility = 0)
+        public static Item CreateItem(string name = "", string description = "", int level = 1, int strength = 0, int stamina = 0, int intellegence = 0, int agility = 0, bool canPickup = true)
         {
             Item item = new Item()
             {
@@ -26,8 +27,8 @@ namespace BlankGame
                 Strength = strength,
                 Stamina = stamina,
                 Intellegence = intellegence,
-                Agility = agility
-
+                Agility = agility,
+                CanPickup = canPickup
             };
 
             return item;
@@ -58,7 +59,8 @@ namespace BlankGame
                                  strength: 100,
                                  stamina: 100,
                                  agility: 100,
-                                 intellegence: 100));
+                                 intellegence: 100,
+                                 canPickup: false));
             
             return items;
         }
