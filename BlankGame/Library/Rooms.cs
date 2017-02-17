@@ -20,12 +20,14 @@ namespace BlankGame
         public string toEast { get; set; }
         public string toWest { get; set; }
         public string toCave { get; set; }
+        public string toDown { get; set; }
+        public string toUp { get; set; }
         public List<Item> Inventory { get; set; }
 
 
         public static Room CreateRoom(string name, string description = "", string litDescription = "", string moveableObject = "", string moveableObjectAction = "",
                                       string moveableObjectDescription = "", string movedObjectDescription = "", string toCave = "", string toEast = "", string toNorth = "",
-                                      string toSouth = "", string toWest = "", List<string> items = default(List<string>))
+                                      string toSouth = "", string toWest = "", string toDown = "", string toUp = "", List<string> items = default(List<string>))
         {
             Room room = new Room()
             {
@@ -41,6 +43,8 @@ namespace BlankGame
                 toNorth = toNorth,
                 toSouth = toSouth,
                 toWest = toWest,
+                toUp = toUp,
+                toDown = toDown,
                 Inventory = new List<Item>()
             };
 
@@ -61,7 +65,8 @@ namespace BlankGame
             List<Room> rooms = new List<Room>();            
             rooms.Add(CreateRoom(name: "Town Square", 
                                  description: "As you look around, you notice that the town square is pretty basic. In fact, it is exactly like every other town square in existance.",
-                                 toNorth: "Town Hall", 
+                                 toNorth: "Town Hall",
+                                 toUp: "The Cloud", 
                                  toWest: "Store", 
                                  toSouth: "Forest"));
             roomItems.Clear();
@@ -71,6 +76,9 @@ namespace BlankGame
                                  items: roomItems,
                                  toNorth: "Town Square", 
                                  toCave: "Cave Room 1"));
+            rooms.Add(CreateRoom(name: "The Cloud",
+                                 description: "This is not a real room just testing new travel system...if you reading this it worked!",
+                                 toDown: "Town Square"));
             rooms.Add(CreateRoom(name: "Town Hall",
                                  description: "The Town Hall is sterile and menacing. There is a receptionist sititng at a desk on one side of the room and offices on the other side.",
                                  toWest: "Inn",
@@ -79,8 +87,11 @@ namespace BlankGame
                                  description: "The Inn is cozy and warmly. There are many empty tables scattered through the first floor. On one side of the room is a fire place with some comfy looking chairs. The Innkeeper is moving about randomly cleaning the tables.",
                                  toEast: "Town Hall",
                                  toSouth: "Store"));
+            roomItems.Clear();
+            roomItems.Add("n00b Sword");
             rooms.Add(CreateRoom(name: "Store",
                                  description: "You are standing in the town store. The walls are littered with amazing stuff that you cant afford. There is a Shopkeeper standing behind a counter.",
+                                 items: roomItems,
                                  toNorth: "Inn",
                                  toEast: "Town Square"));
             rooms.Add(CreateRoom(name: "Cave Room 1",
@@ -105,6 +116,7 @@ namespace BlankGame
                                  toEast: "Cave Room 5",
                                  toSouth: "Cave Room 3"));
             roomItems.Clear();
+            roomItems.Add("Torch");
             roomItems.Add("Sword of Awesomeness");
             rooms.Add(CreateRoom(name: "Cave Room 5",
                                  description: "The cave is pitch black making it impossible to see any details.",

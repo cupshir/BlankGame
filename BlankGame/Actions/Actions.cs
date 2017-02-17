@@ -73,48 +73,23 @@ namespace BlankGame
             Console.WriteLine();
         }
 
-        public static string Travel(string currentRoom, string nextRoom)
+        public static List<Room> MoveObject(List<Room> gameAreas, Room room, string objectToMove)
         {
-            if (nextRoom == "")
-            {
-                CantTravel();
-                return currentRoom;
-            }
-            else
-            {
-                return nextRoom;
-            }
-
-        }
-
-        private static void CantTravel()
-        {
-            Console.WriteLine();
-            Console.WriteLine("There is nothing that way!");
-            Console.WriteLine();
-        }
-
-        public static List<Room> MoveObject(List<Room> gameAreas, string room, string objectToMove)
-        {
-            IEnumerable<Room> currentRoom = gameAreas.Where(p => p.Name == room);
-            IEnumerable<Room> checkMoveableObject = currentRoom.Where(p => p.moveableObject == objectToMove);
-            if (!checkMoveableObject.Any())
+            bool checkMoveableObject = room.moveableObject.ToLower() == objectToMove;
+            if (!checkMoveableObject)
             {
                 Console.WriteLine("Nothing to move");
             } else
             {
-                Room updateRoom = currentRoom.Single();
-                gameAreas.Remove(updateRoom);
-                updateRoom.moveableObjectDescription = updateRoom.movedObjectDescription;
+                gameAreas.Remove(room);
+                room.moveableObjectDescription = room.movedObjectDescription;
                 
-                gameAreas.Add(updateRoom);
+                gameAreas.Add(room);
 
-                Console.WriteLine(updateRoom.moveableObjectAction);
+                Console.WriteLine(room.moveableObjectAction);
             }
             
             return gameAreas;
         }
-
-        
     }
 }

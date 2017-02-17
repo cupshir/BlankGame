@@ -30,14 +30,12 @@ namespace BlankGame
                     {
                         currentRoom = selectedRoom.Name;
                     }
-                } else
+                }
+                else
                 {
                     currentRoom = MainMenu();
                 }
             } while (currentRoom != "Exit");
-
-            Console.ReadLine();
-
         }
 
         // Game's Main Menu
@@ -79,7 +77,7 @@ namespace BlankGame
             result = result.ToLower();
 
             // **Dynamic Actions**
-            //
+            
             // Pickup Item action
             // If valid item, move item from room inventory to player inventory
             if (result.Contains("pickup"))
@@ -93,15 +91,12 @@ namespace BlankGame
                     gameAreas.Remove(room);
                     gameAreas.Add(updatedRoomInventory.Item1);
                     currentInventory = updatedRoomInventory.Item2;
-
                 }
                 else
                 {
                     Console.WriteLine();
                     Console.WriteLine("That item does not exist here!");
                 }
-
-
                 return Tuple.Create(gameAreas, room.Name, currentInventory);
             }
 
@@ -136,12 +131,12 @@ namespace BlankGame
                 {
                     Item selectedItem = checkValidItem.Single();
                     ActionsInventory.DisplayItemStats(selectedItem);
-                } else
+                }
+                else
                 {
                     Console.WriteLine();
                     Console.WriteLine("That item is not in your inventory");
                 }
-                
                 return Tuple.Create(gameAreas, room.Name, currentInventory);
             }
 
@@ -149,13 +144,37 @@ namespace BlankGame
             else if (result.Contains("move"))
             {
                 string objectToMove = result.Remove(0, 5);
-                gameAreas = Actions.MoveObject(gameAreas, room.Name, objectToMove);
+                gameAreas = Actions.MoveObject(gameAreas, room, objectToMove);
                 return Tuple.Create(gameAreas, room.Name, currentInventory);
             }
 
             // Travel Action
-            // placeholder as reminder to redo below travel actions as dynamic action
+            else if (result.Contains("go") || result.Contains("enter"))
+            {
+                string travelTo = "";
+                if (result.Contains("go"))
+                {
+                    travelTo = "to" + result.Remove(0, 3);
+                }
+                else if (result.Contains("enter"))
+                {
+                    travelTo = "to" + result.Remove(0, 6);
+                }
 
+                foreach (var prop in room.GetType().GetProperties())
+                {
+                    if (prop.ToString().ToLower().Contains(travelTo) && prop.GetValue(room, null).ToString() != "")
+                    {
+                        return Tuple.Create(gameAreas, prop.GetValue(room, null).ToString(), currentInventory);
+                    }                    
+                }
+
+                Console.WriteLine("");
+                Console.WriteLine("That is not a valid destination");
+                return Tuple.Create(gameAreas, room.Name, currentInventory);
+
+            }
+            
             // **Static Actions**
             else
             {
@@ -177,49 +196,6 @@ namespace BlankGame
                             Actions.Look(room);
                         }
                         return Tuple.Create(gameAreas, room.Name, currentInventory);
-
-                    // Travel North
-                    case "go north":
-                        {
-                            string nextRoom = Actions.Travel(room.Name, room.toNorth);
-                            return Tuple.Create(gameAreas, nextRoom, currentInventory);
-                        }
-
-                    // Travel South
-                    case "go south":
-                        {
-                            string nextRoom = Actions.Travel(room.Name, room.toSouth);
-                            return Tuple.Create(gameAreas, nextRoom, currentInventory);
-                        }
-
-                    // Travel East
-                    case "go east":
-                        {
-                            string nextRoom = Actions.Travel(room.Name, room.toEast);
-                            return Tuple.Create(gameAreas, nextRoom, currentInventory);
-                        }
-
-                    // Travel West
-                    case "go west":
-                        {
-                            string nextRoom = Actions.Travel(room.Name, room.toWest);
-                            return Tuple.Create(gameAreas, nextRoom, currentInventory);
-                        }
-
-                    // Travel to the Cave Dungeon
-                    case "enter cave":
-                        {
-                            if (room.Name == "Forest")
-                            {
-                                string nextRoom = Actions.Travel(room.Name, room.toCave);
-                                return Tuple.Create(gameAreas, nextRoom, currentInventory);
-                            }
-                            else
-                            {
-                                return Tuple.Create(gameAreas, room.Name, currentInventory);
-                            }
-
-                        }
 
                     // Display Player Inventory
                     case "show inventory":
