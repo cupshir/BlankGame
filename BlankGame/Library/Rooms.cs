@@ -75,12 +75,8 @@ namespace BlankGame
                                  description: "The Town Hall is sterile and menacing. There is a receptionist sititng at a desk on one side of the room and offices on the other side.",
                                  toWest: "Inn",
                                  toSouth: "Town Square"));
-            roomItems.Clear();
-            roomItems.Add("Torch2");
-            roomItems.Add("Torch3");
             rooms.Add(CreateRoom(name: "Inn",
                                  description: "The Inn is cozy and warmly. There are many empty tables scattered through the first floor. On one side of the room is a fire place with some comfy looking chairs. The Innkeeper is moving about randomly cleaning the tables.",
-                                 items: roomItems,
                                  toEast: "Town Hall",
                                  toSouth: "Store"));
             rooms.Add(CreateRoom(name: "Store",
