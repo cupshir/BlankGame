@@ -13,11 +13,11 @@ namespace BlankGame
         public int Level { get; set; }
         public int Strength { get; set; }
         public int Stamina { get; set; }
-        public int Intellegence { get; set; }
+        public int Intelligence { get; set; }
         public int Agility { get; set; }
         public bool CanPickup { get; set; }
 
-        public static Item CreateItem(string name = "", string description = "", int level = 1, int strength = 0, int stamina = 0, int intellegence = 0, int agility = 0, bool canPickup = true)
+        public static Item CreateItem(string name = "", string description = "", int level = 1, int strength = 0, int stamina = 0, int intelligence = 0, int agility = 0, bool canPickup = true)
         {
             Item item = new Item()
             {
@@ -26,7 +26,7 @@ namespace BlankGame
                 Level = level,
                 Strength = strength,
                 Stamina = stamina,
-                Intellegence = intellegence,
+                Intelligence = intelligence,
                 Agility = agility,
                 CanPickup = canPickup
             };
@@ -52,14 +52,14 @@ namespace BlankGame
                                  strength: 1,
                                  stamina: 1,
                                  agility: 1,
-                                 intellegence: 1));
+                                 intelligence: 1));
             items.Add(CreateItem(name: "Sword of Awesomeness",
                                  description: "An epic piece of hardware that will smite its foes with ease",
                                  level: 100,
                                  strength: 100,
                                  stamina: 100,
                                  agility: 100,
-                                 intellegence: 100,
+                                 intelligence: 100,
                                  canPickup: false));
             
             return items;
