@@ -36,11 +36,11 @@ namespace BlankGame
             Console.WriteLine();
             if (room.moveableObject != "") { Console.WriteLine(room.moveableObject);  }
             Console.WriteLine();
-            if (room.Inventory.Count > 0)
+            if (room.Monsters.Count > 0)
             {
-                foreach (Item item in room.Inventory)
+                foreach (Monster mob in room.Monsters)
                 {
-                    Console.WriteLine(item.Name + " is here");
+                    Console.WriteLine(mob.Name + " is here");
                 }
             } else
             {
@@ -68,6 +68,18 @@ namespace BlankGame
             {
                 Console.WriteLine(room.litDescription);
                 if (room.moveableObject != "") { Console.WriteLine(room.moveableObjectDescription); }
+                Console.WriteLine();
+                if (room.Monsters.Count > 0)
+                {
+                    foreach (Monster mob in room.Monsters)
+                    {
+                        Console.WriteLine(mob.Name + " is here");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("There is nothing here");
+                }
                 Console.WriteLine();
                 if (room.toNorth != "") { Console.WriteLine("To the North is the " + room.toNorth); }
                 if (room.toSouth != "") { Console.WriteLine("To the South is the " + room.toSouth); }

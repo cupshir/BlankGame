@@ -23,11 +23,12 @@ namespace BlankGame
         public string toDown { get; set; }
         public string toUp { get; set; }
         public List<Item> Inventory { get; set; }
+        public List<Monster> Monsters { get; set; }
 
 
         public static Room CreateRoom(string name, string description = "", string litDescription = "", string moveableObject = "", string moveableObjectAction = "",
                                       string moveableObjectDescription = "", string movedObjectDescription = "", string toCave = "", string toEast = "", string toNorth = "",
-                                      string toSouth = "", string toWest = "", string toDown = "", string toUp = "", List<string> items = default(List<string>))
+                                      string toSouth = "", string toWest = "", string toDown = "", string toUp = "", List<string> items = default(List<string>), List<string> mobs = default(List<string>))
         {
             Room room = new Room()
             {
@@ -45,7 +46,8 @@ namespace BlankGame
                 toWest = toWest,
                 toUp = toUp,
                 toDown = toDown,
-                Inventory = new List<Item>()
+                Inventory = new List<Item>(),
+                Monsters = new List<Monster>()
             };
 
             if (items != default(List<string>))
@@ -55,6 +57,14 @@ namespace BlankGame
                     room.Inventory.Add(Item.AddItemToRoomInventory(item));
                 }
             }
+
+            if (mobs != default(List<string>))
+            {
+                foreach (string mob in mobs)
+                {
+                    room.Monsters.Add(Monster.AddMonsterToRoom(mob));
+                }
+            }
             
             return room;
         }
@@ -62,6 +72,7 @@ namespace BlankGame
         public static List<Room> CreateRooms()
         {
             List<string> roomItems = new List<string>();
+            List<string> mobNames = new List<string>();
             List<Room> rooms = new List<Room>();            
             rooms.Add(CreateRoom(name: "Town Square", 
                                  description: "As you look around, you notice that the town square is pretty basic. In fact,\nit is exactly like every other town square in existance.",
@@ -94,9 +105,14 @@ namespace BlankGame
                                  items: roomItems,
                                  toNorth: "Inn",
                                  toEast: "Town Square"));
+            mobNames.Clear();
+            mobNames.Add("Snake");
+            mobNames.Add("Rat");
+            mobNames.Add("Bear");
             rooms.Add(CreateRoom(name: "Cave Room 1",
                                  description: "The cave is pitch black making it impossible to see any details.",
                                  litDescription: "The cave is much larger then you expected. The ceiling is at least 15ft up.\nYou dont notice anything out of the ordinary",
+                                 mobs: mobNames,
                                  toNorth: "Cave Room 2",
                                  toSouth: "Forest"));
             rooms.Add(CreateRoom(name: "Cave Room 2",
@@ -147,10 +163,15 @@ namespace BlankGame
                                  litDescription: "This cave looks like all the others, however the sound of fient snoring causes the hairs\non the back of you neck to rise.\n\nAny sane person would turn around...",
                                  toEast: "Cave Room 7",
                                  toWest: "Cave Boss Room"));
+            mobNames.Clear();
+            mobNames.Add("Uber Boss");
             rooms.Add(CreateRoom(name: "Cave Boss Room",
                                  description: "The cave is pitch black making it impossible to see any details.",
                                  litDescription: "The room is quite expansive! So big, that you barely notice the giant Dragon sleeping in the middle of the room.",
+                                 mobs: mobNames,
                                  toEast: "Cave Room 9"));
+            
+
             return rooms;
         }
     }

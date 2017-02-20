@@ -6,28 +6,65 @@ using System.Threading.Tasks;
 
 namespace BlankGame
 {
-    class Monsters
+    public class Monster
     {
        
         public string Name { get; set; }
-        public bool Alive { get; set; }
         public int Level { get; set; }
         public int Hitpoints { get; set; }
         public int AttackPower { get; set; }
         public int DefenseRating { get; set; }
 
-        public static List<Monsters> CreateMonsters()
+        public static Monster CreateMonster(string name = "", int level = 1, int hitpoints = 10, int attackpower = 1, int defenserating = 1)
         {
-            List<Monsters> mobs = new List<Monsters>()
-        {
-            new Monsters {Name = "Snake", Alive = true, Level = 1, Hitpoints = 10, AttackPower = 5, DefenseRating = 1},
-            new Monsters {Name = "Rat", Alive = true, Level = 1, Hitpoints = 10, AttackPower = 1, DefenseRating = 1},
-            new Monsters {Name = "Spider", Alive = true, Level = 1, Hitpoints = 10, AttackPower = 5, DefenseRating = 1},
-            new Monsters {Name = "Turtle", Alive = true, Level = 1, Hitpoints = 50, AttackPower = 1, DefenseRating = 5}
-        };
-            return mobs;
+            Monster mob = new Monster()
+            {
+                Name = name,
+                Level = level,
+                Hitpoints = hitpoints,
+                AttackPower = attackpower,
+                DefenseRating = defenserating
+            };
+
+            return mob;
         }
 
+        public static Monster AddMonsterToRoom(string name)
+        {
+            Monster mob = new Monster();
+            if (name != "")
+            {
+                if (name == "Uber Boss")
+                {
+                    mob = CreateMonster(name: name, level: 10, hitpoints: 500, attackpower: 10, defenserating: 10);
+                }
+                else
+                {
+                    mob = CreateMonster(name);
+                }
+                
+                return mob;
+            }
+            else
+            {
+                Console.WriteLine("Error adding " + name + ".");
+            }
+            return mob;
+
+        }
+
+        public static void DisplayMonsterStats(Monster mob)
+        {
+            Console.Clear();
+            UI.DisplayCenterText(mob.Name + " Stats");
+            UI.DisplayCenterText("---------------------------------------------------");
+            Console.WriteLine();
+            UI.DisplayCenterText("         Level: " + mob.Level);
+            UI.DisplayCenterText("     Hitpoints: " + mob.Hitpoints);
+            UI.DisplayCenterText("  Attack Power: " + mob.AttackPower);
+            UI.DisplayCenterText("Defense Rating: " + mob.DefenseRating);
+            Console.WriteLine();
+        }
         
     }
 }

@@ -44,11 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\Actions.cs" />
-    <Compile Include="Actions\ActionsInventory.cs" />
     <Compile Include="Library\UI.cs" />
     <Compile Include="Library\Monsters.cs" />
     <Compile Include="Library\Player.cs" />
-    <Compile Include="Library\Items.cs" />
+    <Compile Include="Library\Item.cs" />
     <Compile Include="Library\Rooms.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

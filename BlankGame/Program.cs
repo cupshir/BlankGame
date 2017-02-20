@@ -73,7 +73,7 @@ namespace BlankGame
                     Item selectedItem = checkValidItem.Single();
                     if (selectedItem.CanPickup == true)
                     {
-                        Tuple<Room, List<Item>> updatedRoomInventory = ActionsInventory.AddToInventory(room, selectedItem, currentPlayer.Inventory);
+                        Tuple<Room, List<Item>> updatedRoomInventory = Item.AddToInventory(room, selectedItem, currentPlayer.Inventory);
                         gameAreas.Remove(room);
                         gameAreas.Add(updatedRoomInventory.Item1);
                         currentPlayer.Inventory = updatedRoomInventory.Item2;
@@ -103,7 +103,7 @@ namespace BlankGame
                 if (checkValidItem.Count() == 1)
                 {
                     Item selectedItem = checkValidItem.Single();
-                    Tuple<Room, List<Item>> updatedRoomInventory = ActionsInventory.RemoveFromInventory(room, selectedItem, currentPlayer.Inventory);
+                    Tuple<Room, List<Item>> updatedRoomInventory = Item.RemoveFromInventory(room, selectedItem, currentPlayer.Inventory);
                     gameAreas.Remove(room);
                     gameAreas.Add(updatedRoomInventory.Item1);
                     currentPlayer.Inventory = updatedRoomInventory.Item2;
@@ -125,7 +125,7 @@ namespace BlankGame
                 if (checkValidItem.Count() == 1)
                 {
                     Item selectedItem = checkValidItem.Single();
-                    ActionsInventory.DisplayItemStats(selectedItem);
+                    Item.DisplayItemStats(selectedItem);
                 }
                 else
                 {
@@ -141,6 +141,25 @@ namespace BlankGame
             {
                 string objectToMove = result.Remove(0, 5);
                 gameAreas = Actions.MoveObject(gameAreas, room, objectToMove);
+                return Tuple.Create(gameAreas, room.Name, currentPlayer);
+            }
+
+            // Display Monster Stats
+            else if (result.Contains("scout"))
+            {
+                string scoutMobName = result.Remove(0, 6);
+                IEnumerable<Monster> checkValidMob = room.Monsters.Where(p => p.Name.ToLower() == scoutMobName);
+                if (checkValidMob.Count() == 1)
+                {
+                    Monster scoutMob = checkValidMob.Single();
+                    Monster.DisplayMonsterStats(scoutMob);
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine();
+                    Console.WriteLine("You do not see a monster with that name around here.");
+                }
                 return Tuple.Create(gameAreas, room.Name, currentPlayer);
             }
 
@@ -197,7 +216,7 @@ namespace BlankGame
                     // Display Player Inventory
                     case "show inventory":
                         {
-                            ActionsInventory.DisplayInventory(currentPlayer.Inventory);
+                            Item.DisplayInventory(currentPlayer.Inventory);
                             return Tuple.Create(gameAreas, room.Name, currentPlayer);
                         }
                     case "show player":
