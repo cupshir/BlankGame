@@ -80,7 +80,7 @@ namespace BlankGame
                                  description: "This is not a real room just testing new travel system...if you reading this it worked!",
                                  toDown: "Town Square"));
             rooms.Add(CreateRoom(name: "Town Hall",
-                                 description: "The Town Hall is sterile and menacing. There is a receptionist sititng\nat a desk on one side of the room and offices on the other side.",
+                                 description: "The Town Hall is sterile and menacing. There is a receptionist sitting\nat a desk on one side of the room and offices on the other side.",
                                  toWest: "Inn",
                                  toSouth: "Town Square"));
             rooms.Add(CreateRoom(name: "Inn",
