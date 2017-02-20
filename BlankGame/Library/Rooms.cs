@@ -64,7 +64,7 @@ namespace BlankGame
             List<string> roomItems = new List<string>();
             List<Room> rooms = new List<Room>();            
             rooms.Add(CreateRoom(name: "Town Square", 
-                                 description: "As you look around, you notice that the town square is pretty basic. In fact, it is exactly like every other town square in existance.",
+                                 description: "As you look around, you notice that the town square is pretty basic. In fact,\nit is exactly like every other town square in existance.",
                                  toNorth: "Town Hall",
                                  toUp: "The Cloud", 
                                  toWest: "Store", 
@@ -72,7 +72,7 @@ namespace BlankGame
             roomItems.Clear();
             roomItems.Add("Torch");
             rooms.Add(CreateRoom(name: "Forest", 
-                                 description: "There are trees and more trees. Oh, there is a cave too. There is a burning torch near the entrance to the cave",
+                                 description: "There are trees and more trees. Oh, there is a cave too. There is a\nburning torch near the entrance to the cave",
                                  items: roomItems,
                                  toNorth: "Town Square", 
                                  toCave: "Cave Room 1"));
@@ -80,23 +80,23 @@ namespace BlankGame
                                  description: "This is not a real room just testing new travel system...if you reading this it worked!",
                                  toDown: "Town Square"));
             rooms.Add(CreateRoom(name: "Town Hall",
-                                 description: "The Town Hall is sterile and menacing. There is a receptionist sititng at a desk on one side of the room and offices on the other side.",
+                                 description: "The Town Hall is sterile and menacing. There is a receptionist sititng\nat a desk on one side of the room and offices on the other side.",
                                  toWest: "Inn",
                                  toSouth: "Town Square"));
             rooms.Add(CreateRoom(name: "Inn",
-                                 description: "The Inn is cozy and warmly. There are many empty tables scattered through the first floor. On one side of the room is a fire place with some comfy looking chairs. The Innkeeper is moving about randomly cleaning the tables.",
+                                 description: "The Inn is cozy and warmly. There are many empty tables scattered through\nthe first floor. On one side of the room is a fire place with some\ncomfy looking chairs. The Innkeeper is moving about randomly cleaning the tables.",
                                  toEast: "Town Hall",
                                  toSouth: "Store"));
             roomItems.Clear();
             roomItems.Add("n00b Sword");
             rooms.Add(CreateRoom(name: "Store",
-                                 description: "You are standing in the town store. The walls are littered with amazing stuff that you cant afford. There is a Shopkeeper standing behind a counter.",
+                                 description: "You are standing in the town store. The walls are littered with amazing stuff that you cant afford.\nThere is a Shopkeeper standing behind a counter.",
                                  items: roomItems,
                                  toNorth: "Inn",
                                  toEast: "Town Square"));
             rooms.Add(CreateRoom(name: "Cave Room 1",
                                  description: "The cave is pitch black making it impossible to see any details.",
-                                 litDescription: "The cave is much larger then you expected. The ceiling is at least 15ft up. You dont notice anything out of the ordinary",
+                                 litDescription: "The cave is much larger then you expected. The ceiling is at least 15ft up.\nYou dont notice anything out of the ordinary",
                                  toNorth: "Cave Room 2",
                                  toSouth: "Forest"));
             rooms.Add(CreateRoom(name: "Cave Room 2",
@@ -111,7 +111,7 @@ namespace BlankGame
                                  toWest: "Cave Room 2"));
             rooms.Add(CreateRoom(name: "Cave Room 4",
                                  description: "The cave is pitch black making it impossible to see any details.",
-                                 litDescription: "The room is about the size of a standard Inn room. You notice multiple ways to go. The way to the East is small and looks barely passible.",
+                                 litDescription: "The room is about the size of a standard Inn room. You notice multiple ways to go.\nThe way to the East is small and looks barely passible.",
                                  toNorth: "Cave Room 6",
                                  toEast: "Cave Room 5",
                                  toSouth: "Cave Room 3"));
@@ -124,7 +124,7 @@ namespace BlankGame
                                  litDescription: "The room is small and cramped. There are no other exits except for the way you came.",
                                  moveableObject: "Rock",
                                  moveableObjectDescription: "There is a medium sized Rock laying on the ground in the middle of the room",
-                                 moveableObjectAction: "With great effort you roll the rock over to reveal a hole in the ground. Inside is the amazing shiny Sword of Awesomeness!",
+                                 moveableObjectAction: "With great effort you roll the rock over to reveal a hole in the ground.\nInside is the amazing shiny Sword of Awesomeness!",
                                  movedObjectDescription: "There is a hole in the ground. Inside is the amazing shiny Sword of Awesomeness!",
                                  toWest: "Cave Room 4"));
             rooms.Add(CreateRoom(name: "Cave Room 6",
@@ -144,7 +144,7 @@ namespace BlankGame
                                  toSouth: "Cave Room 7"));
             rooms.Add(CreateRoom(name: "Cave Room 9",
                                  description: "The cave is pitch black making it impossible to see any details.",
-                                 litDescription: "This cave looks like all the others, however the sound of fient snoring causes the hairs on the back of you neck to rise. Any sane person would turn around...",
+                                 litDescription: "This cave looks like all the others, however the sound of fient snoring causes the hairs\non the back of you neck to rise.\n\nAny sane person would turn around...",
                                  toEast: "Cave Room 7",
                                  toWest: "Cave Boss Room"));
             rooms.Add(CreateRoom(name: "Cave Boss Room",
