@@ -12,6 +12,7 @@ namespace BlankGame
 
         public static void Help()
         {
+            Console.Clear();
             Console.WriteLine();
             Console.WriteLine("Commands:");
             Console.WriteLine("Look - Looks around the area");
@@ -19,6 +20,7 @@ namespace BlankGame
             Console.WriteLine("Pickup <item> - Pickup an item");
             Console.WriteLine("Drop <item> - Remove item from inventory");
             Console.WriteLine("Show Inventory - Display current inventory");
+            Console.WriteLine("Show Player - Display player stats");
             Console.WriteLine("Go <direction> - Travel in specified direction");
             Console.WriteLine("Enter <place> - Enter a place");
             Console.WriteLine("Clear - Clear the screen");
@@ -28,6 +30,7 @@ namespace BlankGame
 
         public static void Look(Room room)
         {
+            Console.Clear();
             Console.WriteLine();
             Console.WriteLine(room.Description);
             Console.WriteLine();
@@ -53,6 +56,7 @@ namespace BlankGame
 
         public static void LookCave(Room room, List<Item> inventory)
         {
+            Console.Clear();
             IEnumerable<Item> itemCheck = inventory.Where(p => p.Name == "Torch");
 
             Console.WriteLine();
@@ -75,6 +79,8 @@ namespace BlankGame
 
         public static List<Room> MoveObject(List<Room> gameAreas, Room room, string objectToMove)
         {
+            Console.Clear();
+
             bool checkMoveableObject = room.moveableObject.ToLower() == objectToMove;
             if (!checkMoveableObject)
             {

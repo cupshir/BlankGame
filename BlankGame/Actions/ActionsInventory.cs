@@ -10,22 +10,20 @@ namespace BlankGame
     {
         public static void DisplayInventory(List<Item> inventory)
         {
+            Console.Clear();
             Console.WriteLine();
-            Console.WriteLine("Current Inventory");
-            for (int i = 0; i < 50; i++)
-            {
-                Console.Write("-");
-            }
-            Console.WriteLine("");
+            UI.DisplayCenterText("Current Inventory");
+            UI.DisplayCenterText("---------------------------------------------------");
+            Console.WriteLine();
             if (!inventory.Any())
             {
-                Console.WriteLine("<--Inventory Empty-->");
+                UI.DisplayCenterText("<--Inventory Empty-->");
             }
             else
             {
                 foreach (Item item in inventory)
                 {
-                    Console.WriteLine(item.Name);
+                    UI.DisplayCenterText(item.Name);
                 }
             }
             Console.WriteLine();
@@ -33,18 +31,15 @@ namespace BlankGame
 
         public static void DisplayItemStats(Item item)
         {
-                Console.WriteLine(item.Name + " Details");
-                for (int i = 0; i < 50; i++)
-                {
-                    Console.Write("-");
-                }
-                Console.WriteLine();
-                Console.WriteLine("       Level: " + item.Level);
-                Console.WriteLine("    Strength: " + item.Strength);
-                Console.WriteLine("     Stamina: " + item.Stamina);
-                Console.WriteLine("     Agility: " + item.Agility);
-                Console.WriteLine("Intelligence: " + item.Intellegence);
-            
+            Console.Clear();
+            UI.DisplayCenterText(item.Name + " Details");
+            UI.DisplayCenterText("---------------------------------------------------");
+            Console.WriteLine();
+            UI.DisplayCenterText("       Level: " + item.Level);
+            UI.DisplayCenterText("    Strength: " + item.Strength);
+            UI.DisplayCenterText("     Stamina: " + item.Stamina);
+            UI.DisplayCenterText("     Agility: " + item.Agility);
+            UI.DisplayCenterText("Intelligence: " + item.Intelligence);
             Console.WriteLine();
         }
 
@@ -52,6 +47,7 @@ namespace BlankGame
         {
             inventory.Add(item);
             currentRoom.Inventory.Remove(item);
+            Console.Clear();
             Console.WriteLine();
             Console.WriteLine(item.Name + " has been added to your inventory.");
         
@@ -62,6 +58,7 @@ namespace BlankGame
         {
             inventory.Remove(item);
             currentRoom.Inventory.Add(item);
+            Console.Clear();
             Console.WriteLine();
             Console.WriteLine(item.Name + " has been removed from your inventory.");
 

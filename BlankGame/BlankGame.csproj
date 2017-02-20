@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Actions\Actions.cs" />
     <Compile Include="Actions\ActionsInventory.cs" />
+    <Compile Include="Library\UI.cs" />
     <Compile Include="Library\Monsters.cs" />
     <Compile Include="Library\Player.cs" />
     <Compile Include="Library\Items.cs" />
