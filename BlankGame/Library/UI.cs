@@ -18,7 +18,6 @@ namespace BlankGame
             DisplayCenterText("Welcome to Blank Game");
             DisplayCenterText("1) Start Game");
             DisplayCenterText("x) Exit");
-            DisplayCenterText("t) Test Room (Cave Room 5)");
             Console.WriteLine();
             DisplayCenterText("Tip: When in doubt, Help");
             Console.WriteLine();
@@ -30,9 +29,6 @@ namespace BlankGame
                 case "1":
                     Console.Clear();
                     return "CreatePlayer";
-                case "t":
-                    Console.Clear();
-                    return "Cave Room 5";
                 case "x":
                     Console.Clear();
                     return "Exit";

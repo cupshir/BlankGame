@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlankGame
 {
-    class Player
+    public class Player
     {
         public string Name { get; set; }
         public int Level { get; set; }
@@ -32,8 +32,7 @@ namespace BlankGame
             newPlayer.DefenseRating = 100;
             newPlayer.Name = GetPlayerName();
             newPlayer.Inventory = Item.CreateInventory();
-
-
+            
             return newPlayer;
         }
 

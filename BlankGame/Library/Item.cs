@@ -38,6 +38,7 @@ namespace BlankGame
         {
             List<Item> items = new List<Item>();
             items.Add(CreateItem(name: "Pocket Lint", description: "Fuzzy"));
+            items.Add(CreateItem(name: "Torch"));
             return items;
         }
 

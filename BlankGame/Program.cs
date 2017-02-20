@@ -27,7 +27,7 @@ namespace BlankGame
                     currentPlayer = Player.CreatePlayer();
 
                     Console.Clear();
-                    currentRoom = "Town Square";
+                    currentRoom = "Cave Room 1";
                 }
                 else if (currentRoom != "MainMenu") 
                 {
@@ -160,6 +160,31 @@ namespace BlankGame
                     Console.WriteLine();
                     Console.WriteLine("You do not see a monster with that name around here.");
                 }
+                return Tuple.Create(gameAreas, room.Name, currentPlayer);
+            }
+
+            // Fight Monster
+            else if (result.Contains("fight"))
+            {
+                string fightMobName = result.Remove(0, 6);
+                IEnumerable<Monster> checkValidMob = room.Monsters.Where(p => p.Name.ToLower() == fightMobName);
+                if (checkValidMob.Count() == 1)
+                {
+                    Monster fightMob = checkValidMob.Single();
+                    Tuple<Player, Monster> battle = Battle.StartBattle(currentPlayer, fightMob);
+                    currentPlayer = battle.Item1;
+                    if (battle.Item2.Hitpoints == 0)
+                    {
+                        room.Monsters.Remove(fightMob);
+                    }
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine();
+                    Console.WriteLine("You can not fight that!");
+                }
+
                 return Tuple.Create(gameAreas, room.Name, currentPlayer);
             }
 
