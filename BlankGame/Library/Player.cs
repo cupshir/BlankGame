@@ -28,8 +28,8 @@ namespace BlankGame
             newPlayer.Stamina = 10;
             newPlayer.Intelligence = 10;
             newPlayer.Agility = 10;
-            newPlayer.AttackPower = 100;
-            newPlayer.DefenseRating = 100;
+            newPlayer.AttackPower = 10;
+            newPlayer.DefenseRating = 1;
             newPlayer.Name = GetPlayerName();
             newPlayer.Inventory = Item.CreateInventory();
             
@@ -38,26 +38,31 @@ namespace BlankGame
 
         private static string GetPlayerName()
         {
-            Console.Clear();
-            Console.SetCursorPosition(0, 5);
-            UI.DisplayCenterText("Create a new player");
-            Console.WriteLine();
-            UI.DisplayCenterText("Pick a name ");
+            string playerName = "";
 
-            Console.SetCursorPosition(0, 26);
-            Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
-            Console.Write("\r" + new string(' ', Console.WindowWidth - 1) + "\r");
-            Console.SetCursorPosition(0, 24);
-            for (int i = 0; i < 120; i++)
+            do
             {
-                Console.Write("_");
-            }
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.Write("Enter a name: ");
+                Console.Clear();
+                Console.SetCursorPosition(0, 5);
+                UI.DisplayCenterText("Create a new player");
+                Console.WriteLine();
+                UI.DisplayCenterText("Pick a name ");
 
-            string playerName = Console.ReadLine();
+                Console.SetCursorPosition(0, 26);
+                Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
+                Console.Write("\r" + new string(' ', Console.WindowWidth - 1) + "\r");
+                Console.SetCursorPosition(0, 24);
+                for (int i = 0; i < 120; i++)
+                {
+                    Console.Write("_");
+                }
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.Write("Enter a name: ");
 
+                playerName = Console.ReadLine();
+            } while (playerName == "");
+            
             return playerName;
         }
 
@@ -67,14 +72,14 @@ namespace BlankGame
             UI.DisplayCenterText(currentPlayer.Name + " Details");
             UI.DisplayCenterText("---------------------------------------------------");
             Console.WriteLine();
-            UI.DisplayCenterText("       Level: " + currentPlayer.Level);
+            UI.DisplayCenterText("        Level: " + currentPlayer.Level);
             UI.DisplayCenterText("     Hitpoints: " + currentPlayer.Hitpoints);
             UI.DisplayCenterText("  Attack Power: " + currentPlayer.AttackPower);
             UI.DisplayCenterText("Defense Rating: " + currentPlayer.DefenseRating);
-            UI.DisplayCenterText("     Strength: " + currentPlayer.Strength);
-            UI.DisplayCenterText("      Stamina: " + currentPlayer.Stamina);
-            UI.DisplayCenterText("      Agility: " + currentPlayer.Agility);
-            UI.DisplayCenterText(" Intelligence: " + currentPlayer.Intelligence);
+            UI.DisplayCenterText("      Strength: " + currentPlayer.Strength);
+            UI.DisplayCenterText("       Stamina: " + currentPlayer.Stamina);
+            UI.DisplayCenterText("       Agility: " + currentPlayer.Agility);
+            UI.DisplayCenterText("  Intelligence: " + currentPlayer.Intelligence);
 
 
         }

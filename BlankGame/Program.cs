@@ -66,30 +66,33 @@ namespace BlankGame
             // If valid item, move item from room inventory to player inventory
             if (result.Contains("pickup"))
             {
-                string pickedItem = result.Remove(0, 7);
-                IEnumerable<Item> checkValidItem = room.Inventory.Where(p => p.Name.ToLower() == pickedItem);
-                if (checkValidItem.Count() == 1)
+                if (result.Count() > 7)
                 {
-                    Item selectedItem = checkValidItem.Single();
-                    if (selectedItem.CanPickup == true)
+                    string pickedItem = result.Remove(0, 7);
+                    IEnumerable<Item> checkValidItem = room.Inventory.Where(p => p.Name.ToLower() == pickedItem);
+                    if (checkValidItem.Count() == 1)
                     {
-                        Tuple<Room, List<Item>> updatedRoomInventory = Item.AddToInventory(room, selectedItem, currentPlayer.Inventory);
-                        gameAreas.Remove(room);
-                        gameAreas.Add(updatedRoomInventory.Item1);
-                        currentPlayer.Inventory = updatedRoomInventory.Item2;
+                        Item selectedItem = checkValidItem.Single();
+                        if (selectedItem.CanPickup == true)
+                        {
+                            Tuple<Room, List<Item>> updatedRoomInventory = Item.AddToInventory(room, selectedItem, currentPlayer.Inventory);
+                            gameAreas.Remove(room);
+                            gameAreas.Add(updatedRoomInventory.Item1);
+                            currentPlayer.Inventory = updatedRoomInventory.Item2;
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine();
+                            Console.WriteLine("You can not pick that up at this time!");
+                        }
                     }
                     else
                     {
                         Console.Clear();
                         Console.WriteLine();
-                        Console.WriteLine("You can not pick that up at this time!");
+                        Console.WriteLine("That item does not exist here!");
                     }
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine();
-                    Console.WriteLine("That item does not exist here!");
                 }
                 return Tuple.Create(gameAreas, room.Name, currentPlayer);
             }
@@ -98,40 +101,47 @@ namespace BlankGame
             // If item is in player inventory, move it to current room inventory
             else if (result.Contains("drop"))
             {
-                string removeItem = result.Remove(0, 5);
-                IEnumerable<Item> checkValidItem = currentPlayer.Inventory.Where(p => p.Name.ToLower() == removeItem);
-                if (checkValidItem.Count() == 1)
+                if (result.Count() > 5)
                 {
-                    Item selectedItem = checkValidItem.Single();
-                    Tuple<Room, List<Item>> updatedRoomInventory = Item.RemoveFromInventory(room, selectedItem, currentPlayer.Inventory);
-                    gameAreas.Remove(room);
-                    gameAreas.Add(updatedRoomInventory.Item1);
-                    currentPlayer.Inventory = updatedRoomInventory.Item2;
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("That is not currently in your inventory.");
-                }
+                    string removeItem = result.Remove(0, 5);
+                    IEnumerable<Item> checkValidItem = currentPlayer.Inventory.Where(p => p.Name.ToLower() == removeItem);
+                    if (checkValidItem.Count() == 1)
+                    {
+                        Item selectedItem = checkValidItem.Single();
+                        Tuple<Room, List<Item>> updatedRoomInventory = Item.RemoveFromInventory(room, selectedItem, currentPlayer.Inventory);
+                        gameAreas.Remove(room);
+                        gameAreas.Add(updatedRoomInventory.Item1);
+                        currentPlayer.Inventory = updatedRoomInventory.Item2;
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("That is not currently in your inventory.");
+                    }
 
+                }
                 return Tuple.Create(gameAreas, room.Name, currentPlayer);
             }
 
             // Look at Item action
             else if (result.Contains("look at"))
             {
-                string inspectItem = result.Remove(0, 8);
-                IEnumerable<Item> checkValidItem = currentPlayer.Inventory.Where(p => p.Name.ToLower() == inspectItem);
-                if (checkValidItem.Count() == 1)
+                if (result.Count() > 8)
                 {
-                    Item selectedItem = checkValidItem.Single();
-                    Item.DisplayItemStats(selectedItem);
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine();
-                    Console.WriteLine("That item is not in your inventory");
+                    string inspectItem = result.Remove(0, 8);
+                
+                    IEnumerable<Item> checkValidItem = currentPlayer.Inventory.Where(p => p.Name.ToLower() == inspectItem);
+                    if (checkValidItem.Count() == 1)
+                    {
+                        Item selectedItem = checkValidItem.Single();
+                        Item.DisplayItemStats(selectedItem);
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine();
+                        Console.WriteLine("That item is not in your inventory");
+                    }
                 }
                 return Tuple.Create(gameAreas, room.Name, currentPlayer);
             }
@@ -139,26 +149,45 @@ namespace BlankGame
             // Move Item action
             else if (result.Contains("move"))
             {
-                string objectToMove = result.Remove(0, 5);
-                gameAreas = Actions.MoveObject(gameAreas, room, objectToMove);
+                if (result.Count() > 5)
+                {
+                    string objectToMove = result.Remove(0, 5);
+                    gameAreas = Actions.MoveObject(gameAreas, room, objectToMove);
+                    
+                }
+                return Tuple.Create(gameAreas, room.Name, currentPlayer);
+            }
+
+            // Talk action
+            else if (result.Contains("talk to"))
+            {
+                if (result.Count() > 8)
+                {
+                    string objectToMove = result.Remove(0, 8);
+                    
+
+                }
                 return Tuple.Create(gameAreas, room.Name, currentPlayer);
             }
 
             // Display Monster Stats
             else if (result.Contains("scout"))
             {
-                string scoutMobName = result.Remove(0, 6);
-                IEnumerable<Monster> checkValidMob = room.Monsters.Where(p => p.Name.ToLower() == scoutMobName);
-                if (checkValidMob.Count() == 1)
+                if (result.Count() > 6)
                 {
-                    Monster scoutMob = checkValidMob.Single();
-                    Monster.DisplayMonsterStats(scoutMob);
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine();
-                    Console.WriteLine("You do not see a monster with that name around here.");
+                    string scoutMobName = result.Remove(0, 6);
+                    IEnumerable<Monster> checkValidMob = room.Monsters.Where(p => p.Name.ToLower() == scoutMobName);
+                    if (checkValidMob.Count() == 1)
+                    {
+                        Monster scoutMob = checkValidMob.Single();
+                        Monster.DisplayMonsterStats(scoutMob);
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine();
+                        Console.WriteLine("You do not see a monster with that name around here.");
+                    }
                 }
                 return Tuple.Create(gameAreas, room.Name, currentPlayer);
             }
@@ -166,23 +195,27 @@ namespace BlankGame
             // Fight Monster
             else if (result.Contains("fight"))
             {
-                string fightMobName = result.Remove(0, 6);
-                IEnumerable<Monster> checkValidMob = room.Monsters.Where(p => p.Name.ToLower() == fightMobName);
-                if (checkValidMob.Count() == 1)
+                if (result.Count() > 6)
                 {
-                    Monster fightMob = checkValidMob.Single();
-                    Tuple<Player, Monster> battle = Battle.StartBattle(currentPlayer, fightMob);
-                    currentPlayer = battle.Item1;
-                    if (battle.Item2.Hitpoints == 0)
+                    string fightMobName = result.Remove(0, 6);
+                    IEnumerable<Monster> checkValidMob = room.Monsters.Where(p => p.Name.ToLower() == fightMobName);
+                    if (checkValidMob.Count() == 1)
                     {
-                        room.Monsters.Remove(fightMob);
+                        Monster fightMob = checkValidMob.Single();
+                        Console.Clear();
+                        Tuple<Player, Monster> battle = Battle.StartBattle(currentPlayer, fightMob);
+                        currentPlayer = battle.Item1;
+                        if (battle.Item2.Hitpoints <= 0)
+                        {
+                            room.Monsters.Remove(fightMob);
+                        }
                     }
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine();
-                    Console.WriteLine("You can not fight that!");
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine();
+                        Console.WriteLine("You can not fight that!");
+                    }
                 }
 
                 return Tuple.Create(gameAreas, room.Name, currentPlayer);
@@ -194,11 +227,17 @@ namespace BlankGame
                 string travelTo = "";
                 if (result.Contains("go"))
                 {
-                    travelTo = "to" + result.Remove(0, 3);
+                    if (result.Count() > 3)
+                    {
+                        travelTo = "to" + result.Remove(0, 3);
+                    }
                 }
                 else if (result.Contains("enter"))
                 {
-                    travelTo = "to" + result.Remove(0, 6);
+                    if (result.Count() > 6)
+                    { 
+                        travelTo = "to" + result.Remove(0, 6);
+                    }
                 }
 
                 foreach (var prop in room.GetType().GetProperties())
@@ -260,11 +299,15 @@ namespace BlankGame
                     case "clear":
                         Console.Clear();
                         return Tuple.Create(gameAreas, room.Name, currentPlayer);
-                    
+
                     // Display current room if invalid command
+                    case "":
+                        Console.Clear();
+                        return Tuple.Create(gameAreas, room.Name, currentPlayer);
                     default:
                         Console.Clear();
-                        Console.WriteLine("That is not a valid command.");
+                        Console.SetCursorPosition(0, 10);
+                        UI.DisplayCenterText("That is not a valid command.");
                         return Tuple.Create(gameAreas, room.Name, currentPlayer);
                 }
             }

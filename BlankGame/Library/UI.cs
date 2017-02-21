@@ -41,18 +41,14 @@ namespace BlankGame
         // Display action bar at bottom of screen
         public static void DisplayActionBar(string room)
         {
-            Console.SetCursorPosition(0, 26);
+            Console.SetCursorPosition(0, 27);
             Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
             Console.Write("\r" + new string(' ', Console.WindowWidth - 1) + "\r");
-            Console.SetCursorPosition(0, 24);
-            for (int i = 0; i < 120; i++)
-            {
-                Console.Write("_");
-            }
+            Console.SetCursorPosition(0, 25);
+            DrawLine(120);
             Console.WriteLine();
-            Console.WriteLine("Current Location: " + room);
-            Console.Write("Action: ");
-
+            Console.Write(room + ": ");
+            
         }
 
         // Display Text centered in the Screen
@@ -64,6 +60,17 @@ namespace BlankGame
 
 
         }
+
+        // Draw Line
+        public static void DrawLine(int length)
+        {
+            for (int i = 0; i < length; i++)
+            {
+                Console.Write("_");
+            }
+        }
+
+
        
     }    
 }

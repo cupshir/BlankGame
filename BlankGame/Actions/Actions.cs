@@ -14,17 +14,29 @@ namespace BlankGame
         {
             Console.Clear();
             Console.WriteLine();
-            Console.WriteLine("Commands:");
-            Console.WriteLine("Look - Looks around the area");
-            Console.WriteLine("Look at <item> - Look at an item");
-            Console.WriteLine("Pickup <item> - Pickup an item");
-            Console.WriteLine("Drop <item> - Remove item from inventory");
-            Console.WriteLine("Show Inventory - Display current inventory");
-            Console.WriteLine("Show Player - Display player stats");
-            Console.WriteLine("Go <direction> - Travel in specified direction");
-            Console.WriteLine("Enter <place> - Enter a place");
-            Console.WriteLine("Clear - Clear the screen");
-            Console.WriteLine("Exit - Exits the game");
+            //Console.WriteLine("Commands:");
+            //Console.WriteLine("Look - Looks around the area");
+            //Console.WriteLine("Look at <item> - Look at an item");
+            //Console.WriteLine("Pickup <item> - Pickup an item");
+            //Console.WriteLine("Drop <item> - Remove item from inventory");
+            //Console.WriteLine("Show Inventory - Display current inventory");
+            //Console.WriteLine("Show Player - Display player stats");
+            //Console.WriteLine("Go <direction> - Travel in specified direction");
+            //Console.WriteLine("Enter <place> - Enter a place");
+            //Console.WriteLine("Clear - Clear the screen");
+            //Console.WriteLine("Exit - Exits the game");
+            UI.DisplayCenterText("Commands");
+            UI.DrawLine(120);
+            UI.DisplayCenterText("Look");
+            UI.DisplayCenterText("Look at <item>");
+            UI.DisplayCenterText("Pickup <item>");
+            UI.DisplayCenterText("Drop <item>");
+            UI.DisplayCenterText("Show Inventory");
+            UI.DisplayCenterText("Show Player");
+            UI.DisplayCenterText("Go <direction>");
+            UI.DisplayCenterText("Enter <place>");
+            UI.DisplayCenterText("Clear");
+            UI.DisplayCenterText("Exit");
             Console.WriteLine();
         }
 
@@ -116,6 +128,13 @@ namespace BlankGame
             }
             
             return gameAreas;
+        }
+
+        public static Player RockPaperScissors(Player player)
+        {
+
+
+            return player;
         }
     }
 }
