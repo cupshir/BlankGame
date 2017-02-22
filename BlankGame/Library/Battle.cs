@@ -8,21 +8,28 @@ namespace BlankGame
 {
     public class Battle
     {
-        public static Tuple<Player, Monster> StartBattle(Player player, Monster mob)
+        public static Tuple<Player, Monster> ExecuteBattle(Player player, Monster mob)
         {
             string battleStage = "fight";
             string battleTitle = "";
+            string content = "";
 
             do
             {
-                if(HealthCheck(player, mob))
+                Console.Clear();
+                
+                if (HealthCheck(player, mob))
                 {
                     break;
                 }
 
                 battleTitle = SetBattleTitle(player, mob);
-                DisplayBattleTitle(battleTitle);
-                UI.DisplayActionBar("Battle");
+                UI.DrawTitleBar(battleTitle);
+
+                UI.DrawMainArea(content);
+
+                UI.DrawActionBar("Battle");
+
                 string result = Console.ReadLine();
                 
                 switch (result.ToLower())
@@ -36,23 +43,21 @@ namespace BlankGame
                         break;
 
                     case "attack":
-                        AttackMob(player, mob, battleTitle);
-                        AttackPlayer(mob, player);
-                        UI.DisplayActionBar("Battle");
+                        content = "";
+                        content = content + AttackMob(player, mob, battleTitle);
+                        content = content + AttackPlayer(mob, player);
                         break;
 
                     case "run":
-                        Console.Clear();
-                        Console.SetCursorPosition(0, 10);
-                        UI.DisplayCenterText("You have fled in terror like a little bitch!");
                         battleStage = "exit";
                         break;
 
                     case "help":
-                        BattleHelp();
+                        content = "";
+                        content = BattleHelp();
                         break;
                     default:
-                        Console.Clear();
+                        content = "";
                         break;
                 }
                 
@@ -73,72 +78,62 @@ namespace BlankGame
             UI.DrawLine(120);
         }
 
-        private static void AttackMob(Player player, Monster mob, string battleTitle)
+        private static string AttackMob(Player player, Monster mob, string battleTitle)
         {
+            string content = "";
             int damage = 0;
             bool miss = CheckMiss(player);
             if (miss)
             {
-                Console.Clear();
-                battleTitle = SetBattleTitle(player, mob);
-                DisplayBattleTitle(battleTitle);
-                Console.SetCursorPosition(0, 10);
-                UI.DisplayCenterText(player.Name + " swings and misses!");
-              
+                content = content + player.Name + " swings and misses!\n\n";
             }
             else
             {
-                damage = CalculateDamage(player);
+                damage = CalculateDamage(player.AttackPower);
                 int mitigatedDamage = CalculateMitigatedDamage(mob);
                 damage = damage - mitigatedDamage;
                 if (damage > 0)
                 {
                     mob.Hitpoints = mob.Hitpoints - damage;
-                    Console.Clear();
-                    battleTitle = SetBattleTitle(player, mob);
-                    DisplayBattleTitle(battleTitle);
-                    Console.SetCursorPosition(0, 10);
-                    UI.DisplayCenterText(player.Name + " hits " + mob.Name + " for " + damage + " damage!");
+                    content = content + player.Name + " hits " + mob.Name + " for " + damage + " damage!\n\n";
                 }
                 else
                 {
-                    Console.Clear();
-                    battleTitle = SetBattleTitle(player, mob);
-                    DisplayBattleTitle(battleTitle);
-                    Console.SetCursorPosition(0, 10);
-                    UI.DisplayCenterText(player.Name + " hits " + mob.Name + " for 0 damage!");
+                    content = content + player.Name + " hits " + mob.Name + " for 0 damage!\n\n";
                 }
             }
+
+            return content;
             
         }
 
-        private static void AttackPlayer(Monster mob, Player player)
+        private static string AttackPlayer(Monster mob, Player player)
         {
+            string content = "";
             int damage = 0;
             bool miss = CheckMiss(player);
             if (!miss)
             {
-                damage = CalculateDamage(mob);
+                damage = CalculateDamage(mob.AttackPower);
                 int mitigatedDamage = CalculateMitigatedDamage(player);
                 damage = damage - mitigatedDamage;
                 if (damage > 0)
                 {
                     player.Hitpoints = player.Hitpoints - damage;
-                    Console.WriteLine();
-                    UI.DisplayCenterText(mob.Name + " hits " + player.Name + " for " + damage + " damage!");
+                    content = content + mob.Name + " hits " + player.Name + " for " + damage + " damage!\n\n";
                 }
                 else
                 {
-                    Console.WriteLine();
-                    UI.DisplayCenterText(mob.Name + " hits " + player.Name + " for 0 damage!");
+                    content = content + mob.Name + " hits " + player.Name + " for 0 damage!\n\n";
                 }
             }
             else
             {
-                Console.WriteLine();
-                UI.DisplayCenterText(mob.Name + " swings and misses!");
+                content = content + mob.Name + " swings and misses!\n\n";
 
             }
+
+            return content;
         }
 
         private static Boolean CheckMiss(Player player)
@@ -193,18 +188,10 @@ namespace BlankGame
             return false;
         }
 
-        private static int CalculateDamage(Player player)
+        private static int CalculateDamage(int attacker)
         {
             int damage = 1;
-            damage = damage * player.AttackPower;
-            return damage;
-
-        }
-
-        private static int CalculateDamage(Monster mob)
-        {
-            int damage = 1;
-            damage = damage * mob.AttackPower;
+            damage = damage * attacker;
             return damage;
 
         }
@@ -228,17 +215,17 @@ namespace BlankGame
 
         }
 
-        private static void BattleHelp()
+        private static string BattleHelp()
         {
-            Console.Clear();
-            UI.DisplayCenterText("Commands");
-            UI.DrawLine(120);
-            UI.DisplayCenterText("Attack");
-            UI.DisplayCenterText("Run");
-            UI.DisplayCenterText("Help");
+            string content = "";
 
-            UI.DisplayActionBar("Battle");
+            //content = content + "\n";
+            content = content + "Commands\n\n";
+            content = content + "Attack\n";
+            content = content + "Run\n";
+            content = content + "Help\n";
 
+            return content;
         }
 
 

@@ -38,7 +38,7 @@ namespace BlankGame
         {
             List<Item> items = new List<Item>();
             items.Add(CreateItem(name: "Pocket Lint", description: "Fuzzy"));
-            items.Add(CreateItem(name: "Torch"));
+           // items.Add(CreateItem(name: "Torch"));
             return items;
         }
 
@@ -122,15 +122,13 @@ namespace BlankGame
             Console.WriteLine();
         }
 
-        public static Tuple<Room, List<Item>> AddToInventory(Room currentRoom, Item item, List<Item> inventory)
+        public static Tuple<Room, List<Item>, string> AddToInventory(Room currentRoom, Item item, List<Item> inventory)
         {
             inventory.Add(item);
             currentRoom.Inventory.Remove(item);
-            Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine(item.Name + " has been added to your inventory.");
-
-            return Tuple.Create(currentRoom, inventory);
+            string content = item.Name + " has been added to your inventory.";
+            
+            return Tuple.Create(currentRoom, inventory, content);
         }
 
         public static Tuple<Room, List<Item>> RemoveFromInventory(Room currentRoom, Item item, List<Item> inventory)

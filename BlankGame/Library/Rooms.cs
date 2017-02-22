@@ -75,7 +75,7 @@ namespace BlankGame
             List<string> mobNames = new List<string>();
             List<Room> rooms = new List<Room>();            
             rooms.Add(CreateRoom(name: "Town Square", 
-                                 description: "As you look around, you notice that the town square is pretty basic. In fact,\nit is exactly like every other town square in existance.",
+                                 description: "As you look around, you notice that the town square is pretty basic.\n In fact, it is exactly like every other town square in existance.",
                                  toNorth: "Town Hall",
                                  toUp: "The Cloud", 
                                  toWest: "Store", 
@@ -83,7 +83,7 @@ namespace BlankGame
             roomItems.Clear();
             roomItems.Add("Torch");
             rooms.Add(CreateRoom(name: "Forest", 
-                                 description: "There are trees and more trees. Oh, there is a cave too. There is a\nburning torch near the entrance to the cave",
+                                 description: "There are trees and more trees. Oh, there is a cave too.\nThere is a burning torch near the entrance to the cave",
                                  items: roomItems,
                                  toNorth: "Town Square", 
                                  toCave: "Cave Room 1"));
@@ -95,13 +95,13 @@ namespace BlankGame
                                  toWest: "Inn",
                                  toSouth: "Town Square"));
             rooms.Add(CreateRoom(name: "Inn",
-                                 description: "The Inn is cozy and warmly. There are many empty tables scattered through\nthe first floor. On one side of the room is a fire place with some\ncomfy looking chairs. The Innkeeper is moving about randomly cleaning the tables.",
+                                 description: "The Inn is cozy and warmly. There are many empty tables scattered through the first floor.\nOn one side of the room is a fire place with some comfy looking chairs.\nThe Innkeeper is moving about randomly cleaning the tables.",
                                  toEast: "Town Hall",
                                  toSouth: "Store"));
             roomItems.Clear();
             roomItems.Add("n00b Sword");
             rooms.Add(CreateRoom(name: "Store",
-                                 description: "You are standing in the town store. The walls are littered with amazing stuff that you cant afford.\nThere is a Shopkeeper standing behind a counter.",
+                                 description: "You are standing in the town store. The walls are littered with amazing stuff that you cant afford.\n\nThere is a Shopkeeper standing behind a counter.",
                                  items: roomItems,
                                  toNorth: "Inn",
                                  toEast: "Town Square"));
@@ -110,23 +110,23 @@ namespace BlankGame
             mobNames.Add("Rat");
             mobNames.Add("Bear");
             rooms.Add(CreateRoom(name: "Cave Room 1",
-                                 description: "The cave is pitch black making it impossible to see any details.",
-                                 litDescription: "The cave is much larger then you expected. The ceiling is at least 15ft up.\nYou dont notice anything out of the ordinary",
+                                 description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
+                                 litDescription: "The cave is much larger then you expected. The ceiling is at least 15ft up.",
                                  mobs: mobNames,
                                  toNorth: "Cave Room 2",
                                  toSouth: "Forest"));
             rooms.Add(CreateRoom(name: "Cave Room 2",
-                                 description: "The cave is pitch black making it impossible to see any details.",
+                                 description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
                                  litDescription: "This room is as big as the last room. Again, you find nothing special",
                                  toEast: "Cave Room 3",
                                  toSouth: "Cave Room 1"));
             rooms.Add(CreateRoom(name: "Cave Room 3",
-                                 description: "The cave is pitch black making it impossible to see any details.",
+                                 description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
                                  litDescription: "The ceiling is starting to slope downwards. You notice some bones piled on the floor.",
                                  toNorth: "Cave Room 4",
                                  toWest: "Cave Room 2"));
             rooms.Add(CreateRoom(name: "Cave Room 4",
-                                 description: "The cave is pitch black making it impossible to see any details.",
+                                 description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
                                  litDescription: "The room is about the size of a standard Inn room. You notice multiple ways to go.\nThe way to the East is small and looks barely passible.",
                                  toNorth: "Cave Room 6",
                                  toEast: "Cave Room 5",
@@ -135,7 +135,7 @@ namespace BlankGame
             roomItems.Add("Torch");
             roomItems.Add("Sword of Awesomeness");
             rooms.Add(CreateRoom(name: "Cave Room 5",
-                                 description: "The cave is pitch black making it impossible to see any details.",
+                                 description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
                                  items: roomItems,
                                  litDescription: "The room is small and cramped. There are no other exits except for the way you came.",
                                  moveableObject: "Rock",
@@ -144,29 +144,29 @@ namespace BlankGame
                                  movedObjectDescription: "There is a hole in the ground. Inside is the amazing shiny Sword of Awesomeness!",
                                  toWest: "Cave Room 4"));
             rooms.Add(CreateRoom(name: "Cave Room 6",
-                                 description: "The cave is pitch black making it impossible to see any details.",
+                                 description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
                                  litDescription: "Its...a...cave...",
                                  toWest: "Cave Room 7",
                                  toSouth: "Cave Room 4"));
             rooms.Add(CreateRoom(name: "Cave Room 7",
-                                 description: "The cave is pitch black making it impossible to see any details.",
+                                 description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
                                  litDescription: "Its...a...cave...",
                                  toNorth: "Cave Room 8",
                                  toEast: "Cave Room 6",
                                  toWest: "Cave Room 9"));
             rooms.Add(CreateRoom(name: "Cave Room 8",
-                                 description: "The cave is pitch black making it impossible to see any details.",
+                                 description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
                                  litDescription: "Another dead end. Nothing stands out as important.",
                                  toSouth: "Cave Room 7"));
             rooms.Add(CreateRoom(name: "Cave Room 9",
-                                 description: "The cave is pitch black making it impossible to see any details.",
-                                 litDescription: "This cave looks like all the others, however the sound of fient snoring causes the hairs\non the back of you neck to rise.\n\nAny sane person would turn around...",
+                                 description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
+                                 litDescription: "This cave looks like all the others, however the sound of feint snoring causes the hairs\non the back of you neck to rise.\n\nAny sane person would turn around...",
                                  toEast: "Cave Room 7",
                                  toWest: "Cave Boss Room"));
             mobNames.Clear();
             mobNames.Add("Uber Boss");
             rooms.Add(CreateRoom(name: "Cave Boss Room",
-                                 description: "The cave is pitch black making it impossible to see any details.",
+                                 description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
                                  litDescription: "The room is quite expansive! So big, that you barely notice the giant Dragon sleeping in the middle of the room.",
                                  mobs: mobNames,
                                  toEast: "Cave Room 9"));

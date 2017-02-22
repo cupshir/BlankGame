@@ -13,10 +13,11 @@ namespace BlankGame
             // Create Game Rooms and player Inventory
             List<Room> blankGameAreas = Room.CreateRooms();
             Player currentPlayer = new Player();
-
+            
             // Games running State?
             string currentRoom = "MainMenu";
-            Tuple<List<Room>, string,  Player> currentState;
+            string content = "";
+            Tuple<List<Room>, string,  Player, string> currentState;
             do
             {
                 IEnumerable<Room> rooms = blankGameAreas.Where(p => p.Name == currentRoom);
@@ -27,13 +28,14 @@ namespace BlankGame
                     currentPlayer = Player.CreatePlayer();
 
                     Console.Clear();
-                    currentRoom = "Cave Room 1";
+                    currentRoom = "Town Square";
                 }
                 else if (currentRoom != "MainMenu") 
                 {
                     Room selectedRoom = rooms.Single();
-                    currentState = PlayGame(blankGameAreas, selectedRoom, currentPlayer);
+                    currentState = PlayGame(blankGameAreas, selectedRoom, currentPlayer, content);
                     currentRoom = currentState.Item2;
+                    content = currentState.Item4;
                     if (currentRoom == "")
                     {
                         currentRoom = selectedRoom.Name;
@@ -49,14 +51,16 @@ namespace BlankGame
 
 
         // Execute player command
-        public static Tuple<List<Room>, string, Player> PlayGame(List<Room> gameAreas, Room room, Player currentPlayer)
+        public static Tuple<List<Room>, string, Player, string> PlayGame(List<Room> gameAreas, Room room, Player currentPlayer, string content)
         {
+
+            // Draw the screen
+            UI.DrawScreen(room, currentPlayer, content);
+
+            // Clear Content Buffer
+            content = "";
             
-
-
-            // Get player action and process
-            UI.DisplayActionBar(room.Name);
-
+            // Get Player Input
             string result = Console.ReadLine();
             result = result.ToLower();
             
@@ -75,26 +79,23 @@ namespace BlankGame
                         Item selectedItem = checkValidItem.Single();
                         if (selectedItem.CanPickup == true)
                         {
-                            Tuple<Room, List<Item>> updatedRoomInventory = Item.AddToInventory(room, selectedItem, currentPlayer.Inventory);
+                            Tuple<Room, List<Item>, string> updatedRoomInventory = Item.AddToInventory(room, selectedItem, currentPlayer.Inventory);
                             gameAreas.Remove(room);
                             gameAreas.Add(updatedRoomInventory.Item1);
                             currentPlayer.Inventory = updatedRoomInventory.Item2;
+                            content = updatedRoomInventory.Item3;
                         }
                         else
                         {
-                            Console.Clear();
-                            Console.WriteLine();
-                            Console.WriteLine("You can not pick that up at this time!");
+                            content = "\nYou can not pick that up at this time!";
                         }
                     }
                     else
                     {
-                        Console.Clear();
-                        Console.WriteLine();
-                        Console.WriteLine("That item does not exist here!");
+                        content = "\nThat item does not exist here!";
                     }
                 }
-                return Tuple.Create(gameAreas, room.Name, currentPlayer);
+                return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
             }
 
             // Drop Item action
@@ -120,7 +121,7 @@ namespace BlankGame
                     }
 
                 }
-                return Tuple.Create(gameAreas, room.Name, currentPlayer);
+                return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
             }
 
             // Look at Item action
@@ -143,7 +144,7 @@ namespace BlankGame
                         Console.WriteLine("That item is not in your inventory");
                     }
                 }
-                return Tuple.Create(gameAreas, room.Name, currentPlayer);
+                return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
             }
 
             // Move Item action
@@ -152,10 +153,12 @@ namespace BlankGame
                 if (result.Count() > 5)
                 {
                     string objectToMove = result.Remove(0, 5);
-                    gameAreas = Actions.MoveObject(gameAreas, room, objectToMove);
+                    Tuple<List<Room>, string> move = Actions.MoveObject(gameAreas, room, objectToMove);
+                    content = move.Item2;
+                    gameAreas = move.Item1;
                     
                 }
-                return Tuple.Create(gameAreas, room.Name, currentPlayer);
+                return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
             }
 
             // Talk action
@@ -167,7 +170,7 @@ namespace BlankGame
                     
 
                 }
-                return Tuple.Create(gameAreas, room.Name, currentPlayer);
+                return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
             }
 
             // Display Monster Stats
@@ -180,16 +183,14 @@ namespace BlankGame
                     if (checkValidMob.Count() == 1)
                     {
                         Monster scoutMob = checkValidMob.Single();
-                        Monster.DisplayMonsterStats(scoutMob);
+                        content = Monster.DisplayMonsterStats(scoutMob);
                     }
                     else
                     {
-                        Console.Clear();
-                        Console.WriteLine();
-                        Console.WriteLine("You do not see a monster with that name around here.");
+                        content = "\nYou do not see a monster with that name around here.";
                     }
                 }
-                return Tuple.Create(gameAreas, room.Name, currentPlayer);
+                return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
             }
 
             // Fight Monster
@@ -202,8 +203,7 @@ namespace BlankGame
                     if (checkValidMob.Count() == 1)
                     {
                         Monster fightMob = checkValidMob.Single();
-                        Console.Clear();
-                        Tuple<Player, Monster> battle = Battle.StartBattle(currentPlayer, fightMob);
+                        Tuple<Player, Monster> battle = Battle.ExecuteBattle(currentPlayer, fightMob);
                         currentPlayer = battle.Item1;
                         if (battle.Item2.Hitpoints <= 0)
                         {
@@ -212,13 +212,11 @@ namespace BlankGame
                     }
                     else
                     {
-                        Console.Clear();
-                        Console.WriteLine();
-                        Console.WriteLine("You can not fight that!");
+                        content = "You can not fight that!";
                     }
                 }
 
-                return Tuple.Create(gameAreas, room.Name, currentPlayer);
+                return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
             }
 
             // Travel Action
@@ -244,14 +242,11 @@ namespace BlankGame
                 {
                     if (prop.ToString().ToLower().Contains(travelTo) && prop.GetValue(room, null).ToString() != "")
                     {
-                        Console.Clear();
-                        return Tuple.Create(gameAreas, prop.GetValue(room, null).ToString(), currentPlayer);
+                        return Tuple.Create(gameAreas, prop.GetValue(room, null).ToString(), currentPlayer, content);
                     }                    
                 }
-                Console.Clear();
-                Console.WriteLine("");
-                Console.WriteLine("There is nothing in that direction!");
-                return Tuple.Create(gameAreas, room.Name, currentPlayer);
+                content = "There is nothing in that direction!";
+                return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
 
             }
             
@@ -262,53 +257,53 @@ namespace BlankGame
                 {
                     // Display Help Information
                     case "help":
-                        Actions.Help();
-                        return Tuple.Create(gameAreas, room.Name, currentPlayer);
-                    
+                        content = Actions.Help();
+                        return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
+
                     // Display current room information
                     case "look":
                         if (room.Name.Contains("Cave"))
                         {
-                            Actions.LookCave(room, currentPlayer.Inventory);
+                            content = Actions.LookCave(room, currentPlayer.Inventory);
                         }
                         else
                         {
-                            Actions.Look(room);
+                            content = Actions.Look(room);
                         }
-                        return Tuple.Create(gameAreas, room.Name, currentPlayer);
+                        return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
 
                     // Display Player Inventory
                     case "show inventory":
                         {
                             Item.DisplayInventory(currentPlayer.Inventory);
-                            return Tuple.Create(gameAreas, room.Name, currentPlayer);
+                            return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
                         }
                     case "show player":
                         {
-                            Player.DisplayPlayerStats(currentPlayer);
-                            return Tuple.Create(gameAreas, room.Name, currentPlayer);
+                            content = Player.DisplayPlayerStats(currentPlayer);
+                            return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
                         }
 
 
 
                     // Exit to Main Menu
                     case "exit":
-                        return Tuple.Create(gameAreas, "MainMenu", currentPlayer);
+                        return Tuple.Create(gameAreas, "MainMenu", currentPlayer, content);
 
                     // Clear Screen
                     case "clear":
                         Console.Clear();
-                        return Tuple.Create(gameAreas, room.Name, currentPlayer);
+                        return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
 
                     // Display current room if invalid command
                     case "":
                         Console.Clear();
-                        return Tuple.Create(gameAreas, room.Name, currentPlayer);
+                        return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
                     default:
                         Console.Clear();
                         Console.SetCursorPosition(0, 10);
                         UI.DisplayCenterText("That is not a valid command.");
-                        return Tuple.Create(gameAreas, room.Name, currentPlayer);
+                        return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
                 }
             }
         }

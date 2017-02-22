@@ -38,27 +38,67 @@ namespace BlankGame
             }
         }
 
-        // Display action bar at bottom of screen
-        public static void DisplayActionBar(string room)
+        // Draw Screen
+        public static void DrawScreen(Room room, Player player, string content)
         {
-            Console.SetCursorPosition(0, 27);
-            Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
-            Console.Write("\r" + new string(' ', Console.WindowWidth - 1) + "\r");
+            // Clear Screen
+            Console.Clear();
+
+            // Display Title Bar
+            DrawTitleBar(room.Name);
+
+            // Display Main Section
+            if (content == "")
+            {
+                IEnumerable<Item> itemCheck = player.Inventory.Where(p => p.Name == "Torch");
+                
+                if (itemCheck.Count() != 0 && room.Name.Contains("Cave"))
+                {
+                    content = room.litDescription + "\n";
+                }
+                else
+                {
+                    content = room.Description + "\n";
+                }
+            }
+            DrawMainArea(content);
+
+            // Display Action Bar
+            DrawActionBar(player.Name);
+        }
+
+        // Display Title Bar
+        public static void DrawTitleBar(string title)
+        {
+            DisplayCenterText(title);
+            DrawLine(120);
+        }
+
+        public static void DrawMainArea(string content)
+        {
+            Console.WriteLine();
+            var result = content.Split(new[] { '\r', '\n' });
+            foreach (var item in result)
+            {
+                UI.DisplayCenterText(item);
+            }
+        }
+        
+
+        // Display action bar at bottom of screen
+        public static void DrawActionBar(string prompt)
+        {
             Console.SetCursorPosition(0, 25);
             DrawLine(120);
             Console.WriteLine();
-            Console.Write(room + ": ");
-            
+            Console.Write(prompt + ": ");
         }
 
         // Display Text centered in the Screen
         public static void DisplayCenterText(string text)
         {
-            
             Console.SetCursorPosition((Console.WindowWidth - text.Length) / 2, Console.CursorTop);
             Console.WriteLine(text);
-
-
         }
 
         // Draw Line

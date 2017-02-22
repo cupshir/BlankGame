@@ -62,21 +62,24 @@ namespace BlankGame
 
         }
 
-        public static void DisplayMonsterStats(Monster mob)
+        public static string DisplayMonsterStats(Monster mob)
         {
-            Console.Clear();
-            UI.DisplayCenterText(mob.Name + " Stats");
-            UI.DisplayCenterText("---------------------------------------------------");
-            Console.WriteLine();
-            UI.DisplayCenterText("         Level: " + mob.Level);
-            UI.DisplayCenterText("     Hitpoints: " + mob.Hitpoints);
-            UI.DisplayCenterText("  Attack Power: " + mob.AttackPower);
-            UI.DisplayCenterText("Defense Rating: " + mob.DefenseRating);
-            UI.DisplayCenterText("      Strength: " + mob.Strength);
-            UI.DisplayCenterText("       Stamina: " + mob.Stamina);
-            UI.DisplayCenterText("  Intelligence: " + mob.Intelligence);
-            UI.DisplayCenterText("       Agility: " + mob.Agility);
-            Console.WriteLine();
+            string content = "";
+
+            content = content + "\n";
+            content = content + mob.Name + " Stats\n";
+            content = content + "\n";
+            content = content + "Level: " + mob.Level + "\n";
+            content = content + "Hitpoints: " + mob.Hitpoints + "\n";
+            content = content + "Attack Power: " + mob.AttackPower + "\n";
+            content = content + "Defense Rating: " + mob.DefenseRating + "\n";
+            content = content + "Strength: " + mob.Strength + "\n";
+            content = content + "Stamina: " + mob.Stamina + "\n";
+            content = content + "Intelligence: " + mob.Intelligence + "\n";
+            content = content + "Agility: " + mob.Agility + "\n";
+            content = content + "\n";
+
+            return content;
         }
         
     }

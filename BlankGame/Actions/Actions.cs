@@ -10,105 +10,100 @@ namespace BlankGame
     {
         
 
-        public static void Help()
+        public static string Help()
         {
-            Console.Clear();
-            Console.WriteLine();
-            //Console.WriteLine("Commands:");
-            //Console.WriteLine("Look - Looks around the area");
-            //Console.WriteLine("Look at <item> - Look at an item");
-            //Console.WriteLine("Pickup <item> - Pickup an item");
-            //Console.WriteLine("Drop <item> - Remove item from inventory");
-            //Console.WriteLine("Show Inventory - Display current inventory");
-            //Console.WriteLine("Show Player - Display player stats");
-            //Console.WriteLine("Go <direction> - Travel in specified direction");
-            //Console.WriteLine("Enter <place> - Enter a place");
-            //Console.WriteLine("Clear - Clear the screen");
-            //Console.WriteLine("Exit - Exits the game");
-            UI.DisplayCenterText("Commands");
-            UI.DrawLine(120);
-            UI.DisplayCenterText("Look");
-            UI.DisplayCenterText("Look at <item>");
-            UI.DisplayCenterText("Pickup <item>");
-            UI.DisplayCenterText("Drop <item>");
-            UI.DisplayCenterText("Show Inventory");
-            UI.DisplayCenterText("Show Player");
-            UI.DisplayCenterText("Go <direction>");
-            UI.DisplayCenterText("Enter <place>");
-            UI.DisplayCenterText("Clear");
-            UI.DisplayCenterText("Exit");
-            Console.WriteLine();
+            string content = "";
+
+            content = content + "\n";
+            content = content + "Commands\n";
+            content = content + "\n";
+            content = content + "Look\n";
+            content = content + "Look at <item>\n";
+            content = content + "Pickup <item>\n";
+            content = content + "Drop <item>\n";
+            content = content + "Show Inventory\n";
+            content = content + "Show Player\n";
+            content = content + "Go <direction>\n";
+            content = content + "Enter <place>\n";
+            content = content + "Clear\n";
+            content = content + "Exit\n";
+
+            return content;
         }
 
-        public static void Look(Room room)
+        public static string Look(Room room)
         {
-            Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine(room.Description);
-            Console.WriteLine();
-            if (room.moveableObject != "") { Console.WriteLine(room.moveableObject);  }
-            Console.WriteLine();
+            string content = "";
+
+            content = content + room.Description + "\n";
+
+            if (room.moveableObject != "") { content = content + room.moveableObjectDescription + "\n";  }
+
             if (room.Monsters.Count > 0)
             {
+                content = content + "\n";
                 foreach (Monster mob in room.Monsters)
                 {
-                    Console.WriteLine(mob.Name + " is here");
+                    content = content + mob.Name + " is here\n";
                 }
-            } else
-            {
-                Console.WriteLine("There is nothing here");
             }
-            Console.WriteLine();
-            if (room.toNorth != "") { Console.WriteLine("To the North is the " + room.toNorth); }
-            if (room.toSouth != "") { Console.WriteLine("To the South is the " + room.toSouth); }
-            if (room.toEast != "") { Console.WriteLine("To the East is the " + room.toEast); }
-            if (room.toWest != "") { Console.WriteLine("To the West is the " + room.toWest); }
-            Console.WriteLine();
+            else
+            {
+                content = content + "\nThere is nothing to kill here\n";
+            }
+            content = content + "\n";
+            if (room.toNorth != "") { content = content + "To the North is the " + room.toNorth + "\n"; }
+            if (room.toSouth != "") { content = content + "To the South is the " + room.toSouth + "\n"; }
+            if (room.toEast != "") { content = content + "To the East is the " + room.toEast + "\n"; }
+            if (room.toWest != "") { content = content + "To the West is the " + room.toWest + "\n"; }
+
+            return content;
         }
 
-        public static void LookCave(Room room, List<Item> inventory)
+        public static string LookCave(Room room, List<Item> inventory)
         {
-            Console.Clear();
+            string content = "";
+
             IEnumerable<Item> itemCheck = inventory.Where(p => p.Name == "Torch");
 
-            Console.WriteLine();
             if (!itemCheck.Any())
             {
-                Console.WriteLine(room.Description);
-                Console.WriteLine("If only you had something to light up the way");
+                content = content + room.Description + "\n";
             } else
             {
-                Console.WriteLine(room.litDescription);
-                if (room.moveableObject != "") { Console.WriteLine(room.moveableObjectDescription); }
-                Console.WriteLine();
+                content = content + room.litDescription + "\n";
+               
+                if (room.moveableObject != "") { content = content + room.moveableObjectDescription + "\n"; }
                 if (room.Monsters.Count > 0)
                 {
+                    content = content + "\n";
                     foreach (Monster mob in room.Monsters)
                     {
-                        Console.WriteLine(mob.Name + " is here");
+                        content = content + mob.Name + " is here\n";
                     }
                 }
                 else
                 {
-                    Console.WriteLine("There is nothing here");
+                    content = content + "\nThere is nothing to kill here\n";
                 }
-                Console.WriteLine();
-                if (room.toNorth != "") { Console.WriteLine("To the North is the " + room.toNorth); }
-                if (room.toSouth != "") { Console.WriteLine("To the South is the " + room.toSouth); }
-                if (room.toEast != "") { Console.WriteLine("To the East is the " + room.toEast); }
-                if (room.toWest != "") { Console.WriteLine("To the West is the " + room.toWest); }
+                content = content + "\n";
+                if (room.toNorth != "") { content = content + "To the North is the " + room.toNorth + "\n"; }
+                if (room.toSouth != "") { content = content + "To the South is the " + room.toSouth + "\n"; }
+                if (room.toEast != "") { content = content + "To the East is the " + room.toEast + "\n"; }
+                if (room.toWest != "") { content = content + "To the West is the " + room.toWest + "\n"; }
             }
-            Console.WriteLine();
+            return content;
         }
 
-        public static List<Room> MoveObject(List<Room> gameAreas, Room room, string objectToMove)
+        public static Tuple<List<Room>, string> MoveObject(List<Room> gameAreas, Room room, string objectToMove)
         {
-            Console.Clear();
+
+            string content = "";
 
             bool checkMoveableObject = room.moveableObject.ToLower() == objectToMove;
             if (!checkMoveableObject)
             {
-                Console.WriteLine("Nothing to move");
+                content = content + "Nothing to move";
             } else
             {
                 gameAreas.Remove(room);
@@ -124,10 +119,10 @@ namespace BlankGame
                 }
                 gameAreas.Add(room);
 
-                Console.WriteLine(room.moveableObjectAction);
+                content = content +  room.moveableObjectAction;
             }
             
-            return gameAreas;
+            return Tuple.Create(gameAreas, content);
         }
 
         public static Player RockPaperScissors(Player player)

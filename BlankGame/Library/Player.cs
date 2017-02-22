@@ -66,22 +66,23 @@ namespace BlankGame
             return playerName;
         }
 
-        public static void DisplayPlayerStats(Player currentPlayer)
+        public static string DisplayPlayerStats(Player currentPlayer)
         {
-            Console.Clear();
-            UI.DisplayCenterText(currentPlayer.Name + " Details");
-            UI.DisplayCenterText("---------------------------------------------------");
-            Console.WriteLine();
-            UI.DisplayCenterText("        Level: " + currentPlayer.Level);
-            UI.DisplayCenterText("     Hitpoints: " + currentPlayer.Hitpoints);
-            UI.DisplayCenterText("  Attack Power: " + currentPlayer.AttackPower);
-            UI.DisplayCenterText("Defense Rating: " + currentPlayer.DefenseRating);
-            UI.DisplayCenterText("      Strength: " + currentPlayer.Strength);
-            UI.DisplayCenterText("       Stamina: " + currentPlayer.Stamina);
-            UI.DisplayCenterText("       Agility: " + currentPlayer.Agility);
-            UI.DisplayCenterText("  Intelligence: " + currentPlayer.Intelligence);
+            string content = "";
 
+            content = content + "\n";
+            content = content + currentPlayer.Name + " Details\n";
+            content = content + "\n";
+            content = content + "Level: " + currentPlayer.Level + "\n";
+            content = content + "Hitpoints: " + currentPlayer.Hitpoints + "\n";
+            content = content + "Attack Power: " + currentPlayer.AttackPower + "\n";
+            content = content + "Defense Rating: " + currentPlayer.DefenseRating + "\n";
+            content = content + "Strength: " + currentPlayer.Strength + "\n";
+            content = content + "Stamina: " + currentPlayer.Stamina + "\n";
+            content = content + "Agility: " + currentPlayer.Agility + "\n";
+            content = content + "Intelligence: " + currentPlayer.Intelligence + "\n";
 
+            return content;
         }
 
     }
