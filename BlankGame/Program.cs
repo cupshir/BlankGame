@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,7 +37,9 @@ namespace BlankGame
                 {
                     Room selectedRoom = rooms.Single();
                     currentState = PlayGame(blankGameAreas, selectedRoom, currentPlayer, content);
+                    blankGameAreas = currentState.Item1;
                     currentRoom = currentState.Item2;
+                    currentPlayer = currentState.Item3;
                     content = currentState.Item4;
                     if (currentRoom == "")
                     {
@@ -329,9 +334,49 @@ namespace BlankGame
                             return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
                         }
 
+                    // Save Game
+                    case "save":
+                        {
+                            GameData saveData = new GameData();
 
+                            saveData.savedGameRooms = gameAreas;
+                            saveData.savedCurrentRoom = room.Name;
+                            saveData.savedPlayer = currentPlayer;
 
-                    // Exit to Main Menu
+                            string userFile = currentPlayer.Name + ".sav";
+                            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "BlankGame");
+                            if (!Directory.Exists(path))
+                            {
+                                Directory.CreateDirectory(path);
+                            }
+                            path = Path.Combine(path, userFile);
+                            IFormatter formatter = new BinaryFormatter();
+                            Stream stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None);
+                            formatter.Serialize(stream, saveData);
+                            stream.Close();
+                            
+                            content = content + "Game has been saved";
+                            return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
+                        }
+
+                    // Load Game
+                    case "load":
+                        {
+                            Console.Clear();
+                            string loadFile = Player.GetPlayerName("load") + ".sav";
+                            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "BlankGame");
+                            path = Path.Combine(path, loadFile);
+
+                            IFormatter formatter = new BinaryFormatter();
+                            Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+                            GameData loadData = (GameData)formatter.Deserialize(stream);
+                            stream.Close();
+                            
+                            content = content + "Game has been loaded";
+                            return Tuple.Create(loadData.savedGameRooms, loadData.savedCurrentRoom, loadData.savedPlayer, content);
+
+                        }
+                     // Exit to Main Menu
                     case "exit":
                         return Tuple.Create(gameAreas, "MainMenu", currentPlayer, content);
 

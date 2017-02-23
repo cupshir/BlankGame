@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Library\Battle.cs" />
+    <Compile Include="Library\GameData.cs" />
     <Compile Include="Library\UI.cs" />
     <Compile Include="Library\Monsters.cs" />
     <Compile Include="Library\Player.cs" />

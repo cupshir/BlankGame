@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlankGame
 {
+    [Serializable]
     public class Room
     {
         public string Name { get; set; }

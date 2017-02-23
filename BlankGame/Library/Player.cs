@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlankGame
 {
+    [Serializable]
     public class Player
     {
         public string Name { get; set; }
@@ -29,7 +30,7 @@ namespace BlankGame
             newPlayer.Intelligence = 10;
             newPlayer.Agility = 10;
             newPlayer.AttackPower = 10;
-            newPlayer.Name = GetPlayerName();
+            newPlayer.Name = GetPlayerName("new");
             newPlayer.Inventory = Item.CreateInventory();
             newPlayer.EquippedWeapon = "Fists";
             
@@ -37,29 +38,28 @@ namespace BlankGame
         }
 
         // Get Players Name
-        private static string GetPlayerName()
+        public static string GetPlayerName(string option)
         {
             string playerName = "";
+            string content = "";
+            string title = "";
+            string prompt = "Name";
+            if (option == "load")
+            {
+                title = "Load a game";
+                content = "Enter your name";
+            }
+            else
+            {
+                title = "Create a new player";
+                content = "Pick a name";
+            }
 
             do
             {
-                Console.Clear();
-                Console.SetCursorPosition(0, 5);
-                UI.DisplayCenterText("Create a new player");
-                Console.WriteLine();
-                UI.DisplayCenterText("Pick a name ");
-
-                Console.SetCursorPosition(0, 26);
-                Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
-                Console.Write("\r" + new string(' ', Console.WindowWidth - 1) + "\r");
-                Console.SetCursorPosition(0, 24);
-                for (int i = 0; i < 120; i++)
-                {
-                    Console.Write("_");
-                }
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.Write("Enter a name: ");
+                UI.DrawTitleBar(title);
+                UI.DrawMainArea(content);
+                UI.DrawActionBar(prompt);
 
                 playerName = Console.ReadLine();
             } while (playerName == "");
