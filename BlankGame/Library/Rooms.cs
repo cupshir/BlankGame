@@ -25,7 +25,7 @@ namespace BlankGame
         public List<Item> Inventory { get; set; }
         public List<Monster> Monsters { get; set; }
 
-
+        // Create a room
         public static Room CreateRoom(string name, string description = "", string litDescription = "", string moveableObject = "", string moveableObjectAction = "",
                                       string moveableObjectDescription = "", string movedObjectDescription = "", string toCave = "", string toEast = "", string toNorth = "",
                                       string toSouth = "", string toWest = "", string toDown = "", string toUp = "", List<string> items = default(List<string>), List<string> mobs = default(List<string>))
@@ -69,6 +69,7 @@ namespace BlankGame
             return room;
         }
 
+        // Create list of all rooms in game
         public static List<Room> CreateRooms()
         {
             List<string> roomItems = new List<string>();
@@ -173,6 +174,105 @@ namespace BlankGame
             
 
             return rooms;
+        }
+
+        // Display current room info
+        public static string Look(Room room)
+        {
+            string content = "";
+
+            content = content + room.Description + "\n";
+
+            if (room.moveableObject != "") { content = content + room.moveableObjectDescription + "\n"; }
+
+            if (room.Monsters.Count > 0)
+            {
+                content = content + "\n";
+                foreach (Monster mob in room.Monsters)
+                {
+                    content = content + mob.Name + " is here\n";
+                }
+            }
+            else
+            {
+                content = content + "\nThere is nothing to kill here\n";
+            }
+            content = content + "\n";
+            if (room.toNorth != "") { content = content + "To the North is the " + room.toNorth + "\n"; }
+            if (room.toSouth != "") { content = content + "To the South is the " + room.toSouth + "\n"; }
+            if (room.toEast != "") { content = content + "To the East is the " + room.toEast + "\n"; }
+            if (room.toWest != "") { content = content + "To the West is the " + room.toWest + "\n"; }
+
+            return content;
+        }
+
+        // Display current Cave room info
+        public static string LookCave(Room room, List<Item> inventory)
+        {
+            string content = "";
+
+            IEnumerable<Item> itemCheck = inventory.Where(p => p.Name == "Torch");
+
+            if (!itemCheck.Any())
+            {
+                content = content + room.Description + "\n";
+            }
+            else
+            {
+                content = content + room.litDescription + "\n";
+
+                if (room.moveableObject != "") { content = content + room.moveableObjectDescription + "\n"; }
+                if (room.Monsters.Count > 0)
+                {
+                    content = content + "\n";
+                    foreach (Monster mob in room.Monsters)
+                    {
+                        content = content + mob.Name + " is here\n";
+                    }
+                }
+                else
+                {
+                    content = content + "\nThere is nothing to kill here\n";
+                }
+                content = content + "\n";
+                if (room.toNorth != "") { content = content + "To the North is the " + room.toNorth + "\n"; }
+                if (room.toSouth != "") { content = content + "To the South is the " + room.toSouth + "\n"; }
+                if (room.toEast != "") { content = content + "To the East is the " + room.toEast + "\n"; }
+                if (room.toWest != "") { content = content + "To the West is the " + room.toWest + "\n"; }
+            }
+            return content;
+        }
+
+        // Move object in room
+        public static Tuple<List<Room>, string> MoveObject(List<Room> gameAreas, Room room, string objectToMove)
+        {
+
+            string content = "";
+
+            bool checkMoveableObject = room.moveableObject.ToLower() == objectToMove;
+            if (!checkMoveableObject)
+            {
+                content = content + "Nothing to move";
+            }
+            else
+            {
+                gameAreas.Remove(room);
+                room.moveableObjectDescription = room.movedObjectDescription;
+                if (room.Name == "Cave Room 5")
+                {
+                    IEnumerable<Item> getItem = room.Inventory.Where(p => p.Name == "Sword of Awesomeness");
+
+                    Item updateItem = getItem.Single();
+                    room.Inventory.Remove(updateItem);
+                    updateItem.CanPickup = true;
+                    room.Inventory.Add(updateItem);
+                }
+                gameAreas.Add(room);
+
+                content = content + room.moveableObjectAction;
+            }
+
+            return Tuple.Create(gameAreas, content);
         }
     }
 }

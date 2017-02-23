@@ -87,39 +87,35 @@ namespace BlankGame
             return addItem;
         }
 
-        public static void DisplayInventory(List<Item> inventory)
+        public static string DisplayInventory(List<Item> inventory)
         {
-            Console.Clear();
-            Console.WriteLine();
-            UI.DisplayCenterText("Current Inventory");
-            UI.DisplayCenterText("---------------------------------------------------");
-            Console.WriteLine();
+            string content = "";
+            content = content + "Current Inventory\n\n";
             if (!inventory.Any())
             {
-                UI.DisplayCenterText("<--Inventory Empty-->");
+                content = content + "<--Inventory Empty-->\n";
             }
             else
             {
                 foreach (Item item in inventory)
                 {
-                    UI.DisplayCenterText(item.Name);
+                    content = content + item.Name + "\n";
                 }
             }
-            Console.WriteLine();
+            return content;
         }
 
-        public static void DisplayItemStats(Item item)
+        public static string DisplayItemStats(Item item)
         {
-            Console.Clear();
-            UI.DisplayCenterText(item.Name + " Details");
-            UI.DisplayCenterText("---------------------------------------------------");
-            Console.WriteLine();
-            UI.DisplayCenterText("       Level: " + item.Level);
-            UI.DisplayCenterText("    Strength: " + item.Strength);
-            UI.DisplayCenterText("     Stamina: " + item.Stamina);
-            UI.DisplayCenterText("     Agility: " + item.Agility);
-            UI.DisplayCenterText("Intelligence: " + item.Intelligence);
-            Console.WriteLine();
+            string content = "";
+            content = content + item.Name + " Details\n\n";
+            content = content + "       Level: " + item.Level + "\n";
+            content = content + "    Strength: " + item.Strength + "\n";
+            content = content + "     Stamina: " + item.Stamina + "\n";
+            content = content + "     Agility: " + item.Agility + "\n";
+            content = content + "Intelligence: " + item.Intelligence + "\n";
+
+            return content;
         }
 
         public static Tuple<Room, List<Item>, string> AddToInventory(Room currentRoom, Item item, List<Item> inventory)
@@ -131,15 +127,13 @@ namespace BlankGame
             return Tuple.Create(currentRoom, inventory, content);
         }
 
-        public static Tuple<Room, List<Item>> RemoveFromInventory(Room currentRoom, Item item, List<Item> inventory)
+        public static Tuple<Room, List<Item>, string> RemoveFromInventory(Room currentRoom, Item item, List<Item> inventory)
         {
             inventory.Remove(item);
             currentRoom.Inventory.Add(item);
-            Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine(item.Name + " has been removed from your inventory.");
+            string content = item.Name + " has been removed from your inventory.";
 
-            return Tuple.Create(currentRoom, inventory);
+            return Tuple.Create(currentRoom, inventory, content);
         }
 
     }

@@ -109,15 +109,15 @@ namespace BlankGame
                     if (checkValidItem.Count() == 1)
                     {
                         Item selectedItem = checkValidItem.Single();
-                        Tuple<Room, List<Item>> updatedRoomInventory = Item.RemoveFromInventory(room, selectedItem, currentPlayer.Inventory);
+                        Tuple<Room, List<Item>, string> updatedRoomInventory = Item.RemoveFromInventory(room, selectedItem, currentPlayer.Inventory);
                         gameAreas.Remove(room);
                         gameAreas.Add(updatedRoomInventory.Item1);
                         currentPlayer.Inventory = updatedRoomInventory.Item2;
+                        content = updatedRoomInventory.Item3;
                     }
                     else
                     {
-                        Console.Clear();
-                        Console.WriteLine("That is not currently in your inventory.");
+                        content = "\nThat is not currently in your inventory.";
                     }
 
                 }
@@ -135,13 +135,11 @@ namespace BlankGame
                     if (checkValidItem.Count() == 1)
                     {
                         Item selectedItem = checkValidItem.Single();
-                        Item.DisplayItemStats(selectedItem);
+                        content = Item.DisplayItemStats(selectedItem);
                     }
                     else
                     {
-                        Console.Clear();
-                        Console.WriteLine();
-                        Console.WriteLine("That item is not in your inventory");
+                        content = "\nThat item is not in your inventory";
                     }
                 }
                 return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
@@ -153,7 +151,7 @@ namespace BlankGame
                 if (result.Count() > 5)
                 {
                     string objectToMove = result.Remove(0, 5);
-                    Tuple<List<Room>, string> move = Actions.MoveObject(gameAreas, room, objectToMove);
+                    Tuple<List<Room>, string> move = Room.MoveObject(gameAreas, room, objectToMove);
                     content = move.Item2;
                     gameAreas = move.Item1;
                     
@@ -257,25 +255,25 @@ namespace BlankGame
                 {
                     // Display Help Information
                     case "help":
-                        content = Actions.Help();
+                        content = UI.Help();
                         return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
 
                     // Display current room information
                     case "look":
                         if (room.Name.Contains("Cave"))
                         {
-                            content = Actions.LookCave(room, currentPlayer.Inventory);
+                            content = Room.LookCave(room, currentPlayer.Inventory);
                         }
                         else
                         {
-                            content = Actions.Look(room);
+                            content = Room.Look(room);
                         }
                         return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
 
                     // Display Player Inventory
                     case "show inventory":
                         {
-                            Item.DisplayInventory(currentPlayer.Inventory);
+                            content = Item.DisplayInventory(currentPlayer.Inventory);
                             return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
                         }
                     case "show player":
@@ -301,8 +299,7 @@ namespace BlankGame
                         return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
                     default:
                         Console.Clear();
-                        Console.SetCursorPosition(0, 10);
-                        UI.DisplayCenterText("That is not a valid command.");
+                        content = content + "That is not a valid command.\n";
                         return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
                 }
             }

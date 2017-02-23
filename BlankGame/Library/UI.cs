@@ -110,7 +110,29 @@ namespace BlankGame
             }
         }
 
+        // Display Commands
+        public static string Help()
+        {
+            string content = "";
 
-       
+            content = content + "\n";
+            content = content + "Commands\n";
+            content = content + "\n";
+            content = content + "Look\n";
+            content = content + "Look at <item>\n";
+            content = content + "Pickup <item>\n";
+            content = content + "Drop <item>\n";
+            content = content + "Show Inventory\n";
+            content = content + "Show Player\n";
+            content = content + "Go <direction>\n";
+            content = content + "Enter <place>\n";
+            content = content + "Clear\n";
+            content = content + "Exit\n";
+
+            return content;
+        }
+
+
+
     }    
 }
