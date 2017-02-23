@@ -15,9 +15,11 @@ namespace BlankGame
         public int Stamina { get; set; }
         public int Intelligence { get; set; }
         public int Agility { get; set; }
+        public int AttackPower { get; set; }
         public bool CanPickup { get; set; }
 
-        public static Item CreateItem(string name = "", string description = "", int level = 1, int strength = 0, int stamina = 0, int intelligence = 0, int agility = 0, bool canPickup = true)
+        public static Item CreateItem(string name = "", string description = "", int level = 1, int strength = 1, int stamina = 1, 
+                                      int intelligence = 1, int agility = 1, int attackPower = 1, bool canPickup = true)
         {
             Item item = new Item()
             {
@@ -28,6 +30,7 @@ namespace BlankGame
                 Stamina = stamina,
                 Intelligence = intelligence,
                 Agility = agility,
+                AttackPower = attackPower,
                 CanPickup = canPickup
             };
 
@@ -38,7 +41,7 @@ namespace BlankGame
         {
             List<Item> items = new List<Item>();
             items.Add(CreateItem(name: "Pocket Lint", description: "Fuzzy"));
-           // items.Add(CreateItem(name: "Torch"));
+            items.Add(CreateItem(name: "n00b Sword", description: "A shiny basic sword perfect for a n00bie like you", attackPower: 2));
             return items;
         }
 
@@ -53,7 +56,8 @@ namespace BlankGame
                                  strength: 1,
                                  stamina: 1,
                                  agility: 1,
-                                 intelligence: 1));
+                                 intelligence: 1,
+                                 attackPower: 2));
             items.Add(CreateItem(name: "Sword of Awesomeness",
                                  description: "An epic piece of hardware that will smite its foes with ease",
                                  level: 100,
@@ -61,6 +65,7 @@ namespace BlankGame
                                  stamina: 100,
                                  agility: 100,
                                  intelligence: 100,
+                                 attackPower: 100,
                                  canPickup: false));
             
             return items;
@@ -110,6 +115,7 @@ namespace BlankGame
             string content = "";
             content = content + item.Name + " Details\n\n";
             content = content + "       Level: " + item.Level + "\n";
+            content = content + "Attack Power: " + item.AttackPower + "\n";
             content = content + "    Strength: " + item.Strength + "\n";
             content = content + "     Stamina: " + item.Stamina + "\n";
             content = content + "     Agility: " + item.Agility + "\n";

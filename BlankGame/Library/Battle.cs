@@ -96,8 +96,6 @@ namespace BlankGame
             else
             {
                 damage = CalculateDamage(player.AttackPower);
-                int mitigatedDamage = CalculateMitigatedDamage(mob.DefenseRating);
-                damage = damage - mitigatedDamage;
                 if (damage > 0)
                 {
                     mob.Hitpoints = mob.Hitpoints - damage;
@@ -126,8 +124,6 @@ namespace BlankGame
             else
             {
                 damage = CalculateDamage(mob.AttackPower);
-                int mitigatedDamage = CalculateMitigatedDamage(player.DefenseRating);
-                damage = damage - mitigatedDamage;
                 if (damage > 0)
                 {
                     player.Hitpoints = player.Hitpoints - damage;
@@ -146,11 +142,9 @@ namespace BlankGame
         // Calculte if swing misses
         private static Boolean CheckMiss(int agility)
         {
-            int playerAttempt = 50 + agility;
-
             Random rng = new Random();
             int miss = rng.Next(0, 101);
-            if (miss > playerAttempt)
+            if (miss > agility)
             {
                 return true;
             }
@@ -187,21 +181,11 @@ namespace BlankGame
         }
 
         // Calculate Damage
-        private static int CalculateDamage(int attacker)
+        private static int CalculateDamage(int attackPower)
         {
             int damage = 1;
-            damage = damage * attacker;
+            damage = damage * attackPower;
             return damage;
-
-        }
-
-        // Calcuate mitigated Damage
-        private static int CalculateMitigatedDamage(int defenseRating)
-        {
-            int mitigatedDamage = 1;
-            mitigatedDamage = mitigatedDamage * defenseRating;
-
-            return mitigatedDamage;
 
         }
 

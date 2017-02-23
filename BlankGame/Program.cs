@@ -145,6 +145,53 @@ namespace BlankGame
                 return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
             }
 
+            // UnEquip a Weapon
+            else if (result.Contains("unequip"))
+            {
+                if (result.Count() > 8)
+                {
+                    string unequipItem = result.Remove(0, 8);
+
+                    IEnumerable<Item> checkValidItem = currentPlayer.Inventory.Where(p => p.Name.ToLower() == unequipItem);
+                    if (checkValidItem.Count() == 1)
+                    {
+                        Item selectedItem = checkValidItem.Single();
+                        Tuple<Player, string> updatedPlayer = Player.UnEquipWeapon(currentPlayer, selectedItem.Name);
+                        currentPlayer = updatedPlayer.Item1;
+                        content = updatedPlayer.Item2;
+                    }
+                    else
+                    {
+                        content = "\nThat item is not in your inventory";
+                    }
+                }
+                return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
+            }
+
+            // Equip a Weapon
+            else if (result.Contains("equip"))
+            {
+                if (result.Count() > 6)
+                {
+                    string equipItem = result.Remove(0, 6);
+
+                    IEnumerable<Item> checkValidItem = currentPlayer.Inventory.Where(p => p.Name.ToLower() == equipItem);
+                    if (checkValidItem.Count() == 1)
+                    {
+                        Item selectedItem = checkValidItem.Single();
+                        Tuple<Player, string> updatedPlayer = Player.EquipWeapon(currentPlayer, selectedItem.Name);
+                        currentPlayer = updatedPlayer.Item1;
+                        content = updatedPlayer.Item2;
+                    }
+                    else
+                    {
+                        content = "\nThat item is not in your inventory";
+                    }
+
+                }
+                return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
+            }
+
             // Move Item action
             else if (result.Contains("move"))
             {
