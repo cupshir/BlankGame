@@ -16,7 +16,7 @@ namespace BlankGame
             Console.SetCursorPosition(0, 5);
 
             DisplayCenterText("Welcome to Blank Game");
-            DisplayCenterText("1) Start Game");
+            DisplayCenterText("S) Start Game");
             DisplayCenterText("x) Exit");
             Console.WriteLine();
             DisplayCenterText("Tip: When in doubt, Help");
@@ -26,7 +26,7 @@ namespace BlankGame
             string result = Console.ReadLine();
             switch (result.ToLower())
             {
-                case "1":
+                case "s":
                     Console.Clear();
                     return "CreatePlayer";
                 case "x":
@@ -131,8 +131,5 @@ namespace BlankGame
 
             return content;
         }
-
-
-
     }    
 }

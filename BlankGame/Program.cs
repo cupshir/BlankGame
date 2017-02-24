@@ -337,45 +337,22 @@ namespace BlankGame
                     // Save Game
                     case "save":
                         {
-                            GameData saveData = new GameData();
-
-                            saveData.savedGameRooms = gameAreas;
-                            saveData.savedCurrentRoom = room.Name;
-                            saveData.savedPlayer = currentPlayer;
-
-                            string userFile = currentPlayer.Name + ".sav";
-                            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "BlankGame");
-                            if (!Directory.Exists(path))
-                            {
-                                Directory.CreateDirectory(path);
-                            }
-                            path = Path.Combine(path, userFile);
-                            IFormatter formatter = new BinaryFormatter();
-                            Stream stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None);
-                            formatter.Serialize(stream, saveData);
-                            stream.Close();
-                            
-                            content = content + "Game has been saved";
+                            content = GameData.SaveGameToFile(gameAreas, currentPlayer, room.Name);
                             return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
                         }
 
                     // Load Game
                     case "load":
                         {
-                            Console.Clear();
-                            string loadFile = Player.GetPlayerName("load") + ".sav";
-                            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "BlankGame");
-                            path = Path.Combine(path, loadFile);
-
-                            IFormatter formatter = new BinaryFormatter();
-                            Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
-                            GameData loadData = (GameData)formatter.Deserialize(stream);
-                            stream.Close();
+                            Tuple<List<Room>, Player, string, string> loadData = GameData.LoadGameFromFile(gameAreas, currentPlayer, room.Name);
+                            gameAreas = loadData.Item1;
+                            currentPlayer = loadData.Item2;
+                            room.Name = loadData.Item3;
+                            content = loadData.Item4;
                             
-                            content = content + "Game has been loaded";
-                            return Tuple.Create(loadData.savedGameRooms, loadData.savedCurrentRoom, loadData.savedPlayer, content);
-
+                            return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
                         }
+
                      // Exit to Main Menu
                     case "exit":
                         return Tuple.Create(gameAreas, "MainMenu", currentPlayer, content);

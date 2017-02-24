@@ -22,6 +22,7 @@ namespace BlankGame
                 
                 if (HealthCheck(player, mob))
                 {
+                    Player.IncreaseXP(player, mob.xpWorth);
                     break;
                 }
 
@@ -91,7 +92,6 @@ namespace BlankGame
             if (miss)
             {
                 content = content + player.Name + " swings and misses!\n\n";
-
             }
             else
             {

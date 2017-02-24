@@ -18,9 +18,10 @@ namespace BlankGame
         public int Intelligence { get; set; }
         public int Agility { get; set; }
         public int AttackPower { get; set; }
+        public int xpWorth { get; set; }
 
         public static Monster CreateMonster(string name = "", int level = 1, int hitpoints = 50, int attackpower = 5, int strength = 5, int stamina = 5,
-                                            int intelligence = 5, int agility = 5)
+                                            int intelligence = 5, int agility = 5, int xpWorth = 100)
         {
             Monster mob = new Monster()
             {
@@ -31,7 +32,8 @@ namespace BlankGame
                 Strength = strength,
                 Stamina = stamina,
                 Intelligence = intelligence,
-                Agility = agility
+                Agility = agility,
+                xpWorth = xpWorth
             };
 
             return mob;
@@ -44,7 +46,7 @@ namespace BlankGame
             {
                 if (name == "Uber Boss")
                 {
-                    mob = CreateMonster(name: name, level: 10, hitpoints: 500, attackpower: 10, strength: 10, stamina: 10, intelligence: 10, agility: 10);
+                    mob = CreateMonster(name: name, level: 10, hitpoints: 500, attackpower: 10, strength: 10, stamina: 10, intelligence: 10, agility: 10, xpWorth: 1000);
                 }
                 else
                 {
@@ -58,7 +60,6 @@ namespace BlankGame
                 Console.WriteLine("Error adding " + name + ".");
             }
             return mob;
-
         }
 
         public static string DisplayMonsterStats(Monster mob)
@@ -79,6 +80,5 @@ namespace BlankGame
 
             return content;
         }
-        
     }
 }

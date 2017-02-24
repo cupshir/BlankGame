@@ -19,7 +19,8 @@ namespace BlankGame
         public int AttackPower { get; set; }
         public List<Item> Inventory { get; set; }
         public string EquippedWeapon { get; set; }
-        
+        public int Experience { get; set; }
+
         public static Player CreatePlayer()
         {
             Player newPlayer = new Player();
@@ -33,6 +34,7 @@ namespace BlankGame
             newPlayer.Name = GetPlayerName("new");
             newPlayer.Inventory = Item.CreateInventory();
             newPlayer.EquippedWeapon = "Fists";
+            newPlayer.Experience = 0;
             
             return newPlayer;
         }
@@ -76,12 +78,15 @@ namespace BlankGame
             content = content + currentPlayer.Name + " Details\n";
             content = content + "\n";
             content = content + "Level: " + currentPlayer.Level + "\n";
+            content = content + "Experience: " + currentPlayer.Experience + "\n";
+            content = content + "\n";
             content = content + "Hitpoints: " + currentPlayer.Hitpoints + "\n";
             content = content + "Strength: " + currentPlayer.Strength + "\n";
             content = content + "Stamina: " + currentPlayer.Stamina + "\n";
             content = content + "Agility: " + currentPlayer.Agility + "\n";
             content = content + "Intelligence: " + currentPlayer.Intelligence + "\n";
             content = content + "Attack Power: " + currentPlayer.AttackPower + "\n";
+            content = content + "\n";
             content = content + "Equipped Weapon: " + currentPlayer.EquippedWeapon + "\n";
             
             return content;
@@ -140,6 +145,52 @@ namespace BlankGame
                 content = "That is not currently equipped...so you cannot unequip it!\n";
             }
             return Tuple.Create(player, content);
+        }
+
+        public static Player IncreaseXP(Player player, int xp)
+        {
+            player.Experience = player.Experience + xp;
+
+            int playerLevel = SetPlayerLevel(player.Experience);
+            if (playerLevel > player.Level)
+            {
+                player.Level = playerLevel;
+                PlayerLevelUp();
+            }
+            
+            return player;
+        }
+
+        public static int SetPlayerLevel(int xp)
+        {
+            int playerLevel = 1;
+            if (xp <= 99)
+            {
+                playerLevel = 1;
+            }
+            else if (xp >= 100 && xp <= 199)
+            {
+                playerLevel = 2;
+            }
+            else if (xp >= 200 && xp <= 499)
+            {
+                playerLevel = 3;
+            }
+            else if (xp >= 500 && xp <= 999)
+            {
+                playerLevel = 4;
+            }
+
+            return playerLevel;
+        }
+
+        public static void PlayerLevelUp()
+        {
+            Console.Clear();
+            UI.DrawTitleBar("Level Up!!!");
+            UI.DrawMainArea("Congrats on leveling up!!!!");
+            UI.DrawActionBar("Cheers");
+            Console.ReadLine();
         }
 
     }
