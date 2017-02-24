@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlankGame
 {
+    [Serializable]
     public class Item
     {
         public string Name { get; set; }
@@ -15,9 +16,11 @@ namespace BlankGame
         public int Stamina { get; set; }
         public int Intelligence { get; set; }
         public int Agility { get; set; }
+        public int AttackPower { get; set; }
         public bool CanPickup { get; set; }
 
-        public static Item CreateItem(string name = "", string description = "", int level = 1, int strength = 0, int stamina = 0, int intelligence = 0, int agility = 0, bool canPickup = true)
+        public static Item CreateItem(string name = "", string description = "", int level = 1, int strength = 1, int stamina = 1, 
+                                      int intelligence = 1, int agility = 1, int attackPower = 1, bool canPickup = true)
         {
             Item item = new Item()
             {
@@ -28,6 +31,7 @@ namespace BlankGame
                 Stamina = stamina,
                 Intelligence = intelligence,
                 Agility = agility,
+                AttackPower = attackPower,
                 CanPickup = canPickup
             };
 
@@ -38,7 +42,7 @@ namespace BlankGame
         {
             List<Item> items = new List<Item>();
             items.Add(CreateItem(name: "Pocket Lint", description: "Fuzzy"));
-            items.Add(CreateItem(name: "Torch"));
+            items.Add(CreateItem(name: "n00b Sword", description: "A shiny basic sword perfect for a n00bie like you", attackPower: 2));
             return items;
         }
 
@@ -53,7 +57,8 @@ namespace BlankGame
                                  strength: 1,
                                  stamina: 1,
                                  agility: 1,
-                                 intelligence: 1));
+                                 intelligence: 1,
+                                 attackPower: 2));
             items.Add(CreateItem(name: "Sword of Awesomeness",
                                  description: "An epic piece of hardware that will smite its foes with ease",
                                  level: 100,
@@ -61,6 +66,7 @@ namespace BlankGame
                                  stamina: 100,
                                  agility: 100,
                                  intelligence: 100,
+                                 attackPower: 100,
                                  canPickup: false));
             
             return items;
@@ -87,61 +93,54 @@ namespace BlankGame
             return addItem;
         }
 
-        public static void DisplayInventory(List<Item> inventory)
+        public static string DisplayInventory(List<Item> inventory)
         {
-            Console.Clear();
-            Console.WriteLine();
-            UI.DisplayCenterText("Current Inventory");
-            UI.DisplayCenterText("---------------------------------------------------");
-            Console.WriteLine();
+            string content = "";
+            content = content + "Current Inventory\n\n";
             if (!inventory.Any())
             {
-                UI.DisplayCenterText("<--Inventory Empty-->");
+                content = content + "<--Inventory Empty-->\n";
             }
             else
             {
                 foreach (Item item in inventory)
                 {
-                    UI.DisplayCenterText(item.Name);
+                    content = content + item.Name + "\n";
                 }
             }
-            Console.WriteLine();
+            return content;
         }
 
-        public static void DisplayItemStats(Item item)
+        public static string DisplayItemStats(Item item)
         {
-            Console.Clear();
-            UI.DisplayCenterText(item.Name + " Details");
-            UI.DisplayCenterText("---------------------------------------------------");
-            Console.WriteLine();
-            UI.DisplayCenterText("       Level: " + item.Level);
-            UI.DisplayCenterText("    Strength: " + item.Strength);
-            UI.DisplayCenterText("     Stamina: " + item.Stamina);
-            UI.DisplayCenterText("     Agility: " + item.Agility);
-            UI.DisplayCenterText("Intelligence: " + item.Intelligence);
-            Console.WriteLine();
+            string content = "";
+            content = content + item.Name + " Details\n\n";
+            content = content + "       Level: " + item.Level + "\n";
+            content = content + "Attack Power: " + item.AttackPower + "\n";
+            content = content + "    Strength: " + item.Strength + "\n";
+            content = content + "     Stamina: " + item.Stamina + "\n";
+            content = content + "     Agility: " + item.Agility + "\n";
+            content = content + "Intelligence: " + item.Intelligence + "\n";
+
+            return content;
         }
 
-        public static Tuple<Room, List<Item>> AddToInventory(Room currentRoom, Item item, List<Item> inventory)
+        public static Tuple<Room, List<Item>, string> AddToInventory(Room currentRoom, Item item, List<Item> inventory)
         {
             inventory.Add(item);
             currentRoom.Inventory.Remove(item);
-            Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine(item.Name + " has been added to your inventory.");
-
-            return Tuple.Create(currentRoom, inventory);
+            string content = item.Name + " has been added to your inventory.";
+            
+            return Tuple.Create(currentRoom, inventory, content);
         }
 
-        public static Tuple<Room, List<Item>> RemoveFromInventory(Room currentRoom, Item item, List<Item> inventory)
+        public static Tuple<Room, List<Item>, string> RemoveFromInventory(Room currentRoom, Item item, List<Item> inventory)
         {
             inventory.Remove(item);
             currentRoom.Inventory.Add(item);
-            Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine(item.Name + " has been removed from your inventory.");
+            string content = item.Name + " has been removed from your inventory.";
 
-            return Tuple.Create(currentRoom, inventory);
+            return Tuple.Create(currentRoom, inventory, content);
         }
 
     }

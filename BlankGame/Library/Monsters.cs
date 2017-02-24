@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlankGame
 {
+    [Serializable]
     public class Monster
     {
        
@@ -17,9 +18,8 @@ namespace BlankGame
         public int Intelligence { get; set; }
         public int Agility { get; set; }
         public int AttackPower { get; set; }
-        public int DefenseRating { get; set; }
 
-        public static Monster CreateMonster(string name = "", int level = 1, int hitpoints = 50, int attackpower = 5, int defenserating = 1, int strength = 5, int stamina = 5,
+        public static Monster CreateMonster(string name = "", int level = 1, int hitpoints = 50, int attackpower = 5, int strength = 5, int stamina = 5,
                                             int intelligence = 5, int agility = 5)
         {
             Monster mob = new Monster()
@@ -28,7 +28,6 @@ namespace BlankGame
                 Level = level,
                 Hitpoints = hitpoints,
                 AttackPower = attackpower,
-                DefenseRating = defenserating,
                 Strength = strength,
                 Stamina = stamina,
                 Intelligence = intelligence,
@@ -45,7 +44,7 @@ namespace BlankGame
             {
                 if (name == "Uber Boss")
                 {
-                    mob = CreateMonster(name: name, level: 10, hitpoints: 500, attackpower: 10, defenserating: 10, strength: 10, stamina: 10, intelligence: 10, agility: 10);
+                    mob = CreateMonster(name: name, level: 10, hitpoints: 500, attackpower: 10, strength: 10, stamina: 10, intelligence: 10, agility: 10);
                 }
                 else
                 {
@@ -62,21 +61,23 @@ namespace BlankGame
 
         }
 
-        public static void DisplayMonsterStats(Monster mob)
+        public static string DisplayMonsterStats(Monster mob)
         {
-            Console.Clear();
-            UI.DisplayCenterText(mob.Name + " Stats");
-            UI.DisplayCenterText("---------------------------------------------------");
-            Console.WriteLine();
-            UI.DisplayCenterText("         Level: " + mob.Level);
-            UI.DisplayCenterText("     Hitpoints: " + mob.Hitpoints);
-            UI.DisplayCenterText("  Attack Power: " + mob.AttackPower);
-            UI.DisplayCenterText("Defense Rating: " + mob.DefenseRating);
-            UI.DisplayCenterText("      Strength: " + mob.Strength);
-            UI.DisplayCenterText("       Stamina: " + mob.Stamina);
-            UI.DisplayCenterText("  Intelligence: " + mob.Intelligence);
-            UI.DisplayCenterText("       Agility: " + mob.Agility);
-            Console.WriteLine();
+            string content = "";
+
+            content = content + "\n";
+            content = content + mob.Name + " Stats\n";
+            content = content + "\n";
+            content = content + "Level: " + mob.Level + "\n";
+            content = content + "Hitpoints: " + mob.Hitpoints + "\n";
+            content = content + "Attack Power: " + mob.AttackPower + "\n";
+            content = content + "Strength: " + mob.Strength + "\n";
+            content = content + "Stamina: " + mob.Stamina + "\n";
+            content = content + "Intelligence: " + mob.Intelligence + "\n";
+            content = content + "Agility: " + mob.Agility + "\n";
+            content = content + "\n";
+
+            return content;
         }
         
     }
