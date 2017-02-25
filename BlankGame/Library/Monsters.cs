@@ -13,15 +13,12 @@ namespace BlankGame
         public string Name { get; set; }
         public int Level { get; set; }
         public int Hitpoints { get; set; }
-        public int Strength { get; set; }
-        public int Stamina { get; set; }
-        public int Intelligence { get; set; }
         public int Agility { get; set; }
         public int AttackPower { get; set; }
         public int xpWorth { get; set; }
 
-        public static Monster CreateMonster(string name = "", int level = 1, int hitpoints = 50, int attackpower = 5, int strength = 5, int stamina = 5,
-                                            int intelligence = 5, int agility = 5, int xpWorth = 100)
+        public static Monster CreateMonster(string name = "", int level = 1, int hitpoints = 50, int attackpower = 5, 
+                                            int agility = 5, int xpWorth = 100)
         {
             Monster mob = new Monster()
             {
@@ -29,9 +26,6 @@ namespace BlankGame
                 Level = level,
                 Hitpoints = hitpoints,
                 AttackPower = attackpower,
-                Strength = strength,
-                Stamina = stamina,
-                Intelligence = intelligence,
                 Agility = agility,
                 xpWorth = xpWorth
             };
@@ -46,7 +40,15 @@ namespace BlankGame
             {
                 if (name == "Uber Boss")
                 {
-                    mob = CreateMonster(name: name, level: 10, hitpoints: 500, attackpower: 10, strength: 10, stamina: 10, intelligence: 10, agility: 10, xpWorth: 1000);
+                    mob = CreateMonster(name: name, level: 10, hitpoints: 1000, attackpower: 100, agility: 100, xpWorth: 1000);
+                }
+                else if (name == "Zombie" || name =="Vampire" || name == "Goon")
+                {
+                    mob = CreateMonster(name: name, level: 5, hitpoints: 500, attackpower: 50, agility: 50, xpWorth: 500);
+                }
+                else if (name == "Bear" || name == "Imp" || name == "Pig")
+                {
+                    mob = CreateMonster(name: name, level: 2, hitpoints: 100, attackpower: 10, agility: 10, xpWorth: 200);
                 }
                 else
                 {
@@ -72,9 +74,6 @@ namespace BlankGame
             content = content + "Level: " + mob.Level + "\n";
             content = content + "Hitpoints: " + mob.Hitpoints + "\n";
             content = content + "Attack Power: " + mob.AttackPower + "\n";
-            content = content + "Strength: " + mob.Strength + "\n";
-            content = content + "Stamina: " + mob.Stamina + "\n";
-            content = content + "Intelligence: " + mob.Intelligence + "\n";
             content = content + "Agility: " + mob.Agility + "\n";
             content = content + "\n";
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BlankGame
@@ -19,49 +20,69 @@ namespace BlankGame
             do
             {
                 Console.Clear();
-                
+
                 if (HealthCheck(player, mob))
                 {
                     Player.IncreaseXP(player, mob.xpWorth);
                     break;
                 }
 
-                battleTitle = SetBattleTitle(player, mob);
-                UI.DrawTitleBar(battleTitle);
-
-                UI.DrawMainArea(content);
-
-                UI.DrawActionBar("Battle");
-
-                string result = Console.ReadLine();
-                
-                switch (result.ToLower())
+                if (battleStage == "attack")
                 {
-                    case "test":
-                        mob.Hitpoints = 0;
-                        break;
+                    battleTitle = SetBattleTitle(player, mob);
+                    UI.DrawTitleBar(battleTitle);
 
-                    case "test2":
-                        player.Hitpoints = 0;
-                        break;
+                    UI.DrawMainArea(content);
 
-                    case "attack":
-                        content = "";
-                        content = content + AttackMob(player, mob);
-                        content = content + AttackPlayer(mob, player);
-                        break;
+                    UI.DrawActionBar("Auto Battle Engaged (sit back and enjoy doing nothing)");
 
-                    case "run":
-                        battleStage = "exit";
-                        break;
+                    Thread.Sleep(1500);
 
-                    case "help":
-                        content = "";
-                        content = BattleHelp();
-                        break;
-                    default:
-                        content = "";
-                        break;
+                    content = "";
+                    content = content + AttackMob(player, mob);
+                    content = content + AttackPlayer(mob, player);
+
+                }
+                else
+                {
+                    battleTitle = SetBattleTitle(player, mob);
+                    UI.DrawTitleBar(battleTitle);
+
+                    UI.DrawMainArea(content);
+
+                    UI.DrawActionBar("Battle");
+
+                    string result = Console.ReadLine();
+
+                    switch (result.ToLower())
+                    {
+                        case "test":
+                            mob.Hitpoints = 0;
+                            break;
+
+                        case "test2":
+                            player.Hitpoints = 0;
+                            break;
+
+                        case "attack":
+                            battleStage = "attack";
+                            content = "";
+                            content = content + AttackMob(player, mob);
+                            content = content + AttackPlayer(mob, player);
+                            break;
+
+                        case "run":
+                            battleStage = "exit";
+                            break;
+
+                        case "help":
+                            content = "";
+                            content = BattleHelp();
+                            break;
+                        default:
+                            content = "";
+                            break;
+                    }
                 }
                 
             } while (battleStage != "exit");
@@ -88,8 +109,8 @@ namespace BlankGame
         {
             string content = "";
             int damage = 0;
-            bool miss = CheckMiss(player.Agility);
-            if (miss)
+            bool miss = CheckMiss(player.Agility, mob.Agility);
+            if (!miss)
             {
                 content = content + player.Name + " swings and misses!\n\n";
             }
@@ -115,7 +136,7 @@ namespace BlankGame
         {
             string content = "";
             int damage = 0;
-            bool miss = CheckMiss(mob.Agility);
+            bool miss = CheckMiss(mob.Agility, player.Agility);
             if (miss)
             {
                 content = content + mob.Name + " swings and misses!\n\n";
@@ -140,11 +161,12 @@ namespace BlankGame
         }
 
         // Calculte if swing misses
-        private static Boolean CheckMiss(int agility)
+        private static Boolean CheckMiss(int attackerAgility, int defenderAgility)
         {
             Random rng = new Random();
-            int miss = rng.Next(0, 101);
-            if (miss > agility)
+            int attackerAttempt = rng.Next(0, attackerAgility);
+            int defenderAttempt = rng.Next(0, defenderAgility);
+            if (attackerAttempt > defenderAttempt)
             {
                 return true;
             }
@@ -163,8 +185,9 @@ namespace BlankGame
                 string battleTitle = "You won!!!";
                 UI.DrawTitleBar(battleTitle);
                 UI.DrawMainArea("The monster has been slain!!!");
-                UI.DrawActionBar("Battle");
-                Console.ReadLine();
+
+                Thread.Sleep(1500);
+
                 return true;
             }
             else if (player.Hitpoints <= 0)
@@ -172,9 +195,8 @@ namespace BlankGame
                 Console.Clear();
                 string battleTitle = "You loss!!!";
                 UI.DrawTitleBar(battleTitle);
-                UI.DrawMainArea("The monster has slain you...you suck!!!");
-                UI.DrawActionBar("Battle");
-                Console.ReadLine();
+                UI.DrawMainArea("The monster has slain you...you suck!!!\n\nMaybe find a better weapon?");
+                Thread.Sleep(5000);
                 System.Environment.Exit(1);
             }
             return false;

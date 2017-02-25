@@ -12,9 +12,7 @@ namespace BlankGame
         public string Name { get; set; }
         public int Level { get; set; }
         public int Hitpoints { get; set; }
-        public int Strength { get; set; }
-        public int Stamina { get; set; }
-        public int Intelligence { get; set; }
+        public int MaxHitpoints { get; set; }
         public int Agility { get; set; }
         public int AttackPower { get; set; }
         public List<Item> Inventory { get; set; }
@@ -25,12 +23,10 @@ namespace BlankGame
         {
             Player newPlayer = new Player();
             newPlayer.Level = 1;
-            newPlayer.Hitpoints = 100;
-            newPlayer.Strength = 10;
-            newPlayer.Stamina = 10;
-            newPlayer.Intelligence = 10;
-            newPlayer.Agility = 10;
-            newPlayer.AttackPower = 10;
+            newPlayer.Hitpoints = 50;
+            newPlayer.MaxHitpoints = 50;
+            newPlayer.Agility = 1;
+            newPlayer.AttackPower = 1;
             newPlayer.Name = GetPlayerName("new");
             newPlayer.Inventory = Item.CreateInventory();
             newPlayer.EquippedWeapon = "Fists";
@@ -81,10 +77,7 @@ namespace BlankGame
             content = content + "Experience: " + currentPlayer.Experience + "\n";
             content = content + "\n";
             content = content + "Hitpoints: " + currentPlayer.Hitpoints + "\n";
-            content = content + "Strength: " + currentPlayer.Strength + "\n";
-            content = content + "Stamina: " + currentPlayer.Stamina + "\n";
             content = content + "Agility: " + currentPlayer.Agility + "\n";
-            content = content + "Intelligence: " + currentPlayer.Intelligence + "\n";
             content = content + "Attack Power: " + currentPlayer.AttackPower + "\n";
             content = content + "\n";
             content = content + "Equipped Weapon: " + currentPlayer.EquippedWeapon + "\n";
@@ -108,9 +101,6 @@ namespace BlankGame
 
                 Item itemToEquip = itemInInventory.Single();
                 player.EquippedWeapon = itemToEquip.Name;
-                player.Strength = player.Strength + itemToEquip.Strength;
-                player.Stamina = player.Stamina + itemToEquip.Stamina;
-                player.Intelligence = player.Intelligence + itemToEquip.Intelligence;
                 player.Agility = player.Agility + itemToEquip.Agility;
                 player.AttackPower = player.AttackPower * itemToEquip.AttackPower;
 
@@ -132,9 +122,6 @@ namespace BlankGame
             {
                 Item itemToUnEquip = itemInInventory.Single();
                 player.EquippedWeapon = "Fists";
-                player.Strength = player.Strength - itemToUnEquip.Strength;
-                player.Stamina = player.Stamina - itemToUnEquip.Stamina;
-                player.Intelligence = player.Intelligence - itemToUnEquip.Intelligence;
                 player.Agility = player.Agility - itemToUnEquip.Agility;
                 player.AttackPower = player.AttackPower / itemToUnEquip.AttackPower;
 
@@ -155,6 +142,7 @@ namespace BlankGame
             if (playerLevel > player.Level)
             {
                 player.Level = playerLevel;
+                LevelUpStats(player);
                 PlayerLevelUp();
             }
             
@@ -164,23 +152,46 @@ namespace BlankGame
         public static int SetPlayerLevel(int xp)
         {
             int playerLevel = 1;
-            if (xp <= 99)
+            if (xp >= 50000)
             {
-                playerLevel = 1;
+                playerLevel = 10;
             }
-            else if (xp >= 100 && xp <= 199)
+            else if (xp >= 20000)
             {
-                playerLevel = 2;
+                playerLevel = 9;
             }
-            else if (xp >= 200 && xp <= 499)
+            else if (xp >= 10000)
             {
-                playerLevel = 3;
+                playerLevel = 8;
             }
-            else if (xp >= 500 && xp <= 999)
+            else if (xp >= 5000)
+            {
+                playerLevel = 7;
+            }
+            else if (xp >= 2000)
+            {
+                playerLevel = 6;
+            }
+            else if (xp >= 1000)
+            {
+                playerLevel = 5;
+            }
+            else if (xp >= 500)
             {
                 playerLevel = 4;
             }
-
+            else if (xp >= 200)
+            {
+                playerLevel = 3;
+            }
+            else if (xp >= 100)
+            {
+                playerLevel = 2;
+            }
+            else
+            {
+                playerLevel = 1;
+            }
             return playerLevel;
         }
 
@@ -188,9 +199,21 @@ namespace BlankGame
         {
             Console.Clear();
             UI.DrawTitleBar("Level Up!!!");
-            UI.DrawMainArea("Congrats on leveling up!!!!");
+            UI.DrawMainArea("Congrats on not sucking!!!!");
             UI.DrawActionBar("Cheers");
             Console.ReadLine();
+        }
+
+        public static Player LevelUpStats(Player player)
+        {
+
+            player.MaxHitpoints = (int)Math.Round((player.MaxHitpoints * 1.25), 0);
+            player.Agility = (int)Math.Round((player.Agility * 1.25), 0);
+            player.AttackPower = (int)Math.Round((player.AttackPower * 1.25), 0);
+
+            player.Hitpoints = player.MaxHitpoints;
+            
+            return player;
         }
 
     }

@@ -110,34 +110,54 @@ namespace BlankGame
             mobNames.Clear();
             mobNames.Add("Snake");
             mobNames.Add("Rat");
-            mobNames.Add("Bear");
+            mobNames.Add("Spider");
             rooms.Add(CreateRoom(name: "Cave Room 1",
                                  description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
                                  litDescription: "The cave is much larger then you expected. The ceiling is at least 15ft up.",
                                  mobs: mobNames,
                                  toNorth: "Cave Room 2",
                                  toSouth: "Forest"));
+            mobNames.Clear();
+            mobNames.Add("Spider");
+            mobNames.Add("Snake");
+            mobNames.Add("Rat");
             rooms.Add(CreateRoom(name: "Cave Room 2",
                                  description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
                                  litDescription: "This room is as big as the last room. Again, you find nothing special",
+                                 mobs: mobNames,
                                  toEast: "Cave Room 3",
                                  toSouth: "Cave Room 1"));
+            mobNames.Clear();
+            mobNames.Add("Spider");
+            mobNames.Add("Pig");
+            mobNames.Add("Rat");
             rooms.Add(CreateRoom(name: "Cave Room 3",
                                  description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
                                  litDescription: "The ceiling is starting to slope downwards. You notice some bones piled on the floor.",
+                                 mobs: mobNames,
                                  toNorth: "Cave Room 4",
                                  toWest: "Cave Room 2"));
+            mobNames.Clear();
+            mobNames.Add("Imp");
+            mobNames.Add("Pig");
+            mobNames.Add("Rat");
             rooms.Add(CreateRoom(name: "Cave Room 4",
                                  description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
                                  litDescription: "The room is about the size of a standard Inn room. You notice multiple ways to go.\nThe way to the East is small and looks barely passible.",
+                                 mobs: mobNames,
                                  toNorth: "Cave Room 6",
                                  toEast: "Cave Room 5",
                                  toSouth: "Cave Room 3"));
             roomItems.Clear();
             roomItems.Add("Torch");
             roomItems.Add("Sword of Awesomeness");
+            mobNames.Clear();
+            mobNames.Add("Pig");
+            mobNames.Add("Bear");
+            mobNames.Add("Imp");
             rooms.Add(CreateRoom(name: "Cave Room 5",
                                  description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
+                                 mobs: mobNames,
                                  items: roomItems,
                                  litDescription: "The room is small and cramped. There are no other exits except for the way you came.",
                                  moveableObject: "Rock",
@@ -145,32 +165,52 @@ namespace BlankGame
                                  moveableObjectAction: "With great effort you roll the rock over to reveal a hole in the ground.\nInside is the amazing shiny Sword of Awesomeness!",
                                  movedObjectDescription: "There is a hole in the ground. Inside is the amazing shiny Sword of Awesomeness!",
                                  toWest: "Cave Room 4"));
+            mobNames.Clear();
+            mobNames.Add("Bear");
+            mobNames.Add("Pig");
+            mobNames.Add("imp");
             rooms.Add(CreateRoom(name: "Cave Room 6",
                                  description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
+                                 mobs: mobNames,
                                  litDescription: "Its...a...cave...",
                                  toWest: "Cave Room 7",
                                  toSouth: "Cave Room 4"));
+            mobNames.Clear();
+            mobNames.Add("Vampire");
+            mobNames.Add("Pig");
+            mobNames.Add("Imp");
             rooms.Add(CreateRoom(name: "Cave Room 7",
                                  description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
+                                 mobs: mobNames,
                                  litDescription: "Its...a...cave...",
                                  toNorth: "Cave Room 8",
                                  toEast: "Cave Room 6",
                                  toWest: "Cave Room 9"));
+            mobNames.Clear();
+            mobNames.Add("Vampire");
+            mobNames.Add("Zombie");
+            mobNames.Add("Goon");
             rooms.Add(CreateRoom(name: "Cave Room 8",
                                  description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
+                                 mobs: mobNames,
                                  litDescription: "Another dead end. Nothing stands out as important.",
                                  toSouth: "Cave Room 7"));
+            mobNames.Clear();
+            mobNames.Add("Goon");
+            mobNames.Add("Vampire");
+            mobNames.Add("Zombie");
             rooms.Add(CreateRoom(name: "Cave Room 9",
                                  description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
                                  litDescription: "This cave looks like all the others, however the sound of feint snoring causes the hairs\non the back of you neck to rise.\n\nAny sane person would turn around...",
+                                 mobs: mobNames,
                                  toEast: "Cave Room 7",
                                  toWest: "Cave Boss Room"));
             mobNames.Clear();
             mobNames.Add("Uber Boss");
             rooms.Add(CreateRoom(name: "Cave Boss Room",
                                  description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
-                                 litDescription: "The room is quite expansive! So big, that you barely notice the giant Dragon sleeping in the middle of the room.",
                                  mobs: mobNames,
+                                 litDescription: "The room is quite expansive! So big, that you barely notice the giant Dragon sleeping in the middle of the room.",
                                  toEast: "Cave Room 9"));
             
 
