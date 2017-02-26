@@ -25,11 +25,13 @@ namespace BlankGame
         public string toUp { get; set; }
         public List<Item> Inventory { get; set; }
         public List<Monster> Monsters { get; set; }
+        public List<NPC> NPCs { get; set; }
 
         // Create a room
         public static Room CreateRoom(string name, string description = "", string litDescription = "", string moveableObject = "", string moveableObjectAction = "",
                                       string moveableObjectDescription = "", string movedObjectDescription = "", string toCave = "", string toEast = "", string toNorth = "",
-                                      string toSouth = "", string toWest = "", string toDown = "", string toUp = "", List<string> items = default(List<string>), List<string> mobs = default(List<string>))
+                                      string toSouth = "", string toWest = "", string toDown = "", string toUp = "", List<string> items = default(List<string>), 
+                                      List<string> mobs = default(List<string>), List<string> npcs = default(List<string>))
         {
             Room room = new Room()
             {
@@ -48,7 +50,8 @@ namespace BlankGame
                 toUp = toUp,
                 toDown = toDown,
                 Inventory = new List<Item>(),
-                Monsters = new List<Monster>()
+                Monsters = new List<Monster>(),
+                NPCs = new List<NPC>()
             };
 
             if (items != default(List<string>))
@@ -66,6 +69,14 @@ namespace BlankGame
                     room.Monsters.Add(Monster.AddMonsterToRoom(mob));
                 }
             }
+
+            if (npcs != default(List<string>))
+            {
+                foreach (string npc in npcs)
+                {
+                    room.NPCs.Add(NPC.AddNPCToRoom(npc));
+                }
+            }
             
             return room;
         }
@@ -75,6 +86,7 @@ namespace BlankGame
         {
             List<string> roomItems = new List<string>();
             List<string> mobNames = new List<string>();
+            List<string> npcNames = new List<string>();
             List<Room> rooms = new List<Room>();            
             rooms.Add(CreateRoom(name: "Town Square", 
                                  description: "As you look around, you notice that the town square is pretty basic.\n In fact, it is exactly like every other town square in existance.",
@@ -92,8 +104,14 @@ namespace BlankGame
             rooms.Add(CreateRoom(name: "The Cloud",
                                  description: "This is not a real room just testing new travel system...if you reading this it worked!",
                                  toDown: "Town Square"));
+            npcNames.Clear();
+            npcNames.Add("Receptionist");
+            roomItems.Clear();
+            roomItems.Add("Big Bag O'Money");
             rooms.Add(CreateRoom(name: "Town Hall",
                                  description: "The Town Hall is sterile and menacing. There is a receptionist sitting\nat a desk on one side of the room and offices on the other side.",
+                                 items: roomItems,
+                                 npcs: npcNames,
                                  toWest: "Inn",
                                  toSouth: "Town Square"));
             rooms.Add(CreateRoom(name: "Inn",
@@ -102,8 +120,12 @@ namespace BlankGame
                                  toSouth: "Store"));
             roomItems.Clear();
             roomItems.Add("n00b Sword");
+            roomItems.Add("Healing Potion");
+            npcNames.Clear();
+            npcNames.Add("Shopkeeper");
             rooms.Add(CreateRoom(name: "Store",
                                  description: "You are standing in the town store. The walls are littered with amazing stuff that you cant afford.\n\nThere is a Shopkeeper standing behind a counter.",
+                                 npcs: npcNames,
                                  items: roomItems,
                                  toNorth: "Inn",
                                  toEast: "Town Square"));
@@ -225,6 +247,19 @@ namespace BlankGame
             content = content + room.Description + "\n";
 
             if (room.moveableObject != "") { content = content + room.moveableObjectDescription + "\n"; }
+
+            if (room.Inventory.Count() > 0)
+            {
+                content = content + "\n";
+                foreach (Item item in room.Inventory)
+                {
+                    content = content + item.Name + " is here\n";
+                }
+            }
+            else
+            {
+                content = content + "\nThere are no items here\n";
+            }
 
             if (room.Monsters.Count > 0)
             {

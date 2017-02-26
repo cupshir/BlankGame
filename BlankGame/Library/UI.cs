@@ -74,6 +74,7 @@ namespace BlankGame
             DrawLine(120);
         }
 
+        // Display center area containg content
         public static void DrawMainArea(string content)
         {
             Console.WriteLine();

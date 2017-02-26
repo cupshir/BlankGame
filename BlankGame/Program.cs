@@ -129,22 +129,50 @@ namespace BlankGame
                 return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
             }
 
-            // Look at Item action
+            // Look at NPC or Item action
             else if (result.Contains("look at"))
             {
                 if (result.Count() > 8)
                 {
-                    string inspectItem = result.Remove(0, 8);
-                
-                    IEnumerable<Item> checkValidItem = currentPlayer.Inventory.Where(p => p.Name.ToLower() == inspectItem);
-                    if (checkValidItem.Count() == 1)
+                    // Check if player is looking at NPC and that NPC is in current room
+                    if (result.Contains("shopkeeper") || result.Contains("receptionist"))
                     {
-                        Item selectedItem = checkValidItem.Single();
-                        content = Item.DisplayItemStats(selectedItem);
+                        string inspectNPC = result.Remove(0, 8);
+                        if (inspectNPC == "shopkeeper" || inspectNPC == "receptionist")
+                        {
+                            IEnumerable<NPC> checkValidNPC = room.NPCs.Where(p => p.Name.ToLower() == inspectNPC);
+                            if (checkValidNPC.Count() == 1)
+                            {
+                                NPC npc = checkValidNPC.Single();
+                                content = NPC.DisplayNPCStats(npc);
+                            }
+                            else
+                            {
+                                content = "\nYou can't look at that";
+                            }
+                        }
                     }
+                    // Check if player is looking at item, ensure item is in player inventory or room inventory before displaying stats
                     else
                     {
-                        content = "\nThat item is not in your inventory";
+                        string inspectItem = result.Remove(0, 8);
+
+                        IEnumerable<Item> checkValidPlayerItem = currentPlayer.Inventory.Where(p => p.Name.ToLower() == inspectItem);
+                        IEnumerable<Item> checkValidRoomItem = room.Inventory.Where(p => p.Name.ToLower() == inspectItem);
+                        if (checkValidPlayerItem.Count() == 1)
+                        {
+                            Item selectedItem = checkValidPlayerItem.Single();
+                            content = Item.DisplayItemStats(selectedItem);
+                        }
+                        else if (checkValidRoomItem.Count() == 1)
+                        {
+                            Item selectedItem = checkValidRoomItem.Single();
+                            content = Item.DisplayItemStats(selectedItem);
+                        }
+                        else
+                        {
+                            content = "\nYou can't look at that";
+                        }
                     }
                 }
                 return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
@@ -216,8 +244,34 @@ namespace BlankGame
             {
                 if (result.Count() > 8)
                 {
-                    string objectToMove = result.Remove(0, 8);
-                    
+                    string talkTo = result.Remove(0, 8);
+                    IEnumerable<NPC> checkValidNPC = room.NPCs.Where(p => p.Name.ToLower() == talkTo);
+                    if (checkValidNPC.Count() == 1)
+                    {
+                        NPC npc = checkValidNPC.Single();
+                        Tuple<Player, Room, string> conversation = NPC.TalkToNPC(currentPlayer, npc, room);
+                        currentPlayer = conversation.Item1;
+                        room = conversation.Item2;
+                        gameAreas.Remove(room);
+                        gameAreas.Add(room);
+
+                        IEnumerable<Item> itemCheck = currentPlayer.Inventory.Where(p => p.Name == "Torch");
+
+                        if (itemCheck.Count() != 0 && room.Name.Contains("Cave"))
+                        {
+                            content = room.litDescription + "\n";
+                        }
+                        else
+                        {
+                            content = room.Description + "\n";
+                        }
+                    }
+                    else
+                    {
+                        content = content + "There is no NPC with that name around here.";
+                    }
+
+
 
                 }
                 return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
@@ -373,7 +427,5 @@ namespace BlankGame
                 }
             }
         }
-
     }
-
 }

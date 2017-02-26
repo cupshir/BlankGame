@@ -17,6 +17,7 @@ namespace BlankGame
         public int AttackPower { get; set; }
         public int xpWorth { get; set; }
 
+        // Create monster object
         public static Monster CreateMonster(string name = "", int level = 1, int hitpoints = 50, int attackpower = 5, 
                                             int agility = 5, int xpWorth = 100)
         {
@@ -33,6 +34,7 @@ namespace BlankGame
             return mob;
         }
 
+        // Add monster object to List
         public static Monster AddMonsterToRoom(string name)
         {
             Monster mob = new Monster();
@@ -64,6 +66,7 @@ namespace BlankGame
             return mob;
         }
 
+        // Display Monster Stats
         public static string DisplayMonsterStats(Monster mob)
         {
             string content = "";

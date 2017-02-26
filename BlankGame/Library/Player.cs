@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BlankGame
@@ -19,6 +20,7 @@ namespace BlankGame
         public string EquippedWeapon { get; set; }
         public int Experience { get; set; }
 
+        // Create player object
         public static Player CreatePlayer()
         {
             Player newPlayer = new Player();
@@ -85,6 +87,7 @@ namespace BlankGame
             return content;
         }
 
+        // Equip Weapon and add item stats to player stats
         public static Tuple<Player, string> EquipWeapon(Player player, string weapon)
         {
             string content = "";
@@ -113,6 +116,7 @@ namespace BlankGame
             return Tuple.Create(player, content);
         }
 
+        // UnEquip Weapon and remove item stats from player stats
         public static Tuple<Player, string> UnEquipWeapon(Player player, string weapon)
         {
             string content = "";
@@ -134,6 +138,7 @@ namespace BlankGame
             return Tuple.Create(player, content);
         }
 
+        // Increase player XP by mobs worth
         public static Player IncreaseXP(Player player, int xp)
         {
             player.Experience = player.Experience + xp;
@@ -149,6 +154,7 @@ namespace BlankGame
             return player;
         }
 
+        // Set Player level based on player XP
         public static int SetPlayerLevel(int xp)
         {
             int playerLevel = 1;
@@ -195,15 +201,17 @@ namespace BlankGame
             return playerLevel;
         }
 
+        // Display Player Level Up message
         public static void PlayerLevelUp()
         {
             Console.Clear();
             UI.DrawTitleBar("Level Up!!!");
             UI.DrawMainArea("Congrats on not sucking!!!!");
             UI.DrawActionBar("Cheers");
-            Console.ReadLine();
+            Thread.Sleep(3000);
         }
 
+        // Increase player stats for leveling up
         public static Player LevelUpStats(Player player)
         {
 
@@ -215,6 +223,5 @@ namespace BlankGame
             
             return player;
         }
-
     }
 }

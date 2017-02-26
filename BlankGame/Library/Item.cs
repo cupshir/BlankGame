@@ -16,6 +16,7 @@ namespace BlankGame
         public int AttackPower { get; set; }
         public bool CanPickup { get; set; }
 
+        // Create an Item object
         public static Item CreateItem(string name = "", string description = "", int level = 1, 
                                       int agility = 1, int attackPower = 1, bool canPickup = true)
         {
@@ -32,24 +33,33 @@ namespace BlankGame
             return item;
         }
 
+        // Create an Inventory list
         public static List<Item> CreateInventory()
         {
             List<Item> items = new List<Item>();
-            items.Add(CreateItem(name: "Pocket Lint", description: "Fuzzy"));
+            items.Add(CreateItem(name: "Pocket Lint", description: "Its Fuzzy!", agility: 0));
             //items.Add(CreateItem(name: "n00b Sword", description: "A shiny basic sword perfect for a n00bie like you", attackPower: 2));
             return items;
         }
 
+        // Create list of all valid items in game
         public static List<Item> ValidItems()
         {
             List<Item> items = new List<Item>();
             items.Add(CreateItem(name: "Torch",
-                                 description: "A stick thats on fire...that is...bright...hint..hint...hint"));
+                                 description: "A stick thats on fire...that is...bright...hint..wink..hint..."));
             items.Add(CreateItem(name: "n00b Sword",
                                  description: "A shiny basic sword perfect for a n00bie like you",
                                  level: 1,
                                  agility: 10,
-                                 attackPower: 20));
+                                 attackPower: 20,
+                                 canPickup: false));
+            items.Add(CreateItem(name: "Healing Potion",
+                                 description: "Keeps you from dying",
+                                 canPickup: false));
+            items.Add(CreateItem(name: "Big Bag O'Money",
+                                 description: "A big fat bag of the good stuff...cash money!",
+                                 canPickup: false));
             items.Add(CreateItem(name: "Sword of Awesomeness",
                                  description: "An epic piece of hardware that will smite its foes with ease",
                                  level: 100,
@@ -81,6 +91,7 @@ namespace BlankGame
             return addItem;
         }
 
+        // Display inventory
         public static string DisplayInventory(List<Item> inventory)
         {
             string content = "";
@@ -99,17 +110,20 @@ namespace BlankGame
             return content;
         }
 
+        // Display Item Stats
         public static string DisplayItemStats(Item item)
         {
             string content = "";
             content = content + item.Name + " Details\n\n";
             content = content + "       Level: " + item.Level + "\n";
             content = content + "Attack Power: " + item.AttackPower + "\n";
-            content = content + "     Agility: " + item.Agility + "\n";
-            
+            content = content + "     Agility: " + item.Agility + "\n\n\n";
+            content = content + item.Description + "\n";
+
             return content;
         }
 
+        // Add Item to Player Inventory and remove from Room inventory
         public static Tuple<Room, List<Item>, string> AddToInventory(Room currentRoom, Item item, List<Item> inventory)
         {
             inventory.Add(item);
@@ -119,6 +133,7 @@ namespace BlankGame
             return Tuple.Create(currentRoom, inventory, content);
         }
 
+        // Remove Item from player inventory and add to Room inventory
         public static Tuple<Room, List<Item>, string> RemoveFromInventory(Room currentRoom, Item item, List<Item> inventory)
         {
             inventory.Remove(item);
@@ -127,6 +142,5 @@ namespace BlankGame
 
             return Tuple.Create(currentRoom, inventory, content);
         }
-
     }
 }
