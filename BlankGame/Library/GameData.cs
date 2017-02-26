@@ -16,6 +16,7 @@ namespace BlankGame
         public Player savedPlayer;
         public string savedCurrentRoom;
 
+        // Save game to file in Mydocs folder called BlankGame
         public static string SaveGameToFile(List<Room> gameRooms, Player player, string currentRoom)
         {
             string content = "";
@@ -41,6 +42,7 @@ namespace BlankGame
             return content;
         }
 
+        // Load game from file by matching to name inputted by player
         public static Tuple<List<Room>, Player, string, string> LoadGameFromFile(List<Room> gameRooms, Player currentPlayer, string currentRoom)
         {
             string content = "";
@@ -51,7 +53,7 @@ namespace BlankGame
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "BlankGame");
             path = Path.Combine(path, loadFile);
 
-            if (Directory.Exists(path))
+            if (File.Exists(path))
             {
                 IFormatter formatter = new BinaryFormatter();
                 Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);

@@ -207,7 +207,7 @@ namespace BlankGame
             Console.Clear();
             UI.DrawTitleBar("Level Up!!!");
             UI.DrawMainArea("Congrats on not sucking!!!!");
-            UI.DrawActionBar("Cheers");
+            //UI.DrawActionBar("Cheers");
             Thread.Sleep(3000);
         }
 
