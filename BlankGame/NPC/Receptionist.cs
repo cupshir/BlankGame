@@ -26,26 +26,55 @@ namespace BlankGame
 
                 // Get player input
                 string result = Console.ReadLine();
-
+                result = result.ToLower();
                 // Dynamic responses
 
-
-                // Static responses
-                switch (result.ToLower())
+                // Give action
+                if (result.Contains("give"))
                 {
-                    case "hi":
-                        content = "How can I help you?";
-                        break;
-                    case "bye":
-                        topic = "goodbye";
-                        break;
-                    case "help":
-                        content = "Help? I guess i can LOAN you the information you need";
-                        break;
-                    default:
-                        content = "I dont understand that, u tard";
-                        break;
+                    string itemToGive = result.Remove(0, 5);
+                    if (itemToGive.Contains("mob shit"))
+                    {
+                        IEnumerable<Item> offeredItem = player.Inventory.Where(p => p.Name == "mob shit");
+                        if (offeredItem.Count() == 1)
+                        {
+                            content = "Dinner!";
+                        }
+                    }
+                    else
+                    {
+                        content = "I dont want that...do you not listen?";
+                    }
+
+
                 }
+
+                // Loan Response
+                else if (result.Contains("loan"))
+                {
+                    content = "You want ME to give YOU money?\n\nThats cute.\n\nGo kill 10 monsters and bring me their scat,\nin exchange I will give you some mooneh!";
+                }
+                else
+                {
+                    // Static responses
+                    switch (result)
+                    {
+                        case "hi":
+                            content = "How can I help you?";
+                            break;
+                        case "bye":
+                            topic = "goodbye";
+                            break;
+                        case "help":
+                            content = "Help? I guess i can LOAN you the information you need";
+                            break;
+                        default:
+                            content = "I dont understand that, u tard";
+                            break;
+                    }
+                }
+
+                
             
             } while (topic != "goodbye");
 

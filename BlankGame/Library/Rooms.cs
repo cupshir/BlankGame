@@ -120,7 +120,7 @@ namespace BlankGame
                                  toSouth: "Store"));
             roomItems.Clear();
             roomItems.Add("n00b Sword");
-            roomItems.Add("Healing Potion");
+            roomItems.Add("Healing Rock");
             npcNames.Clear();
             npcNames.Add("Shopkeeper");
             rooms.Add(CreateRoom(name: "Store",

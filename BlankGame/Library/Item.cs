@@ -15,10 +15,12 @@ namespace BlankGame
         public int Agility { get; set; }
         public int AttackPower { get; set; }
         public bool CanPickup { get; set; }
+        public int Quantity { get; set; }
 
         // Create an Item object
         public static Item CreateItem(string name = "", string description = "", int level = 1, 
-                                      int agility = 1, int attackPower = 1, bool canPickup = true)
+                                      int agility = 1, int attackPower = 1, bool canPickup = true,
+                                      int quantity = 1)
         {
             Item item = new Item()
             {
@@ -27,7 +29,8 @@ namespace BlankGame
                 Level = level,
                 Agility = agility,
                 AttackPower = attackPower,
-                CanPickup = canPickup
+                CanPickup = canPickup,
+                Quantity = quantity
             };
 
             return item;
@@ -54,8 +57,8 @@ namespace BlankGame
                                  agility: 10,
                                  attackPower: 20,
                                  canPickup: false));
-            items.Add(CreateItem(name: "Healing Potion",
-                                 description: "Keeps you from dying",
+            items.Add(CreateItem(name: "Healing Rock",
+                                 description: "Restores your health, so dont die",
                                  canPickup: false));
             items.Add(CreateItem(name: "Big Bag O'Money",
                                  description: "A big fat bag of the good stuff...cash money!",
@@ -104,7 +107,7 @@ namespace BlankGame
             {
                 foreach (Item item in inventory)
                 {
-                    content = content + item.Name + "\n";
+                    content = content + item.Name + " (" + item.Quantity +  ")\n";
                 }
             }
             return content;
@@ -115,6 +118,7 @@ namespace BlankGame
         {
             string content = "";
             content = content + item.Name + " Details\n\n";
+            content = content + "       Owned: " + item.Quantity + "\n\n";
             content = content + "       Level: " + item.Level + "\n";
             content = content + "Attack Power: " + item.AttackPower + "\n";
             content = content + "     Agility: " + item.Agility + "\n\n\n";

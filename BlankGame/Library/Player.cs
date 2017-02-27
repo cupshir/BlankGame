@@ -215,7 +215,7 @@ namespace BlankGame
         public static Player LevelUpStats(Player player)
         {
 
-            player.MaxHitpoints = (int)Math.Round((player.MaxHitpoints * 1.25), 0);
+            player.MaxHitpoints = (int)Math.Round((player.MaxHitpoints * 1.5), 0);
             player.Agility = (int)Math.Round((player.Agility * 1.25), 0);
             player.AttackPower = (int)Math.Round((player.AttackPower * 1.25), 0);
 

@@ -23,6 +23,7 @@ namespace BlankGame
 
                 if (HealthCheck(player, mob))
                 {
+                    player = MobDefeated(player, mob);
                     Player.IncreaseXP(player, mob.xpWorth);
                     break;
                 }
@@ -181,26 +182,52 @@ namespace BlankGame
         {
             if (mob.Hitpoints <= 0)
             {
-                Console.Clear();
-                string battleTitle = "You won!!!";
-                UI.DrawTitleBar(battleTitle);
-                UI.DrawMainArea("The monster has been slain!!!");
-
-                Thread.Sleep(1500);
-
                 return true;
             }
             else if (player.Hitpoints <= 0)
             {
-                Console.Clear();
-                string battleTitle = "You loss!!!";
-                UI.DrawTitleBar(battleTitle);
-                UI.DrawMainArea("The monster has slain you...you suck!!!\n\nMaybe find a better weapon?");
-                Thread.Sleep(5000);
-                System.Environment.Exit(1);
+                PlayerDefeated();
             }
             return false;
         }
+
+        // Execute Player Defeated
+        private static void PlayerDefeated()
+        {
+            Console.Clear();
+            string battleTitle = "You loss!!!";
+            UI.DrawTitleBar(battleTitle);
+            UI.DrawMainArea("The monster has slain you...you suck!!!\n\nMaybe find a better weapon?\n\nOr buy a healing rock?!?");
+            Thread.Sleep(5000);
+            System.Environment.Exit(1);
+        }
+
+        // Execute Mob Defeated
+        private static Player MobDefeated(Player player, Monster mob)
+        {
+            Console.Clear();
+            string battleTitle = "You won!!!";
+            UI.DrawTitleBar(battleTitle);
+            UI.DrawMainArea("The monster has been slain!!!\n\nLike a desperate degenerate, you collect its shit.");
+            if (mob.Name != "Uber Boss")
+            {
+                IEnumerable<Item> hasShit = player.Inventory.Where(p => p.Name == "Shit");
+                if (hasShit.Count() == 1)
+                {
+                    Item shit = hasShit.Single();
+                    shit.Quantity = shit.Quantity + 1;
+                    player.Inventory.Remove(shit);
+                    player.Inventory.Add(shit);
+                }
+                else
+                {
+                    player.Inventory.Add(Item.CreateItem(name: "Shit", description: "Smelly piece of..."));
+                }
+            }
+
+            Thread.Sleep(1500);
+            return player;
+        } 
 
         // Calculate Damage
         private static int CalculateDamage(int attackPower)
