@@ -33,6 +33,8 @@ namespace BlankGame
                                  description: "A person that sells shit"));
             npcs.Add(CreateNPC(name: "Receptionist",
                                  description: "Mason's Mom"));
+            npcs.Add(CreateNPC(name: "Innkeeper",
+                                description: "Mason's Grandma"));
             return npcs;
         }
 
@@ -76,6 +78,15 @@ namespace BlankGame
                 case "Receptionist":
                     {
                         Tuple<Player, NPC, Room, string> converstaion = Receptionist.TalkToReceptionist(player, npc, room);
+                        player = converstaion.Item1;
+                        npc = converstaion.Item2;
+                        room = converstaion.Item3;
+                        content = converstaion.Item4;
+                        break;
+                    }
+                case "Innkeeper":
+                    {
+                        Tuple<Player, NPC, Room, string> converstaion = Innkeeper.TalkToInnkeeper(player, npc, room);
                         player = converstaion.Item1;
                         npc = converstaion.Item2;
                         room = converstaion.Item3;

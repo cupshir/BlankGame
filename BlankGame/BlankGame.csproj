@@ -52,6 +52,7 @@
     <Compile Include="Library\Player.cs" />
     <Compile Include="Library\Item.cs" />
     <Compile Include="Library\Rooms.cs" />
+    <Compile Include="NPC\Innkeeper.cs" />
     <Compile Include="NPC\Receptionist.cs" />
     <Compile Include="NPC\Shopkeeper.cs" />
     <Compile Include="Program.cs" />

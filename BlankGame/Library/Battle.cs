@@ -225,7 +225,7 @@ namespace BlankGame
                 }
             }
 
-            Thread.Sleep(1500);
+            Thread.Sleep(2000);
             return player;
         } 
 

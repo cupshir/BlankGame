@@ -25,6 +25,7 @@ namespace BlankGame
 
                 // Get player input
                 string result = Console.ReadLine();
+                result = result.ToLower();
 
                 // Dynamic responses
 
@@ -58,13 +59,35 @@ namespace BlankGame
                     if (result.Count() > 4)
                     {
                         string itemToBuy = result.Remove(0, 4);
+                        itemToBuy = itemToBuy.ToLower();
                         if (itemToBuy.Contains("sword"))
                         {
                             content = "You cant afford my uber sword...\n\n...but, since im such a nice Shopkeeper,\nI will give you a sword if you\ncan beat me in a game.";
                         }
-                        else if (itemToBuy.ToLower().Contains("healing potion"))
+                        else if (itemToBuy.Contains("healing potion"))
                         {
-                            content = "If you had money, you could buy this...";
+                            IEnumerable<Item> checkForMoney = player.Inventory.Where(p => p.Name == "Big Bag O'Money");
+                            if (checkForMoney.Count() == 1)
+                            {
+                                IEnumerable<Item> checkForPotion = room.Inventory.Where(p => p.Name == "Healing Potion");
+                                if (checkForPotion.Count() == 1)
+                                {
+                                    Item potion = checkForPotion.Single();
+                                    room.Inventory.Remove(potion);
+                                    player.Inventory.Add(potion);
+                                    content = "Excellent, I take your money...you get this water\nerrm I mean Healing Potion";
+                                    topic = "goodbye";
+                                    Console.Clear();
+                                    UI.DrawTitleBar(shopkeeper.Name);
+                                    UI.DrawMainArea(content);
+                                    UI.DrawActionBar("Talk");
+                                    Thread.Sleep(2000);
+                                }
+                            }
+                            else
+                            {
+                                content = "If you had money, you could buy this...";
+                            }
                         }
                         else
                         {
@@ -86,7 +109,7 @@ namespace BlankGame
                 // Static responses
                 else
                 {
-                    switch (result.ToLower())
+                    switch (result)
                     {
                         case "hi":
                             content = "How can I help you?";

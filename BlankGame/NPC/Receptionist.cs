@@ -9,7 +9,6 @@ namespace BlankGame
 {
     class Receptionist
     {
-
         // Talk to Receptionist
         public static Tuple<Player, NPC, Room, string> TalkToReceptionist(Player player, NPC receptionist, Room room)
         {
@@ -33,13 +32,47 @@ namespace BlankGame
                 if (result.Contains("give"))
                 {
                     string itemToGive = result.Remove(0, 5);
-                    if (itemToGive.Contains("mob shit"))
+                    if (itemToGive.Contains("shit"))
                     {
-                        IEnumerable<Item> offeredItem = player.Inventory.Where(p => p.Name == "mob shit");
+                        IEnumerable<Item> offeredItem = player.Inventory.Where(p => p.Name == "Shit");
                         if (offeredItem.Count() == 1)
                         {
-                            content = "Dinner!";
+                            Item shit = offeredItem.Single();
+                            if (shit.Quantity >= 10)
+                            {
+                                shit.Quantity = shit.Quantity - 10;
+                                player.Inventory.Remove(shit);
+                                player.Inventory.Add(shit);
+
+                                IEnumerable<Item> moneyBag = room.Inventory.Where(p => p.Name == "Big Bag O'Money");
+                                if (moneyBag.Count() == 1)
+                                {
+                                    Item bagOMoney = moneyBag.Single();
+                                    room.Inventory.Remove(bagOMoney);
+                                    player.Inventory.Add(bagOMoney);
+                                    content = "Thank you for this smelly shit!\nHere is your Big Bag O'Money";
+                                    topic = "goodbye";
+                                    Console.Clear();
+                                    UI.DrawTitleBar(receptionist.Name);
+                                    UI.DrawMainArea(content);
+                                    UI.DrawActionBar("Talk");
+                                    Thread.Sleep(2000);
+                                }
+                                else
+                                {
+                                    content = "I have no more money to give...";
+                                }
+                            }
+                            else
+                            {
+                                content = "I said 10 pieces of shit...you only have " + shit.Quantity + " pieces of shit in your possesion";
+                            }
+                            
                         }
+                    }
+                    else if (itemToGive.Contains("money"))
+                    {
+                        content = "You want me...to give you...\n...this money for free?!?!\n\nYa, no.";
                     }
                     else
                     {

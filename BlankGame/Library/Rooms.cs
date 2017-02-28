@@ -114,8 +114,11 @@ namespace BlankGame
                                  npcs: npcNames,
                                  toWest: "Inn",
                                  toSouth: "Town Square"));
+            npcNames.Clear();
+            npcNames.Add("Innkeeper");
             rooms.Add(CreateRoom(name: "Inn",
-                                 description: "The Inn is cozy and warmly. There are many empty tables scattered through the first floor.\nOn one side of the room is a fire place with some comfy looking chairs.\nThe Innkeeper is moving about randomly cleaning the tables.",
+                                 description: "The Inn is cozy and warmly. There are many empty tables scattered about.\nOn one side of the room is a fire place with some comfy looking chairs.\nThe Innkeeper is moving about randomly cleaning the tables.",
+                                 npcs: npcNames,
                                  toEast: "Town Hall",
                                  toSouth: "Store"));
             roomItems.Clear();
