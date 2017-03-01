@@ -12,7 +12,7 @@ namespace BlankGame
         // Talk to Innkeeper
         public static Tuple<Player, NPC, Room, string> TalkToInnkeeper(Player player, NPC innkeeper, Room room)
         {
-            string content = "Welcome, pull up a comfy chair and relax!";
+            string content = "\n\nWelcome, pull up a comfy chair and relax!";
             string topic = "hello";
 
             do
@@ -30,11 +30,11 @@ namespace BlankGame
                 switch (result)
                 {
                     case "rest":
-                        content = "Sit in one of those comfy chairs and\nyou will feel right as rain";
+                        content = "\n\nSit in one of those comfy chairs and\nyou will feel right as rain\n\nNo seriously sit in the chair!";
                         break;
                     case "sit":
                         {
-                            content = "The chair feels so amazing.\n\nHow amazing?\n\nSo amazing your health is fully restored!";
+                            content = "\n\nThe chair feels so so so amazing.\n\nHow amazing?\n\nSo amazing your health is fully restored!";
                             topic = "goodbye";
                             Console.Clear();
                             UI.DrawTitleBar(innkeeper.Name);
@@ -44,8 +44,11 @@ namespace BlankGame
                             Thread.Sleep(2000);
                             break;
                         }
+                    case "help":
+                        content = "\n\nAre you sitting down for this news?\n\nIf not it would be wise if you sat...";
+                        break;
                     default:
-                        content = "Uh, huh. Im sure thats nice sweety.";
+                        content = "\n\nUh, huh. Im sure thats nice sweety.";
                         break;
                 }
 
@@ -53,7 +56,7 @@ namespace BlankGame
             } while (topic != "goodbye");
 
             // Display Goodbye screen
-            content = "Come back soon!";
+            content = "\n\nCome back soon!";
             Console.Clear();
             UI.DrawTitleBar(innkeeper.Name);
             UI.DrawMainArea(content);

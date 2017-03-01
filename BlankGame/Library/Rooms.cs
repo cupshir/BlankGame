@@ -192,7 +192,7 @@ namespace BlankGame
                                  toWest: "Cave Room 4"));
             mobNames.Clear();
             mobNames.Add("Bear");
-            mobNames.Add("Pig");
+            mobNames.Add("Zombie");
             mobNames.Add("imp");
             rooms.Add(CreateRoom(name: "Cave Room 6",
                                  description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
@@ -202,8 +202,8 @@ namespace BlankGame
                                  toSouth: "Cave Room 4"));
             mobNames.Clear();
             mobNames.Add("Vampire");
-            mobNames.Add("Pig");
-            mobNames.Add("Imp");
+            mobNames.Add("Goon");
+            mobNames.Add("Zombie");
             rooms.Add(CreateRoom(name: "Cave Room 7",
                                  description: "The cave is pitch black making it impossible to see any details...\nif only there was a way to light things up...",
                                  mobs: mobNames,
@@ -261,7 +261,7 @@ namespace BlankGame
             }
             else
             {
-                content = content + "\nThere are no items here\n";
+                content = content + "\n\nThere are no items here\n";
             }
 
             if (room.Monsters.Count > 0)
@@ -274,7 +274,7 @@ namespace BlankGame
             }
             else
             {
-                content = content + "\nThere is nothing to kill here\n";
+                content = content + "\n\nThere is nothing to kill here\n";
             }
             content = content + "\n";
             if (room.toNorth != "") { content = content + "To the North is the " + room.toNorth + "\n"; }
@@ -311,7 +311,7 @@ namespace BlankGame
                 }
                 else
                 {
-                    content = content + "\nThere is nothing to kill here\n";
+                    content = content + "\n\nThere is nothing to kill here\n";
                 }
                 content = content + "\n";
                 if (room.toNorth != "") { content = content + "To the North is the " + room.toNorth + "\n"; }

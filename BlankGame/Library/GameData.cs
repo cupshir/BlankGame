@@ -38,7 +38,7 @@ namespace BlankGame
             formatter.Serialize(stream, saveData);
             stream.Close();
 
-            content = content + "Game has been saved";
+            content = content + "\n\nGame has been saved";
             return content;
         }
 
@@ -60,7 +60,7 @@ namespace BlankGame
                 loadData = (GameData)formatter.Deserialize(stream);
                 stream.Close();
 
-                content = content + "Game has been loaded";
+                content = content + "\n\nGame has been loaded";
             }
             else
             {
@@ -68,7 +68,7 @@ namespace BlankGame
                 loadData.savedPlayer = currentPlayer;
                 loadData.savedCurrentRoom = currentRoom;
 
-                content = "A save file for that name does not exist.";
+                content = "\n\nA save file for that name does not exist.";
             }
 
             return Tuple.Create(loadData.savedGameRooms, loadData.savedPlayer, loadData.savedCurrentRoom, content);

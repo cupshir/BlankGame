@@ -12,7 +12,7 @@ namespace BlankGame
         // Talk to Receptionist
         public static Tuple<Player, NPC, Room, string> TalkToReceptionist(Player player, NPC receptionist, Room room)
         {
-            string content = "Hello, how can I help you?";
+            string content = "\n\nHello, how can I help you?";
             string topic = "hello";
 
             do
@@ -50,33 +50,33 @@ namespace BlankGame
                                     Item bagOMoney = moneyBag.Single();
                                     room.Inventory.Remove(bagOMoney);
                                     player.Inventory.Add(bagOMoney);
-                                    content = "Thank you for this smelly shit!\nHere is your Big Bag O'Money";
+                                    content = "\n\nThank you for this smelly shit!\nHere is your Big Bag O'Money";
                                     topic = "goodbye";
                                     Console.Clear();
                                     UI.DrawTitleBar(receptionist.Name);
                                     UI.DrawMainArea(content);
                                     UI.DrawActionBar("Talk");
-                                    Thread.Sleep(2000);
+                                    Thread.Sleep(3000);
                                 }
                                 else
                                 {
-                                    content = "I have no more money to give...";
+                                    content = "\n\nI have no more money to give...";
                                 }
                             }
                             else
                             {
-                                content = "I said 10 pieces of shit...you only have " + shit.Quantity + " pieces of shit in your possesion";
+                                content = "\n\nI said 10 pieces of shit...you only have " + shit.Quantity + " pieces of shit in your possesion";
                             }
                             
                         }
                     }
                     else if (itemToGive.Contains("money"))
                     {
-                        content = "You want me...to give you...\n...this money for free?!?!\n\nYa, no.";
+                        content = "\n\nYou want me...to give you...\n...this money for free?!?!\n\nYa, no.";
                     }
                     else
                     {
-                        content = "I dont want that...do you not listen?";
+                        content = "\n\nI dont want that...do you not listen?";
                     }
 
 
@@ -85,7 +85,7 @@ namespace BlankGame
                 // Loan Response
                 else if (result.Contains("loan"))
                 {
-                    content = "You want ME to give YOU money?\n\nThats cute.\n\nGo kill 10 monsters and bring me their scat,\nin exchange I will give you some mooneh!";
+                    content = "\n\nYou want ME to give YOU money?\n\nThats cute.\n\nGo kill 10 monsters and bring me their scat,\nin exchange I will give you some mooneh!";
                 }
                 else
                 {
@@ -93,16 +93,16 @@ namespace BlankGame
                     switch (result)
                     {
                         case "hi":
-                            content = "How can I help you?";
+                            content = "\n\nHow can I help you?";
                             break;
                         case "bye":
-                            topic = "goodbye";
+                            topic = "\n\ngoodbye";
                             break;
                         case "help":
-                            content = "Help? I guess i can LOAN you the information you need";
+                            content = "\n\nHelp? I guess i can LOAN you the information you need";
                             break;
                         default:
-                            content = "I dont understand that, u tard";
+                            content = "\n\nI dont understand that, u tard";
                             break;
                     }
                 }
@@ -112,7 +112,7 @@ namespace BlankGame
             } while (topic != "goodbye");
 
             // Display Goodbye screen
-            content = "Buhbye!";
+            content = "\n\nBuhbye!";
             Console.Clear();
             UI.DrawTitleBar(receptionist.Name);
             UI.DrawMainArea(content);

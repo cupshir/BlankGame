@@ -92,12 +92,12 @@ namespace BlankGame
                         }
                         else
                         {
-                            content = "\nYou can not pick that up at this time!";
+                            content = "\n\nYou can not pick that up at this time!";
                         }
                     }
                     else
                     {
-                        content = "\nThat item does not exist here!";
+                        content = "\n\nThat item does not exist here!";
                     }
                 }
                 return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
@@ -122,7 +122,7 @@ namespace BlankGame
                     }
                     else
                     {
-                        content = "\nThat is not currently in your inventory.";
+                        content = "\n\nThat is not currently in your inventory.";
                     }
 
                 }
@@ -148,7 +148,7 @@ namespace BlankGame
                             }
                             else
                             {
-                                content = "\nYou can't look at that";
+                                content = "\n\nYou can't look at that";
                             }
                         }
                     }
@@ -171,7 +171,7 @@ namespace BlankGame
                         }
                         else
                         {
-                            content = "\nYou can't look at that";
+                            content = "\n\nYou can't look at that";
                         }
                     }
                 }
@@ -195,7 +195,7 @@ namespace BlankGame
                     }
                     else
                     {
-                        content = "\nThat item is not in your inventory";
+                        content = "\n\nThat item is not in your inventory";
                     }
                 }
                 return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
@@ -218,7 +218,7 @@ namespace BlankGame
                     }
                     else
                     {
-                        content = "\nThat item is not in your inventory";
+                        content = "\n\nThat item is not in your inventory";
                     }
 
                 }
@@ -268,7 +268,7 @@ namespace BlankGame
                     }
                     else
                     {
-                        content = content + "There is no NPC with that name around here.";
+                        content = content + "\n\nThere is no NPC with that name around here.";
                     }
 
 
@@ -291,7 +291,7 @@ namespace BlankGame
                     }
                     else
                     {
-                        content = "\nYou do not see a monster with that name around here.";
+                        content = "\n\nYou do not see a monster with that name around here.";
                     }
                 }
                 return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
@@ -316,7 +316,7 @@ namespace BlankGame
                     }
                     else
                     {
-                        content = "You can not fight that!";
+                        content = "\n\nYou can not fight that!";
                     }
                 }
 
@@ -349,8 +349,30 @@ namespace BlankGame
                         return Tuple.Create(gameAreas, prop.GetValue(room, null).ToString(), currentPlayer, content);
                     }                    
                 }
-                content = "There is nothing in that direction!";
+                content = "\n\nThere is nothing in that direction!";
                 return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
+
+            }
+
+            // Use Item
+            else if (result.Contains("use"))
+            {
+                if (result.Count() > 3)
+                {
+                    string useItem = result.Remove(0, 4);
+                    if(useItem == "healing rock")
+                    {
+                        currentPlayer.Hitpoints = currentPlayer.MaxHitpoints;
+                        content = "\n\nAs you rub the rock you feel your health recover";
+                    }
+                    else
+                    {
+                        content = "\n\nYou can not use that";
+                    }
+                }
+                return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
+                
+
 
             }
             
@@ -422,7 +444,7 @@ namespace BlankGame
                         return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
                     default:
                         Console.Clear();
-                        content = content + "That is not a valid command.\n";
+                        content = content + "\n\nThat is not a valid command.\n";
                         return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
                 }
             }

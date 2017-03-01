@@ -23,14 +23,14 @@ namespace BlankGame
 
             if (matchOutcome.Item1 == "win")
             {
-                content = content + "You win!!!";
+                content = content + "\n\nYou win!!!";
             }
             else if (matchOutcome.Item1 == "loss")
             {
-                content = content + "You Lose!!!";
+                content = content + "\n\nYou Lose!!!";
             } else if (matchOutcome.Item1 == "draw")
             {
-                content = content + "Its a tie!";
+                content = content + "\n\nIts a tie!";
             }
 
             Console.Clear();

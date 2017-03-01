@@ -106,7 +106,7 @@ namespace BlankGame
         {
             string content = "";
 
-            content = content + "\n";
+            content = content + "\n\n";
             content = content + npc.Name + " Stats\n";
             content = content + "\n";
             content = content + "Description: " + npc.Description + "\n";

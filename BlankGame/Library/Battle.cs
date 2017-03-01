@@ -197,7 +197,7 @@ namespace BlankGame
             Console.Clear();
             string battleTitle = "You loss!!!";
             UI.DrawTitleBar(battleTitle);
-            UI.DrawMainArea("The monster has slain you...you suck!!!\n\nMaybe find a better weapon?\n\nOr buy a healing rock?!?");
+            UI.DrawMainArea("\n\nThe monster has slain you...you suck!!!\n\nMaybe find a better weapon?\n\nOr buy a healing rock?!?");
             Thread.Sleep(5000);
             System.Environment.Exit(1);
         }
@@ -207,10 +207,10 @@ namespace BlankGame
         {
             Console.Clear();
             string battleTitle = "You won!!!";
-            UI.DrawTitleBar(battleTitle);
-            UI.DrawMainArea("The monster has been slain!!!\n\nLike a desperate degenerate, you collect its shit.");
             if (mob.Name != "Uber Boss")
             {
+                UI.DrawTitleBar(battleTitle);
+                UI.DrawMainArea("\n\nThe monster has been slain!!!\n\nLike a desperate degenerate, you collect its shit.");
                 IEnumerable<Item> hasShit = player.Inventory.Where(p => p.Name == "Shit");
                 if (hasShit.Count() == 1)
                 {
@@ -223,6 +223,13 @@ namespace BlankGame
                 {
                     player.Inventory.Add(Item.CreateItem(name: "Shit", description: "Smelly piece of..."));
                 }
+            }
+            else
+            {
+                UI.DrawTitleBar(battleTitle);
+                UI.DrawMainArea("\n\nThe epic dragon has been slain!!!\n\nThe Hero saves the day.\n\nGet down with your bad self, you earned it!\n\n\nIf this game had achievements, you would us just unlocked the big one!\n\nCattywampos is the winning word");
+                Thread.Sleep(30000);
+                System.Environment.Exit(1);
             }
 
             Thread.Sleep(2000);

@@ -57,7 +57,7 @@ namespace BlankGame
                                  attackPower: 20,
                                  canPickup: false));
             items.Add(CreateItem(name: "Healing Rock",
-                                 description: "Restores your health, so dont die",
+                                 description: "Restores your health, so dont die. Can be used many times",
                                  canPickup: false));
             items.Add(CreateItem(name: "Big Bag O'Money",
                                  description: "A big fat bag of the good stuff...cash money!",
@@ -86,7 +86,7 @@ namespace BlankGame
                 }
                 else
                 {
-                    Console.WriteLine("Error adding " + item + ".");
+                    Console.WriteLine("\n\nError adding " + item + ".");
                 }
                 
             }

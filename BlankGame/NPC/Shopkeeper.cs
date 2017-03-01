@@ -12,7 +12,7 @@ namespace BlankGame
         // Talk to Shopkeeper
         public static Tuple<Player, NPC, Room, string> TalkToShopkeeper(Player player, NPC shopkeeper, Room room)
         {
-            string content = "Hello, how can I help you?";
+            string content = "\n\nHello, how can I help you?";
             string topic = "hello";
 
             do
@@ -32,25 +32,38 @@ namespace BlankGame
                 // Play Rock Paper Scissors game with Shopkeeper
                 if (result.Contains("play"))
                 {
-                    content = PlayRockPaperScissors(player.Name);
-                    Console.Clear();
-                    UI.DrawTitleBar(shopkeeper.Name);
-                    UI.DrawMainArea(content);
-                    UI.DrawActionBar("Results");
-                    Thread.Sleep(3000);
-                    if (content.Contains("NOOOO")) 
+                    IEnumerable<Item> getSword = room.Inventory.Where(p => p.Name == "n00b Sword");
+                    if (getSword.Count() == 1)
                     {
-                        IEnumerable<Item> getSword = room.Inventory.Where(p => p.Name == "n00b Sword");
-                        if (getSword.Count() == 1)
+                        content = PlayRockPaperScissors(player.Name);
+                        Console.Clear();
+                        UI.DrawTitleBar(shopkeeper.Name);
+                        UI.DrawMainArea(content);
+                        UI.DrawActionBar("Results");
+                        Thread.Sleep(3000);
+                        if (content.Contains("NOOOO"))
                         {
-                            Item n00bSword = getSword.Single();
-                            Tuple<Room, List<Item>, string> updateRoom = Item.AddToInventory(room, n00bSword, player.Inventory);
-                            room = updateRoom.Item1;
-                            player.Inventory = updateRoom.Item2;
-                            topic = "goodbye";
+                                Item n00bSword = getSword.Single();
+                                Tuple<Room, List<Item>, string> updateRoom = Item.AddToInventory(room, n00bSword, player.Inventory);
+                                room = updateRoom.Item1;
+                                player.Inventory = updateRoom.Item2;
+                                topic = "goodbye";
                         }
+                        content = "";
                     }
-                    content = "";
+                    else
+                    {
+                        content = "\n\nI have nothing more to give you, but we can play for fun!";
+                        Console.Clear();
+                        UI.DrawTitleBar(shopkeeper.Name);
+                        UI.DrawMainArea(content);
+                        UI.DrawActionBar(player.Name);
+                        Thread.Sleep(2000);
+                        content = PlayRockPaperScissors(player.Name);
+                        UI.DrawTitleBar(shopkeeper.Name);
+                        UI.DrawMainArea(content);
+                        UI.DrawActionBar("Results");
+                    }
                 }
 
                 // Buy an item
@@ -62,48 +75,48 @@ namespace BlankGame
                         itemToBuy = itemToBuy.ToLower();
                         if (itemToBuy.Contains("sword"))
                         {
-                            content = "You cant afford my uber sword...\n\n...but, since im such a nice Shopkeeper,\nI will give you a sword if you\ncan beat me in a game.";
+                            content = "\n\nYou cant afford my uber sword...\n\n...but, since im such a nice Shopkeeper,\nI will give you a sword if you\ncan beat me in a game.";
                         }
-                        else if (itemToBuy.Contains("healing potion"))
+                        else if (itemToBuy.Contains("healing rock"))
                         {
                             IEnumerable<Item> checkForMoney = player.Inventory.Where(p => p.Name == "Big Bag O'Money");
                             if (checkForMoney.Count() == 1)
                             {
-                                IEnumerable<Item> checkForPotion = room.Inventory.Where(p => p.Name == "Healing Potion");
+                                IEnumerable<Item> checkForPotion = room.Inventory.Where(p => p.Name == "Healing Rock");
                                 if (checkForPotion.Count() == 1)
                                 {
                                     Item potion = checkForPotion.Single();
                                     room.Inventory.Remove(potion);
                                     player.Inventory.Add(potion);
-                                    content = "Excellent, I take your money...you get this water\nerrm I mean Healing Potion";
+                                    content = "\n\nExcellent, I take your money...you get this stone\nerrm I mean Healing rock";
                                     topic = "goodbye";
                                     Console.Clear();
                                     UI.DrawTitleBar(shopkeeper.Name);
                                     UI.DrawMainArea(content);
                                     UI.DrawActionBar("Talk");
-                                    Thread.Sleep(2000);
+                                    Thread.Sleep(3000);
                                 }
                             }
                             else
                             {
-                                content = "If you had money, you could buy this...";
+                                content = "\n\nIf you had money, you could buy this...";
                             }
                         }
                         else
                         {
-                            content = "You cant afford that";
+                            content = "\n\nYou cant afford that";
                         }
                     }
                     else
                     {
-                        content = "Buy what?";
+                        content = "\n\nBuy what?";
                     }
                 }
 
                 // About side game
                 else if (result.Contains("game"))
                 {
-                    content = "The game is Rock, Paper, Scissors!";
+                    content = "\n\nThe game is Rock, Paper, Scissors!";
                 }
 
                 // Static responses
@@ -112,16 +125,16 @@ namespace BlankGame
                     switch (result)
                     {
                         case "hi":
-                            content = "How can I help you?";
+                            content = "\n\nHow can I help you?";
                             break;
                         case "bye":
                             topic = "goodbye";
                             break;
                         case "help":
-                            content = "Bye to get the conversation started...\n...or was it buy...";
+                            content = "\n\nBye to get the conversation started...\n...or was it buy...";
                             break;
                         default:
-                            content = "I dont understand that, u tard";
+                            content = "\n\nI dont understand that, u tard";
                             break;
                     }
                 }
@@ -130,7 +143,7 @@ namespace BlankGame
             } while (topic != "goodbye");
 
             // Display goodbye screen
-            content = "Thank you, please come again!";
+            content = "\n\nThank you, please come again!";
             Console.Clear();
             UI.DrawTitleBar(shopkeeper.Name);
             UI.DrawMainArea(content);
@@ -151,15 +164,15 @@ namespace BlankGame
 
             if (match == "win")
             {
-                content = content + "You have defeated me, NOOOO\n\nEnjoy this sword desinged for a n00b like you!";
+                content = content + "\n\nYou have defeated me, NOOOO\n\nEnjoy this sword desinged for a n00b like you!";
             }
             else if (match == "loss")
             {
-                content = content + "I have defeated you, LOL\n";
+                content = content + "\n\nI have defeated you, LOL\n";
             }
             else if (match == "draw")
             {
-                content = content + "We tie, play again\n";
+                content = content + "\n\nWe tie, play again\n";
             }
 
             return content;

@@ -111,7 +111,7 @@ namespace BlankGame
             }
             else
             {
-                content = "You have trouble equipping that...\n";
+                content = "\n\nYou have trouble equipping that...\n";
             }
             return Tuple.Create(player, content);
         }
@@ -133,7 +133,7 @@ namespace BlankGame
             }
             else
             {
-                content = "That is not currently equipped...so you cannot unequip it!\n";
+                content = "\n\nThat is not currently equipped...so you cannot unequip it!\n";
             }
             return Tuple.Create(player, content);
         }
@@ -206,7 +206,7 @@ namespace BlankGame
         {
             Console.Clear();
             UI.DrawTitleBar("Level Up!!!");
-            UI.DrawMainArea("Congrats on not sucking!!!!");
+            UI.DrawMainArea("\n\nCongrats on not sucking!!!!");
             //UI.DrawActionBar("Cheers");
             Thread.Sleep(3000);
         }

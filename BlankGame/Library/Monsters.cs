@@ -42,11 +42,11 @@ namespace BlankGame
             {
                 if (name == "Uber Boss")
                 {
-                    mob = CreateMonster(name: name, level: 10, hitpoints: 1000, attackpower: 100, agility: 100, xpWorth: 1000);
+                    mob = CreateMonster(name: name, level: 10, hitpoints: 1000, attackpower: 250, agility: 250, xpWorth: 1000);
                 }
                 else if (name == "Zombie" || name =="Vampire" || name == "Goon")
                 {
-                    mob = CreateMonster(name: name, level: 5, hitpoints: 500, attackpower: 50, agility: 50, xpWorth: 500);
+                    mob = CreateMonster(name: name, level: 5, hitpoints: 500, attackpower: 100, agility: 100, xpWorth: 500);
                 }
                 else if (name == "Bear" || name == "Imp" || name == "Pig")
                 {
