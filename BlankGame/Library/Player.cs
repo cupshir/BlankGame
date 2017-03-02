@@ -207,7 +207,6 @@ namespace BlankGame
             Console.Clear();
             UI.DrawTitleBar("Level Up!!!");
             UI.DrawMainArea("\n\nCongrats on not sucking!!!!");
-            //UI.DrawActionBar("Cheers");
             Thread.Sleep(3000);
         }
 
@@ -218,7 +217,6 @@ namespace BlankGame
             player.MaxHitpoints = (int)Math.Round((player.MaxHitpoints * 1.5), 0);
             player.Agility = (int)Math.Round((player.Agility * 1.25), 0);
             player.AttackPower = (int)Math.Round((player.AttackPower * 1.25), 0);
-
             player.Hitpoints = player.MaxHitpoints;
             
             return player;

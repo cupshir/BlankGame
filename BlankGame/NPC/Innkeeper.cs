@@ -39,13 +39,16 @@ namespace BlankGame
                             Console.Clear();
                             UI.DrawTitleBar(innkeeper.Name);
                             UI.DrawMainArea(content);
-                            UI.DrawActionBar("Resting");
+                            //UI.DrawActionBar("Resting");
                             player.Hitpoints = player.MaxHitpoints;
-                            Thread.Sleep(2000);
+                            Thread.Sleep(3000);
                             break;
                         }
                     case "help":
                         content = "\n\nAre you sitting down for this news?\n\nIf not it would be wise if you sat...";
+                        break;
+                    case "bye":
+                        topic = "goodbye";
                         break;
                     default:
                         content = "\n\nUh, huh. Im sure thats nice sweety.";
@@ -60,7 +63,7 @@ namespace BlankGame
             Console.Clear();
             UI.DrawTitleBar(innkeeper.Name);
             UI.DrawMainArea(content);
-            UI.DrawActionBar("Goodbye");
+            //UI.DrawActionBar("Goodbye");
             Thread.Sleep(3000);
 
             return Tuple.Create(player, innkeeper, room, content);

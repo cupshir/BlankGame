@@ -54,7 +54,6 @@ namespace BlankGame
                 {
                     Console.WriteLine("Error adding " + npc + ".");
                 }
-
             }
             return addNPC;
         }

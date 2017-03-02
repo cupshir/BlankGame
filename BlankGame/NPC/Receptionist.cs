@@ -55,7 +55,7 @@ namespace BlankGame
                                     Console.Clear();
                                     UI.DrawTitleBar(receptionist.Name);
                                     UI.DrawMainArea(content);
-                                    UI.DrawActionBar("Talk");
+                                    //UI.DrawActionBar("Talk");
                                     Thread.Sleep(3000);
                                 }
                                 else
@@ -96,7 +96,7 @@ namespace BlankGame
                             content = "\n\nHow can I help you?";
                             break;
                         case "bye":
-                            topic = "\n\ngoodbye";
+                            topic = "goodbye";
                             break;
                         case "help":
                             content = "\n\nHelp? I guess i can LOAN you the information you need";
@@ -116,7 +116,7 @@ namespace BlankGame
             Console.Clear();
             UI.DrawTitleBar(receptionist.Name);
             UI.DrawMainArea(content);
-            UI.DrawActionBar("Goodbye");
+            //UI.DrawActionBar("Goodbye");
             Thread.Sleep(3000);
 
             return Tuple.Create(player, receptionist, room, content);

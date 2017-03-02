@@ -93,7 +93,7 @@ namespace BlankGame
                                     Console.Clear();
                                     UI.DrawTitleBar(shopkeeper.Name);
                                     UI.DrawMainArea(content);
-                                    UI.DrawActionBar("Talk");
+                                    //UI.DrawActionBar("Talk");
                                     Thread.Sleep(3000);
                                 }
                             }
@@ -147,7 +147,7 @@ namespace BlankGame
             Console.Clear();
             UI.DrawTitleBar(shopkeeper.Name);
             UI.DrawMainArea(content);
-            UI.DrawActionBar("Goodbye");
+            //UI.DrawActionBar("Goodbye");
             Thread.Sleep(3000);
 
             return Tuple.Create(player, shopkeeper, room, content);

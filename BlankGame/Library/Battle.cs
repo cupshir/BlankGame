@@ -28,7 +28,7 @@ namespace BlankGame
                     break;
                 }
 
-                if (battleStage == "attack")
+                if (battleStage == "autoattack")
                 {
                     battleTitle = SetBattleTitle(player, mob);
                     UI.DrawTitleBar(battleTitle);
@@ -57,12 +57,12 @@ namespace BlankGame
 
                     switch (result.ToLower())
                     {
-                        case "test":
-                            mob.Hitpoints = 0;
+                        case "auto attack":
+                            battleStage = "autoattack";
                             break;
 
-                        case "test2":
-                            player.Hitpoints = 0;
+                        case "use healing rock":
+                            player.Hitpoints = player.MaxHitpoints;
                             break;
 
                         case "attack":
@@ -138,7 +138,7 @@ namespace BlankGame
             string content = "";
             int damage = 0;
             bool miss = CheckMiss(mob.Agility, player.Agility);
-            if (miss)
+            if (!miss)
             {
                 content = content + mob.Name + " swings and misses!\n\n";
 
@@ -167,6 +167,7 @@ namespace BlankGame
             Random rng = new Random();
             int attackerAttempt = rng.Next(0, attackerAgility);
             int defenderAttempt = rng.Next(0, defenderAgility);
+            
             if (attackerAttempt > defenderAttempt)
             {
                 return true;
@@ -198,7 +199,7 @@ namespace BlankGame
             string battleTitle = "You loss!!!";
             UI.DrawTitleBar(battleTitle);
             UI.DrawMainArea("\n\nThe monster has slain you...you suck!!!\n\nMaybe find a better weapon?\n\nOr buy a healing rock?!?");
-            Thread.Sleep(5000);
+            Console.ReadLine();
             System.Environment.Exit(1);
         }
 
@@ -228,7 +229,7 @@ namespace BlankGame
             {
                 UI.DrawTitleBar(battleTitle);
                 UI.DrawMainArea("\n\nThe epic dragon has been slain!!!\n\nThe Hero saves the day.\n\nGet down with your bad self, you earned it!\n\n\nIf this game had achievements, you would us just unlocked the big one!\n\nCattywampos is the winning word");
-                Thread.Sleep(30000);
+                Console.ReadLine();
                 System.Environment.Exit(1);
             }
 
@@ -253,12 +254,12 @@ namespace BlankGame
             //content = content + "\n";
             content = content + "Commands\n\n";
             content = content + "Attack\n";
+            content = content + "Use\n";
+            content = content + "Auto Attack";
             content = content + "Run\n";
             content = content + "Help\n";
 
             return content;
         }
-
-
     }
 }

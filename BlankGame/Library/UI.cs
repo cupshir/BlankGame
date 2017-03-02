@@ -124,9 +124,12 @@ namespace BlankGame
             content = content + "Pickup <item>\n";
             content = content + "Drop <item>\n";
             content = content + "Show Inventory\n";
-            content = content + "Show Player\n";
+            content = content + "Show Player or Look At Myself\n";
+            content = content + "Talk to <NPC>\n";
             content = content + "Go <direction>\n";
             content = content + "Enter <place>\n";
+            content = content + "Save\n";
+            content = content + "Load\n";
             content = content + "Clear\n";
             content = content + "Exit\n";
 

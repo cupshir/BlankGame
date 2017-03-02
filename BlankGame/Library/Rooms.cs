@@ -97,7 +97,7 @@ namespace BlankGame
             roomItems.Clear();
             roomItems.Add("Torch");
             rooms.Add(CreateRoom(name: "Forest", 
-                                 description: "There are trees and more trees. Oh, there is a cave too.\nThere is a burning torch near the entrance to the cave",
+                                 description: "There are trees and more trees. Oh, there is a cave too.",
                                  items: roomItems,
                                  toNorth: "Town Square", 
                                  toCave: "Cave Room 1"));
@@ -186,9 +186,9 @@ namespace BlankGame
                                  items: roomItems,
                                  litDescription: "The room is small and cramped. There are no other exits except for the way you came.",
                                  moveableObject: "Rock",
-                                 moveableObjectDescription: "There is a medium sized Rock laying on the ground in the middle of the room",
+                                 moveableObjectDescription: "There is a large heavy Rock laying on the ground in the middle of the room",
                                  moveableObjectAction: "With great effort you roll the rock over to reveal a hole in the ground.\nInside is the amazing shiny Sword of Awesomeness!",
-                                 movedObjectDescription: "There is a hole in the ground. Inside is the amazing shiny Sword of Awesomeness!",
+                                 movedObjectDescription: "With the Rock moved, you find a hole in the ground. Inside is the amazing shiny Sword of Awesomeness!",
                                  toWest: "Cave Room 4"));
             mobNames.Clear();
             mobNames.Add("Bear");
@@ -253,10 +253,19 @@ namespace BlankGame
 
             if (room.Inventory.Count() > 0)
             {
+                IEnumerable<Item> isTorchHere = room.Inventory.Where(p => p.Name == "Torch");
                 content = content + "\n";
                 foreach (Item item in room.Inventory)
                 {
-                    content = content + item.Name + " is here\n";
+                    if (isTorchHere.Count() == 1 && room.Name == "Forest")
+                    {
+                        content = content + "A burning torch is mounted to the side of the cave\n";
+                    }
+                    else
+                    {
+                        content = content + item.Name + " is here\n";
+                    }
+                    
                 }
             }
             else

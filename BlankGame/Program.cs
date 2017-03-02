@@ -84,6 +84,11 @@ namespace BlankGame
                         Item selectedItem = checkValidItem.Single();
                         if (selectedItem.CanPickup == true)
                         {
+                            if (selectedItem.Name == "Sword of Awesomeness")
+                            {
+                                room.moveableObjectDescription = "With the Rock moved, you find a hole in the ground.";
+                            }
+
                             Tuple<Room, List<Item>, string> updatedRoomInventory = Item.AddToInventory(room, selectedItem, currentPlayer.Inventory);
                             gameAreas.Remove(room);
                             gameAreas.Add(updatedRoomInventory.Item1);
@@ -151,6 +156,11 @@ namespace BlankGame
                                 content = "\n\nYou can't look at that";
                             }
                         }
+                    }
+                    else if (result.Contains("myself"))
+                    {
+                        content = Player.DisplayPlayerStats(currentPlayer);
+                        return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
                     }
                     // Check if player is looking at item, ensure item is in player inventory or room inventory before displaying stats
                     else
@@ -230,10 +240,18 @@ namespace BlankGame
             {
                 if (result.Count() > 5)
                 {
-                    string objectToMove = result.Remove(0, 5);
-                    Tuple<List<Room>, string> move = Room.MoveObject(gameAreas, room, objectToMove);
-                    content = move.Item2;
-                    gameAreas = move.Item1;
+                    if (room.Name == "Cave Room 5" && room.Monsters.Count() > 0)
+                    {
+                        content = "\n\nYou cant get close enough to move that with all those mobs in the way";
+                    }
+                    else
+                    {
+                        string objectToMove = result.Remove(0, 5);
+                        Tuple<List<Room>, string> move = Room.MoveObject(gameAreas, room, objectToMove);
+                        content = move.Item2;
+                        gameAreas = move.Item1;
+                    }
+                    
                     
                 }
                 return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
@@ -346,6 +364,27 @@ namespace BlankGame
                 {
                     if (prop.ToString().ToLower().Contains(travelTo) && prop.GetValue(room, null).ToString() != "")
                     {
+                        if (room.Monsters.Count > 0 && room.Name.Contains("Cave"))
+                        {
+                            if ((room.Name == "Cave Room 1" || room.Name == "Cave Room 2" || room.Name == "Cave Room 4" || room.Name == "Cave Room 6" || room.Name == "Cave Room 8") && travelTo == "tosouth")
+                            {
+                                return Tuple.Create(gameAreas, prop.GetValue(room, null).ToString(), currentPlayer, content);
+                            }
+                            else if ((room.Name == "Cave Room 3" || room.Name == "Cave Room 5") && travelTo == "towest")
+                            {
+                                return Tuple.Create(gameAreas, prop.GetValue(room, null).ToString(), currentPlayer, content);
+                            }
+                            else if ((room.Name == "Cave Room 7" || room.Name == "Cave Room 9" || room.Name == "Cave Boss Room") && travelTo == "toeast")
+                            {
+                                return Tuple.Create(gameAreas, prop.GetValue(room, null).ToString(), currentPlayer, content);
+                            }
+                            else
+                            {
+                                content = "\n\nYou can not proceed until the mobs blocking your way are dead";
+                                return Tuple.Create(gameAreas, room.Name, currentPlayer, content);
+                            }
+                        }
+
                         return Tuple.Create(gameAreas, prop.GetValue(room, null).ToString(), currentPlayer, content);
                     }                    
                 }

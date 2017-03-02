@@ -132,7 +132,7 @@ namespace BlankGame
             inventory.Add(item);
             currentRoom.Inventory.Remove(item);
             string content = item.Name + " has been added to your inventory.";
-            
+
             return Tuple.Create(currentRoom, inventory, content);
         }
 
