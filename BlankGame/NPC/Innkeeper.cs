@@ -39,7 +39,6 @@ namespace BlankGame
                             Console.Clear();
                             UI.DrawTitleBar(innkeeper.Name);
                             UI.DrawMainArea(content);
-                            //UI.DrawActionBar("Resting");
                             player.Hitpoints = player.MaxHitpoints;
                             Thread.Sleep(3000);
                             break;
